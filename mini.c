@@ -6,11 +6,28 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:06:26 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/21 15:28:57 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:53:21 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char  *PWD(char **env,char **cmd)
+{
+	int i = 0;
+	char *str;
+	char *s;
+	int acc;
+	char *d;
+	while(env[i])
+	{
+		if(env[i][0] == 'P' && env[i][1] == 'W')
+			break;
+		i++;
+	}
+	s = env[i] + 4;
+	return s;
+}
 
 void check(char *str,char **sp,char **cmd,char **env)
 {
@@ -18,10 +35,11 @@ void check(char *str,char **sp,char **cmd,char **env)
 	int i = 0;
 	int acc;
 	int pid = fork();
-	if (pid < 0)
-		return ;
 	if (!pid)
 	{
+		acc = access(cmd[0],X_OK);
+		if(acc == 0)
+			execve(cmd[0],NULL,env);
 		while(sp[i])
 		{
 			line = ft_strjoin(sp[i],"/");
@@ -29,11 +47,14 @@ void check(char *str,char **sp,char **cmd,char **env)
 			acc = access(line,X_OK);
 			if(acc == 0)
 				execve(line,cmd,env);
-			free(line);
+			//free(line);
 			i++;
 		}
 		if(acc == -1)
+		{
 			printf("bash: %s: command not found\n",cmd[0]);
+			exit(127);
+		}
 	}
 	else
 		wait(NULL);
@@ -78,6 +99,7 @@ int main(int ac, char **av, char **env)
 	
 	sp = ft_split(ft_env(env),':');
 	int pid = fork();
+	int acc;
 	if (pid < 0)
 		return 1;
 	if(pid == 0)
@@ -90,12 +112,12 @@ int main(int ac, char **av, char **env)
 			check(line, sp,cmd,env);
 			free(line);
 		}
-		
 	}
 	else
 	{
 		wait(NULL);
 		return 0;
 	}
+
 }
 

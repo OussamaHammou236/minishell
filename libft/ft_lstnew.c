@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/26 15:21:24 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/17 15:17:09 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/04/25 16:35:51 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
-#define MINISHELL_H
+#include "libft.h"
 
-typedef struct s_list
+t_list	*ft_lstnew(char **content)
 {
-	char **cmd;	
-	int type;
-	struct s_list *next;	
-} t_list;
+	t_list	*node;
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-char **ft_mini_split(char *str,char sp);
-
-
-
-#endif
+	node = malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node->cmd = content;
+	node->type = 0;
+	node->next = 0x0;
+	return (node);
+}
