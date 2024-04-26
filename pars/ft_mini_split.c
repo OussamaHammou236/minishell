@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/25 22:50:07 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:22:58 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ char **ft_mini_split(char *str,char sp)
 	i = 0;
 	len = cont_words(str,sp);
 	s = malloc((len + 1) * sizeof(char *));
-	while(*str && *str == sp)
-	 	str++;
+	s[len] = NULL;
 	while(i < len && *str)
 	{
 		j = len_of_words(str,sp);
+		while(*str && *str == sp)
+			str++;
 		if(*(str + j - 1) != sp)
 		{
 			s[i] = malloc(j + 1);
@@ -97,7 +98,6 @@ char **ft_mini_split(char *str,char sp)
 		str += j;
 		i++;
 	}
-	s[len] = NULL;
 	return s;
 }
 
