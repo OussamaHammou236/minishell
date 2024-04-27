@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/27 15:54:07 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:45:46 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main(int ac,char **av)
 	while(1)
 	{
 		char *str = readline("minishell> ");
-		char **sp = ft_mini_split(str,' ');
+		char **sp = ft_mini_split(str,'|');
 		// for(int i = 0;sp[i];i++)
 		// 	printf("|%s|\n",sp[i]);
  		command(str,&node);
