@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/27 16:45:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/27 18:25:17 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void command(char *line,t_list **list)
 	free(cmd);
 	while(*list)
 	{
+		printf("------------------------\n");
 	 	for(int i = 0;(*list)->cmd[i];i++)
 	 		printf("%s\n",(*list)->cmd[i]);
 	 	(*list) = (*list)->next;

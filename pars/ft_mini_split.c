@@ -6,17 +6,12 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/27 16:49:11 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/28 09:43:23 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-# define DOUBLE_Q_OFF 1
-# define DOUBLE_Q_ON 2
-# define SINGLE_Q_OFF 3
-# define SINGLE_Q_ON 4
 
-// ls | 'vd' | echo " ffff | s"
 int cont_words(char *str,char sp)
 {
 	int i;
@@ -35,7 +30,7 @@ int cont_words(char *str,char sp)
 				j++;
 			while(str[i] && str[i] != sp)
 			{
-				if( flag == DOUBLE_Q_OFF && str[i] == '"')
+				if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == '"')
 				{
 					flag = DOUBLE_Q_ON;
 					i++;
@@ -43,7 +38,7 @@ int cont_words(char *str,char sp)
 				if(flag == DOUBLE_Q_ON && str[i] == '"')
 					flag = DOUBLE_Q_OFF;
 
-				if(flag2 == SINGLE_Q_OFF && str[i] == 39)
+				if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == 39)
 				{
 					flag2 = SINGLE_Q_ON;
 					i++;
@@ -75,14 +70,14 @@ int len_of_words(char *str,char sp)
 	flag2 = SINGLE_Q_OFF;
 	while(str[i])
 	{
-		if(flag == DOUBLE_Q_OFF && str[i] == '"')
+		if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == '"')
 		{
 			flag = DOUBLE_Q_ON;
 			i++;
 		}
 		if(flag == DOUBLE_Q_ON && str[i] == '"')
 			flag = DOUBLE_Q_OFF;
-		if(flag2 == SINGLE_Q_OFF && str[i] == 39)
+		if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == 39)
 		{
 			flag2 = SINGLE_Q_ON;
 			i++;
