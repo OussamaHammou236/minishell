@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/30 14:15:09 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:46:47 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,26 @@ char *copy(char *src,int len)
 	int flag;
 	int j = 0;
 	i = 0;
+	int flag2 = SINGLE_Q_OFF;
 	flag = DOUBLE_Q_OFF;
 	str = malloc(len + 1);
 	while(src[i])
 	{
-		if (flag == DOUBLE_Q_OFF && src[i] == '"')
+		if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && src[i] == '"')
 		{
 			flag = DOUBLE_Q_ON;
 			i++;
 		}
 		if (flag == DOUBLE_Q_ON && src[i] == '"')
 			flag = DOUBLE_Q_OFF;
-		if(flag == DOUBLE_Q_ON)
+		if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF &&  src[i] == 39)
+		{
+			flag2 = SINGLE_Q_ON;
+			i++;
+		}
+		if(flag2 == SINGLE_Q_ON &&  src[i] == 39)
+			flag = SINGLE_Q_OFF;
+		if(flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON)
 		{
 			str[j] = src[i];
 			j++;
@@ -39,7 +47,8 @@ char *copy(char *src,int len)
 	}
 	return str;
 }
-
+// " 'ddddfkfkef'"
+// DON
 void len_of_word(t_list **node)
 {
 	int len;
@@ -48,24 +57,29 @@ void len_of_word(t_list **node)
 	int flag = DOUBLE_Q_OFF;
 	char *str;
 	void *tmp;
-	
+	int flag2 = SINGLE_Q_OFF; 
 	while((*node)->cmd[j])
 	{
 		i = 0;
 		len = 0;
 		while((*node)->cmd[j][i])
 		{
-			if (flag == DOUBLE_Q_OFF && (*node)->cmd[j][i] == '"')
+			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && (*node)->cmd[j][i] == '"')
 				flag = DOUBLE_Q_ON;
 			else if (flag == DOUBLE_Q_ON && (*node)->cmd[j][i] == '"')
 				flag = DOUBLE_Q_OFF;
-			if(flag == DOUBLE_Q_ON)
+			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF &&  (*node)->cmd[j][i] == 39)
+				flag2 = SINGLE_Q_OFF;
+			else if(flag2 == SINGLE_Q_ON &&  (*node)->cmd[j][i] == 39)
+				flag2 = SINGLE_Q_OFF;	
+			if(flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON)
 				len++;
 			i++;
 		}
 		if (len != 0)
 		{
 			tmp = (*node)->cmd[j];
+			//printf("%d\n",len);
 			(*node)->cmd[j] = copy((*node)->cmd[j],len);
 			free(tmp);
 		}
