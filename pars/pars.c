@@ -22,6 +22,7 @@ char *copy(char *src,int len)
 	int flag2 = SINGLE_Q_OFF;
 	flag = DOUBLE_Q_OFF;
 	str = malloc(len + 1);
+	str[len] = '\0';
 	while(src[i])
 	{
 		if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && src[i] == '"')
@@ -37,8 +38,8 @@ char *copy(char *src,int len)
 			i++;
 		}
 		if(flag2 == SINGLE_Q_ON &&  src[i] == 39)
-			flag = SINGLE_Q_OFF;
-		if(flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON)
+			flag2 = SINGLE_Q_OFF;
+		if((flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON))
 		{
 			str[j] = src[i];
 			j++;
@@ -47,8 +48,7 @@ char *copy(char *src,int len)
 	}
 	return str;
 }
-// " 'ddddfkfkef'"
-// DON
+
 void len_of_word(t_list **node)
 {
 	int len;
@@ -65,21 +65,27 @@ void len_of_word(t_list **node)
 		while((*node)->cmd[j][i])
 		{
 			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && (*node)->cmd[j][i] == '"')
+			{
 				flag = DOUBLE_Q_ON;
+				i++;
+			}
 			else if (flag == DOUBLE_Q_ON && (*node)->cmd[j][i] == '"')
 				flag = DOUBLE_Q_OFF;
 			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF &&  (*node)->cmd[j][i] == 39)
-				flag2 = SINGLE_Q_OFF;
+			{
+				flag2 = SINGLE_Q_ON;
+				i++;
+			}
 			else if(flag2 == SINGLE_Q_ON &&  (*node)->cmd[j][i] == 39)
 				flag2 = SINGLE_Q_OFF;	
-			if(flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON)
+			if((flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON))
 				len++;
 			i++;
 		}
+		//printf("%d\n",len);
 		if (len != 0)
 		{
 			tmp = (*node)->cmd[j];
-			//printf("%d\n",len);
 			(*node)->cmd[j] = copy((*node)->cmd[j],len);
 			free(tmp);
 		}
