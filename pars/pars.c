@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/30 14:46:47 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:07:42 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ char *copy(char *src,int len)
 	i = 0;
 	int flag2 = SINGLE_Q_OFF;
 	flag = DOUBLE_Q_OFF;
+	if((src[i] == '"' && src[i + 1] == '"' ) || (src[i] == '\'' && src[i + 1] == '\''))
+	{
+		str = malloc(1);
+		str[0] = '\0';
+		return str;
+	}
 	str = malloc(len + 1);
 	str[len] = '\0';
 	while(src[i])
