@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/28 14:22:24 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:44:32 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int cont_words(char *str,char sp)
 				}
 				if(flag == DOUBLE_Q_ON && str[i] == '"')
 					flag = DOUBLE_Q_OFF;
-
 				if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == 39)
 				{
 					flag2 = SINGLE_Q_ON;
@@ -50,13 +49,7 @@ int cont_words(char *str,char sp)
 		}
 		else
 			i++;
-	}
-	if(flag2 == SINGLE_Q_ON || flag == DOUBLE_Q_ON)
-	{
-		printf("error\n");
-		exit(1);
-	}
-		
+	}	
 	return j;
 }
 
@@ -102,7 +95,6 @@ char **ft_mini_split(char *str,char sp)
 
 	i = 0;
 	len = cont_words(str,sp);
-	//printf("%d\n",len);
 	s = malloc((len + 1) * sizeof(char *));
 	s[len] = NULL;
 	while(i < len && *str)

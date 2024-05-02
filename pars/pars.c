@@ -6,99 +6,109 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:07:42 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:08:28 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *copy(char *src,int len)
+void ft_error(char *str)
 {
-	char *str;
+	write(1,str,ft_strlen(str));
+	exit(1);
+}
+
+int len(char *str)
+{
 	int i;
+	int len;
 	int flag;
-	int j = 0;
-	i = 0;
-	int flag2 = SINGLE_Q_OFF;
+	int flag1;
+	
 	flag = DOUBLE_Q_OFF;
-	if((src[i] == '"' && src[i + 1] == '"' ) || (src[i] == '\'' && src[i + 1] == '\''))
+	flag1 = SINGLE_Q_OFF;
+	len = 0;
+	i = 0;
+	while(str[i])
 	{
-		str = malloc(1);
-		str[0] = '\0';
-		return str;
+		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '"')
+			flag = DOUBLE_Q_ON;
+		else if (flag == DOUBLE_Q_ON && str[i] == '"')
+			flag = DOUBLE_Q_OFF;
+		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '\'')
+			flag1 = SINGLE_Q_ON;
+		else if (flag1 == SINGLE_Q_ON && str[i] == '\'')
+			flag1 = SINGLE_Q_OFF;
+		if ((flag1 == SINGLE_Q_ON || flag == DOUBLE_Q_ON) && (str[i] == '"' || str[i] == '\''))
+			i++;
+		if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON || (str[i] != '"' &&  str[i] != '\''))
+			len++;
+		i++;
 	}
-	str = malloc(len + 1);
-	str[len] = '\0';
-	while(src[i])
+	return len;
+}
+char *change_cmd(char *str,int len)
+{
+	char *cmd;
+	int i;
+	int flag,flag1,d;
+	flag = DOUBLE_Q_OFF;
+	flag1 = SINGLE_Q_OFF;
+	i = 0;
+	cmd = malloc(len + 1);
+	cmd[len] = '\0';
+	d = 0;
+	while(str[i])
 	{
-		if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && src[i] == '"')
+		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '"')
 		{
 			flag = DOUBLE_Q_ON;
 			i++;
 		}
-		if (flag == DOUBLE_Q_ON && src[i] == '"')
+		if (flag == DOUBLE_Q_ON && str[i] == '"')
 			flag = DOUBLE_Q_OFF;
-		if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF &&  src[i] == 39)
+		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '\'')
 		{
-			flag2 = SINGLE_Q_ON;
+			flag1 = SINGLE_Q_ON;
 			i++;
 		}
-		if(flag2 == SINGLE_Q_ON &&  src[i] == 39)
-			flag2 = SINGLE_Q_OFF;
-		if((flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON))
+		if (flag1 == SINGLE_Q_ON && str[i] == '\'')
+			flag1 = SINGLE_Q_OFF;
+		if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON || (str[i] != '"' &&  str[i] != '\''))
 		{
-			str[j] = src[i];
-			j++;
+			cmd[d] = str[i];
+			d++;
 		}
 		i++;
 	}
-	return str;
+	if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON)
+		ft_error("error");
+	return cmd;
 }
-
-void len_of_word(t_list **node)
+void chenge(t_list **list)
 {
-	int len;
+	int j;
 	int i;
-	int j = 0;
-	int flag = DOUBLE_Q_OFF;
-	char *str;
 	void *tmp;
-	int flag2 = SINGLE_Q_OFF; 
-	while((*node)->cmd[j])
+	j = 0;
+	while((*list)->cmd[j])
 	{
 		i = 0;
-		len = 0;
-		while((*node)->cmd[j][i])
+		while((*list)->cmd[j][i])
 		{
-			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF && (*node)->cmd[j][i] == '"')
+			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'')
 			{
-				flag = DOUBLE_Q_ON;
-				i++;
+				tmp = (*list)->cmd[j];
+				//printf("%s\n",(*list)->cmd[j]);
+				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
+				free(tmp);
+				break ;
 			}
-			else if (flag == DOUBLE_Q_ON && (*node)->cmd[j][i] == '"')
-				flag = DOUBLE_Q_OFF;
-			if (flag2 == SINGLE_Q_OFF && flag == DOUBLE_Q_OFF &&  (*node)->cmd[j][i] == 39)
-			{
-				flag2 = SINGLE_Q_ON;
-				i++;
-			}
-			else if(flag2 == SINGLE_Q_ON &&  (*node)->cmd[j][i] == 39)
-				flag2 = SINGLE_Q_OFF;	
-			if((flag == DOUBLE_Q_ON || flag2 == SINGLE_Q_ON))
-				len++;
 			i++;
-		}
-		//printf("%d\n",len);
-		if (len != 0)
-		{
-			tmp = (*node)->cmd[j];
-			(*node)->cmd[j] = copy((*node)->cmd[j],len);
-			free(tmp);
 		}
 		j++;
 	}
 }
-
 void command(char *line,t_list **list)
 {
 	int i;
@@ -106,13 +116,13 @@ void command(char *line,t_list **list)
 	char **cmd;
 	char **s;
 	t_list *node;
-
+	void *tmp;
 	j = 0;
 	cmd = ft_mini_split(line,'|');
 	while(cmd[j])
 	{
 		node = ft_lstnew(ft_mini_split(cmd[j],' '));
-		len_of_word(&node);
+		chenge(&node);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;
