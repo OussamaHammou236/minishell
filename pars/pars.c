@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/02 22:08:28 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:37:10 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void chenge(t_list **list)
 			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'')
 			{
 				tmp = (*list)->cmd[j];
-				//printf("%s\n",(*list)->cmd[j]);
 				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
 				free(tmp);
 				break ;
@@ -121,7 +120,7 @@ void command(char *line,t_list **list)
 	cmd = ft_mini_split(line,'|');
 	while(cmd[j])
 	{
-		node = ft_lstnew(ft_mini_split(cmd[j],' '));
+		node = ft_lstnew(ft_mini_split(handel_parenthese(cmd[j]),' '));
 		chenge(&node);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
@@ -143,7 +142,9 @@ int main(int ac,char **av)
 	while(1)
 	{
 		char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
-		char **sp = ft_mini_split(str,'|');
+		handel_parenthese(str);
+		//set_spase(cmd[j]);
+		//printf("%d\n",len_of_str(str));
 		// for(int i = 0;sp[i];i++)
 		// 	printf("|%s|\n",sp[i]);
  		command(str,&node);
