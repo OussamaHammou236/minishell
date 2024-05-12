@@ -20,6 +20,14 @@
 # define PARENTHESE_OFF 0
 # define PARENTHESE_ON 1
 
+
+# define PIP 1
+# define WORD 2
+# define IN_F 3
+# define OUT_F 4
+# define RE_INF 5
+# define RE_OUTF 6
+
 typedef struct s_list
 {
 	char **cmd;
@@ -36,17 +44,11 @@ typedef struct s_data
 	int len;
 	int i;
 	char **cmd;
+	int *tab;
+	int j;
 } t_data;
 
-typedef enum e_token
-{
-	PIP,
-	WORD,
-	IN_F,
-	OUT_F,
-	RE_INF,
-	RE_OUTF
-} t_token;
+
 
 
 #include "libft/libft.h"
@@ -62,5 +64,8 @@ void double_single_Q(t_data *data,char c);
 void ft_error(char *str);
 int len_of_str(char *str);
 char *handel_parenthese(char *line);
+int cont_words(char *str,char sp);
+char *set_spase(char *str);
+void check_tocken(char *str);
 
 #endif

@@ -24,6 +24,8 @@ int len_of_str(char *str)
 	data.len = 0;
 	while(str[i])
 	{
+		if(data.flag2 == PARENTHESE_OFF &&  str[i] == ')')
+			ft_error("error1");
 		double_single_Q(&data,str[i]);
 		if((data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[i] != '(' &&  str[i] != ')')
 			|| (data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON))
@@ -31,7 +33,7 @@ int len_of_str(char *str)
 		i++;
 	}
 	if(data.flag2 == PARENTHESE_ON)
-		ft_error("error1");
+		ft_error("error2");
 	return data.len;
 }
 char *handel_parenthese(char *line)

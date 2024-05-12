@@ -85,6 +85,7 @@ char *change_cmd(char *str,int len)
 		ft_error("error");
 	return cmd;
 }
+
 void chenge(t_list **list)
 {
 	int j;
@@ -108,6 +109,7 @@ void chenge(t_list **list)
 		j++;
 	}
 }
+
 void command(char *line,t_list **list)
 {
 	int i;
@@ -120,7 +122,7 @@ void command(char *line,t_list **list)
 	cmd = ft_mini_split(line,'|');
 	while(cmd[j])
 	{
-		node = ft_lstnew(ft_mini_split(handel_parenthese(cmd[j]),' '));
+		node = ft_lstnew(ft_mini_split(cmd[j],' '));
 		chenge(&node);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
@@ -139,14 +141,18 @@ void command(char *line,t_list **list)
 int main(int ac,char **av)
 {
 	t_list *node = NULL;
+	t_data data;
 	while(1)
 	{
 		char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
-		handel_parenthese(str);
+		add_history(str);
+		data.str = handel_parenthese(str);
 		//set_spase(cmd[j]);
 		//printf("%d\n",len_of_str(str));
 		// for(int i = 0;sp[i];i++)
 		// 	printf("|%s|\n",sp[i]);
- 		command(str,&node);
+
+		check_tocken(data.str);
+ 		command(data.str,&node);
 	}
 }

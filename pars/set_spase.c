@@ -47,7 +47,8 @@ int edit_line(char *str)
 				data.len += 2;
 				i++;
 			}
-			else if((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<' && str[i + 1] != '<'))
+			else if((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<' && str[i + 1] != '<') || 
+				(str[i] == '|'))
 				data.len += 2;
 		}
 		data.len++;
@@ -65,7 +66,8 @@ void etc(t_data *data,char *str)
 		data->str[data->len += 1] = ' ';
 		data->i++;
 	}
-	else if((str[data->i] == '>' && str[data->i + 1] != '>') || (str[data->i] == '<' && str[data->i + 1] != '<'))
+	else if((str[data->i] == '>' && str[data->i + 1] != '>') || (str[data->i] == '<' && str[data->i + 1] != '<')
+		|| (str[data->i] == '|'))
 	{
 		data->str[data->len] = ' ';
 		data->str[data->len += 1] = str[data->i];
@@ -97,6 +99,5 @@ char *set_spase(char *str)
 		data.len++;
 		data.i++;
 	}
-	
 	return data.str;	
 }
