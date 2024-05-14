@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/09 22:07:30 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:44:26 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define DOUBLE_Q_ON 1
 # define SINGLE_Q_OFF 0
 # define SINGLE_Q_ON 1
-# define PARENTHESE_OFF 0
-# define PARENTHESE_ON 1
+// # define PARENTHESE_OFF 0
+// # define PARENTHESE_ON 1
 
 
 # define PIP 1
@@ -61,11 +61,9 @@ char **ft_mini_split(char *str,char sp);
 int edit_line(char *str);
 char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
-void ft_error(char *str);
-int len_of_str(char *str);
-char *handel_parenthese(char *line);
 int cont_words(char *str,char sp);
 char *set_spase(char *str);
-void check_tocken(char *str);
+int check_tocken(char *str);
+int check_syntax_error(t_data data);
 
 #endif

@@ -22,10 +22,6 @@ void double_single_Q(t_data *data,char c)
 			data->flag1 = SINGLE_Q_ON;
 		else if (data->flag1 == SINGLE_Q_ON && c == '\'')
 			data->flag1 = SINGLE_Q_OFF;
-		if(data->flag2 ==  PARENTHESE_OFF && data->flag == DOUBLE_Q_OFF && data->flag1 == SINGLE_Q_OFF && c == '(')
-			data->flag2 =  PARENTHESE_ON;
-		else if(data->flag2 ==  PARENTHESE_ON && data->flag == DOUBLE_Q_OFF && data->flag1 == SINGLE_Q_OFF && c == ')')
-			data->flag2 =  PARENTHESE_OFF;
 }
 
 int edit_line(char *str)
@@ -44,7 +40,7 @@ int edit_line(char *str)
 		{
 			if((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<'))
 			{
-				data.len += 2;
+				data.len += 3;
 				i++;
 			}
 			else if((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<' && str[i + 1] != '<') || 
@@ -55,6 +51,24 @@ int edit_line(char *str)
 		i++;
 	}
 	return data.len;
+}
+int check_syntax_error(t_data data)
+{
+	data.i = 0;
+	data.flag = DOUBLE_Q_OFF;
+	data.flag1 = SINGLE_Q_OFF;
+	while(data.str[data.i])
+	{
+		double_single_Q(&data,data.str[data.i]);
+		if ((data.str[data.i] == ')' || data.str[data.i] == '(' || data.str[data.i] == ';' ||
+			data.str[data.i] == '\\' || data.str[data.i] == '&') &&
+						(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF))
+					return -1;
+		data.i++;
+	}	
+	if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON)
+		return -1;
+	return 0;
 }
 void etc(t_data *data,char *str)
 {

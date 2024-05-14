@@ -6,46 +6,29 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/09 18:37:10 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:44:18 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_error(char *str)
-{
-	write(1,str,ft_strlen(str));
-	exit(1);
-}
-
 int len(char *str)
 {
-	int i;
-	int len;
-	int flag;
-	int flag1;
-	
-	flag = DOUBLE_Q_OFF;
-	flag1 = SINGLE_Q_OFF;
-	len = 0;
-	i = 0;
-	while(str[i])
+	t_data data;	
+	data.flag = DOUBLE_Q_OFF;
+	data.flag1 = SINGLE_Q_OFF;
+	data.len = 0;
+	data.i = 0;
+	while(str[data.i])
 	{
-		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '"')
-			flag = DOUBLE_Q_ON;
-		else if (flag == DOUBLE_Q_ON && str[i] == '"')
-			flag = DOUBLE_Q_OFF;
-		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '\'')
-			flag1 = SINGLE_Q_ON;
-		else if (flag1 == SINGLE_Q_ON && str[i] == '\'')
-			flag1 = SINGLE_Q_OFF;
-		if ((flag1 == SINGLE_Q_ON || flag == DOUBLE_Q_ON) && (str[i] == '"' || str[i] == '\''))
-			i++;
-		if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON || (str[i] != '"' &&  str[i] != '\''))
-			len++;
-		i++;
+		double_single_Q(&data,str[data.i]);
+		if ((data.flag1 == SINGLE_Q_ON && str[data.i] == '\'') ||  (data.flag == DOUBLE_Q_ON && str[data.i] == '"'))
+			data.i++;
+		if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\''))
+			data.len++;
+		data.i++;
 	}
-	return len;
+	return data.len;
 }
 char *change_cmd(char *str,int len)
 {
@@ -56,6 +39,7 @@ char *change_cmd(char *str,int len)
 	flag1 = SINGLE_Q_OFF;
 	i = 0;
 	cmd = malloc(len + 1);
+	printf("%d\n",len);
 	cmd[len] = '\0';
 	d = 0;
 	while(str[i])
@@ -81,8 +65,6 @@ char *change_cmd(char *str,int len)
 		}
 		i++;
 	}
-	if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON)
-		ft_error("error");
 	return cmd;
 }
 
@@ -146,13 +128,14 @@ int main(int ac,char **av)
 	{
 		char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
 		add_history(str);
-		data.str = handel_parenthese(str);
-		//set_spase(cmd[j]);
-		//printf("%d\n",len_of_str(str));
-		// for(int i = 0;sp[i];i++)
-		// 	printf("|%s|\n",sp[i]);
-
-		check_tocken(data.str);
- 		command(data.str,&node);
+		rl_redisplay();
+		data.str = set_spase(str);
+		if(check_syntax_error(data) == 0 && check_tocken(data.str) == 0)
+ 			command(data.str,&node);
+		else
+		{
+			printf("syntax error\n");
+			free(str);	
+		}
 	}
 }
