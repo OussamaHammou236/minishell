@@ -24,8 +24,8 @@ size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-t_list	*ft_lstnew(char **content);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
+t_input	*ft_lstnew(char **content);
+t_input	*ft_lstlast(t_input *lst);
+void	ft_lstadd_back(t_input **lst, t_input *new);
 
 #endif

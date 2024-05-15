@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 18:39:24 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/05/14 21:43:26 by ohammou-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "header.h"
+
+int main(int argc, char **argv, char **env)
+{
+    t_data info;
+	t_data data;
+    info.env = duplacte_env(env);
+    extract_path(env, &info);
+    initialization(&info);
+    t_input *tm;
+    while (1)
+    {
+        char *str = readline("minishell-> ");
+        add_history(str);
+		data.str = set_spase(str);
+        tm = NULL;
+		if(check_syntax_error(data) == 0 && check_tocken(data.str) == 0)
+		{
+			command(str,&tm);
+			info.input = *tm;
+			if (check_input(&info) == -1)
+			{
+				printf("command not found !!\n");
+			}
+			info.flags.is_builtin_cmd = 0;
+		}
+		else
+			printf("syntax error\n");
+		free(str);
+    }
+
+
+}

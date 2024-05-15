@@ -68,7 +68,7 @@ char *change_cmd(char *str,int len)
 	return cmd;
 }
 
-void chenge(t_list **list)
+void chenge(t_input **list)
 {
 	int j;
 	int i;
@@ -92,13 +92,13 @@ void chenge(t_list **list)
 	}
 }
 
-void command(char *line,t_list **list)
+void command(char *line,t_input **list)
 {
 	int i;
 	int j;
 	char **cmd;
 	char **s;
-	t_list *node;
+	t_input *node;
 	void *tmp;
 	j = 0;
 	cmd = ft_mini_split(line,'|');
@@ -111,31 +111,31 @@ void command(char *line,t_list **list)
 	 	j++;
 	}
 	free(cmd);
-	while(*list)
-	{
-		printf("------------------------\n");
-	 	for(int i = 0;(*list)->cmd[i];i++)
-	 		printf("%s\n",(*list)->cmd[i]);
-	 	(*list) = (*list)->next;
-	}
+	// while(*list)
+	// {
+	// 	printf("------------------------\n");
+	//  	for(int i = 0;(*list)->cmd[i];i++)
+	//  		printf("%s\n",(*list)->cmd[i]);
+	//  	(*list) = (*list)->next;
+	// }
 }
 
-int main(int ac,char **av)
-{
-	t_list *node = NULL;
-	t_data data;
-	while(1)
-	{
-		char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
-		add_history(str);
-		rl_redisplay();
-		data.str = set_spase(str);
-		if(check_syntax_error(data) == 0 && check_tocken(data.str) == 0)
- 			command(data.str,&node);
-		else
-		{
-			printf("syntax error\n");
-			free(str);	
-		}
-	}
-}
+// int main(int ac,char **av)
+// {
+// 	t_input *node = NULL;
+// 	t_data data;
+// 	while(1)
+// 	{
+// 		char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
+// 		add_history(str);
+// 		rl_redisplay();
+// 		data.str = set_spase(str);
+// 		if(check_syntax_error(data) == 0 && check_tocken(data.str) == 0)
+//  			command(data.str,&node);
+// 		else
+// 		{
+// 			printf("syntax error\n");
+// 			free(str);	
+// 		}
+// 	}
+// }

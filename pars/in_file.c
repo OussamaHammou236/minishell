@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   in_file.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 17:51:57 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/21 11:35:36 by ohammou-         ###   ########.fr       */
+/*   Created: 2024/05/14 21:27:15 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/05/14 21:35:43 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void in_file(char *cmd,char *file)
 {
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) & (i < n))
+	if(access(file.F_OK) == 0)
 	{
-		if (s1[i] != s2[i])
-			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
-		i++;
+		printf("1\n");
 	}
-	return (0);
+	else
+		printf("2\n");
+}
+int main(int ac,char **av)
+{
+	in_file("ls",av[1]);
 }
