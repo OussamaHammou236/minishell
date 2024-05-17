@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   out_file.c                                         :+:      :+:    :+:   */
+/*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 20:18:18 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/15 20:18:42 by ohammou-         ###   ########.fr       */
+/*   Created: 2024/05/16 10:00:48 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/05/16 10:08:29 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void out_file(char **cmd,char *file,char **env,char *path)
+void herdoc(char *end,char **cmd,char *path,char **env)
 {
-	int fd;
 	int pid;
+	char *str;
 
-	fd = open(file, O_CREAT  | O_RDWR | O_TRUNC,0644);
 	pid = fork();
 	if(pid == 0)
 	{
-		dup2(fd,1);
-		execve(path,cmd,env);
+		str = get_next_line(0);
+		if(!str)
+			return ;
 	}
 	else
 		wait(&pid);
-	close(fd);
-}
-int main(int ac,char **av,char **env)
-{
-	char **sp = ft_mini_split("  ls  ",' ');
-	out_file(sp,av[1],env,"/bin/ls");
 }

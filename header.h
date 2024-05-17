@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:39:19 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/14 21:37:29 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:42:22 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct t_flags
 typedef struct s_input
 {
 	char **cmd;	
-	int type;
+	int *type;
 	struct s_input *next;	
 } t_input;
 
@@ -92,9 +92,7 @@ char **ft_mini_split(char *str,char sp);
 int edit_line(char *str);
 char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
-void ft_error(char *str);
 void command(char *line,t_input **list);
-int check_tocken(char *str);
 int check_syntax_error(t_data data);
-
+int check_tocken(char *str,t_input **list,int flag);
 #endif

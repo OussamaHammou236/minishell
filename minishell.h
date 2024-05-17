@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/14 21:30:44 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:34:38 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 #include "header.h"
+
 
 # define DOUBLE_Q_OFF 0
 # define DOUBLE_Q_ON 1
@@ -46,6 +47,7 @@ typedef enum e_token
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 
 char **ft_mini_split(char *str,char sp);
@@ -54,7 +56,7 @@ char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
 int cont_words(char *str,char sp);
 char *set_spase(char *str);
-int check_tocken(char *str);
+int check_tocken(char *str,t_input **list,int flag);
 int check_syntax_error(t_data data);
 
 #endif

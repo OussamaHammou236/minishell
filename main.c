@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:39:24 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/14 21:43:26 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:00:48 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int main(int argc, char **argv, char **env)
         add_history(str);
 		data.str = set_spase(str);
         tm = NULL;
-		if(check_syntax_error(data) == 0 && check_tocken(data.str) == 0)
+		if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0))
 		{
-			command(str,&tm);
+			command(data.str,&tm);
 			info.input = *tm;
 			if (check_input(&info) == -1)
 			{

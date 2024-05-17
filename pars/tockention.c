@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/14 15:10:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:47:03 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ int check(t_data *data)
 	return 0;
 }
 
-int check_tocken(char *str)
+int check_tocken(char *str,t_input **list,int flag)
 {
 	t_data data;
 	data.len = cont_words(str,' ');
 	data.tab = (int *)malloc(data.len * sizeof(int));
 	tockention(str,&data);
+	if(flag)
+		(*list)->type = data.tab;
 	if(check(&data) == -1)
 		return -1;
 	return 0;
