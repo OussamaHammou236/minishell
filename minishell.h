@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/17 16:34:38 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:34:05 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ int cont_words(char *str,char sp);
 char *set_spase(char *str);
 int check_tocken(char *str,t_input **list,int flag);
 int check_syntax_error(t_data data);
-
+char *expande(char *str,int len);
 #endif

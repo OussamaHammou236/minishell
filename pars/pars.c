@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/17 18:39:56 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:32:46 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *change_cmd(char *str,int len)
 	flag1 = SINGLE_Q_OFF;
 	i = 0;
 	cmd = malloc(len + 1);
-	printf("%d\n",len);
+	// printf("%d\n",len);
 	cmd[len] = '\0';
 	d = 0;
 	while(str[i])
@@ -82,7 +82,10 @@ void chenge(t_input **list)
 			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'')
 			{
 				tmp = (*list)->cmd[j];
-				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
+				if(ft_strchr((*list)->cmd[j],'$') == 1)
+					(*list)->cmd[j] = expande((*list)->cmd[j],len((*list)->cmd[j]));
+				else
+					(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
 				free(tmp);
 				break ;
 			}
