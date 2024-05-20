@@ -58,6 +58,8 @@ char *change_cmd(char *str,int len)
 		}
 		if (flag1 == SINGLE_Q_ON && str[i] == '\'')
 			flag1 = SINGLE_Q_OFF;
+		if(str[i] == '$')
+			expande(str,&data);
 		if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON || (str[i] != '"' &&  str[i] != '\''))
 		{
 			cmd[d] = str[i];
@@ -79,7 +81,7 @@ void chenge(t_input **list)
 		i = 0;
 		while((*list)->cmd[j][i])
 		{
-			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'')
+			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\''|| (*list)->cmd[j][i] == '$' )
 			{
 				tmp = (*list)->cmd[j];
 				// if(ft_strchr((*list)->cmd[j],'$') == 1)

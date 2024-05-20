@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
   
-char *expande(char *str,int len)
+char *expande(char *str,t_data *info)
 {
-	t_data data;
-	data.i = 0;
-	data.str = malloc(len + 1);
+	int i;
+	char *s;
 
-	while (str[data.i])
-	{
-		
-	}
+	i = 0;
+	while(str[info->i + i] != ' ' && str[info->i + i] != '"' && str[info->i + i] != '\'' && str[info->i + i] != '\0')
+		i++;
+	s = ft_substr(str,info->i,i);
+	printf("%s\n",s);
 }
