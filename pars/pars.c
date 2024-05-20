@@ -32,42 +32,40 @@ int len(char *str)
 }
 char *change_cmd(char *str,int len)
 {
-	char *cmd;
-	int i;
-	int flag,flag1,d;
-	flag = DOUBLE_Q_OFF;
-	flag1 = SINGLE_Q_OFF;
-	i = 0;
-	cmd = malloc(len + 1);
-	// printf("%d\n",len);
-	cmd[len] = '\0';
-	d = 0;
-	while(str[i])
+	t_data data;	
+	data.flag = DOUBLE_Q_OFF;
+	data.flag1 = SINGLE_Q_OFF;
+	data.len = 0;
+	data.i = 0;
+	data.str = malloc(len + 1);
+	data.str[len] = '\0';
+	data.len = 0;
+	while(str[data.i])
 	{
-		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '"')
+		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '"')
 		{
-			flag = DOUBLE_Q_ON;
-			i++;
+			data.flag = DOUBLE_Q_ON;
+			data.i++;
 		}
-		if (flag == DOUBLE_Q_ON && str[i] == '"')
-			flag = DOUBLE_Q_OFF;
-		if(flag == DOUBLE_Q_OFF && flag1 == SINGLE_Q_OFF && str[i] == '\'')
+		if (data.flag == DOUBLE_Q_ON && str[data.i] == '"')
+			data.flag = DOUBLE_Q_OFF;
+		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '\'')
 		{
-			flag1 = SINGLE_Q_ON;
-			i++;
+			data.flag1 = SINGLE_Q_ON;
+			data.i++;
 		}
-		if (flag1 == SINGLE_Q_ON && str[i] == '\'')
-			flag1 = SINGLE_Q_OFF;
-		if(str[i] == '$')
+		if (data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
+			data.flag1 = SINGLE_Q_OFF;
+		if(str[data.i] == '$')
 			expande(str,&data);
-		if(flag == DOUBLE_Q_ON || flag1 == SINGLE_Q_ON || (str[i] != '"' &&  str[i] != '\''))
+		if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
-			cmd[d] = str[i];
-			d++;
+			data.str[data.len] = str[data.i];
+			data.len++;
 		}
-		i++;
+		data.i++;
 	}
-	return cmd;
+	return data.str;
 }
 
 void chenge(t_input **list)

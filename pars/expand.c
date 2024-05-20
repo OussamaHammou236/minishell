@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
   
-char *expande(char *str,t_data *info)
+void expande(char *str,t_data *info)
 {
 	int i;
 	char *s;
