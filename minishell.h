@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/18 20:34:05 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:53:23 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # define DOUBLE_Q_ON 1
 # define SINGLE_Q_OFF 0
 # define SINGLE_Q_ON 1
-# define PARENTHESE_OFF 0
-# define PARENTHESE_ON 1
+
 
 typedef struct s_list
 {
@@ -31,15 +30,12 @@ typedef struct s_list
 } t_list;
 
 
-typedef enum e_token
-{
-	PIP,
-	WORD,
-	IN_F,
-	OUT_F,
-	RE_INF,
-	RE_OUTF
-} t_token;
+# define PIP 1
+# define WORD 2
+# define IN_F 3
+# define OUT_F 4
+# define RE_INF 5
+# define RE_OUTF 6
 
 
 #include "libft/libft.h"

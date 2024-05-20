@@ -91,7 +91,7 @@ int     check_input(t_data *info)
     }
     else
     {
-        pipe_time(info);
+        return (pipe_time(info));
     }
     return (0);
 

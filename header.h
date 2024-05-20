@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 18:39:19 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/17 18:42:22 by ohammou-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 # ifndef HEADER_H
 # define HEADER_H
 
@@ -37,7 +25,7 @@ typedef struct s_input
 typedef struct s_trash
 {
 	void *adr;
-	struct s_input *next;	
+	struct s_trash *next;	
 } t_trash;
 
 typedef struct t_data{
@@ -85,7 +73,7 @@ void    run_export(t_data *info, t_input temp);
 void    ft_free_env(t_data *info, int len);
 void    run_unset(t_data *info, t_input temp);
 void    run_exit();
-void    pipe_time(t_data *info);
+int    pipe_time(t_data *info);
 int check_built_cmd(t_data *info, t_input temp);
 
 char **ft_mini_split(char *str,char sp);

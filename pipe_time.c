@@ -1,66 +1,83 @@
 #include "header.h"
 
-void    pipe_time(t_data *info)
+int    pipe_time(t_data *info)
 {
     t_input *temp;
     temp = &info->input;
 
-   int i = 0;
-    int fd[2]; // fd[0] for read  , fd[1] for write . 
 
-    pipe(fd);
+    int fd[info->number_cmd - 1][2]; // fd[0] for read  , fd[1] for write . 
+    int i = 0;
    while (i < info->number_cmd)
    {
+        if (i < info->number_cmd - 1)
+            pipe(fd[i]);
         int id = fork();
-
         if (!id)
         {
-            if (i == 0) // first (just write)
-            {
-                close(fd[0]);
-                if (!check_cmd(info, temp->cmd[0]))
+            if (i == 0)
+            { 
+                if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    // the cmd is not exist !.    
+                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    return (0);
                 }
-                if (temp->next != NULL)
-                    dup2(fd[1], 1);
-                close(fd[1]);
-                if (check_built_cmd(info, *temp) == 0)    
+                close(fd[i][0]);
+                dup2(fd[i][1], 1);
+                close(fd[i][1]);
+                if (check_built_cmd(info, *temp) == 0)
                     execve(info->current_path, temp->cmd, info->env);
+                else
+                    exit(0);
             }
-            else if (temp->next == NULL) // last (just read)
+            else if (!temp->next)
             {
-                close(fd[1]);
-                if (!check_cmd(info, temp->cmd[0]))
+                if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    // the cmd is not exist !.    
+                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    return (0);
                 }
-                dup2(fd[0], 0);
-                close(fd[0]);
-                if (check_built_cmd(info, *temp) == 0)    
+                close(fd[i - 1][1]);
+                dup2(fd[i - 1][0], 0);
+                close(fd[i - 1][0]);
+                if (check_built_cmd(info, *temp) == 0)
                     execve(info->current_path, temp->cmd, info->env);
+                else
+                    exit(0);
             }
-            else // bettwen first and last there is a (read & write operation) . 
+            else
             {
-                if (!check_cmd(info, temp->cmd[0]))
+                if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    // the cmd is not exist !.    
+                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    return (0);
                 }
-                dup2(fd[0], 0);
-                dup2(fd[1], 1);
-                close(fd[0]);
-                close(fd[1]);
-                if (check_built_cmd(info, *temp) == 0)    
+                dup2(fd[i - 1][0], 0);
+                close(fd[i -1][0]);
+                dup2(fd[i][1], 1);
+                close(fd[i][1]);
+                if (check_built_cmd(info, *temp) == 0)
                     execve(info->current_path, temp->cmd, info->env);
+                else
+                    exit(0);
             }
         }
         else
         {
-            int status;
-            wait(&status);
+            if (i == 0)
+                close(fd[i][1]);
+            else if (!temp->next)
+                close(fd[i -1][0]);
+            else
+            {
+                close(fd[i - 1][0]);
+                close(fd[i][1]);
+            }
+            int st;
+            wait(&st);
         }
         i++;
         temp = temp->next;
    }
-   //printf("pipe is done 111111111111111111111111111111111111111111\n");
+    return (0);
 }

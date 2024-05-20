@@ -82,9 +82,9 @@ void chenge(t_input **list)
 			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'')
 			{
 				tmp = (*list)->cmd[j];
-				if(ft_strchr((*list)->cmd[j],'$') == 1)
-					(*list)->cmd[j] = expande((*list)->cmd[j],len((*list)->cmd[j]));
-				else
+				// if(ft_strchr((*list)->cmd[j],'$') == 1)
+				// 	(*list)->cmd[j] = expande((*list)->cmd[j],len((*list)->cmd[j]));
+				// else
 					(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
 				free(tmp);
 				break ;
