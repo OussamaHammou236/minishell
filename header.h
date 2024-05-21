@@ -80,7 +80,7 @@ char **ft_mini_split(char *str,char sp);
 int edit_line(char *str);
 char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
-void command(char *line,t_input **list);
+void command(char *line,t_input **list,t_data *info);
 int check_syntax_error(t_data data);
 int check_tocken(char *str,t_input **list,int flag);
 #endif

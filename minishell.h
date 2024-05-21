@@ -54,5 +54,5 @@ int cont_words(char *str,char sp);
 char *set_spase(char *str);
 int check_tocken(char *str,t_input **list,int flag);
 int check_syntax_error(t_data data);
-void expande(char *str,t_data *info);
+void expande(char *str,t_data *info,t_data *data);
 #endif

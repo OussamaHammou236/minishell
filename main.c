@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **env)
         tm = NULL;
        	if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0))
 		{
-			command(data.str,&tm);
+			command(data.str,&tm,&info);
 			// info.input = *tm;
 			// if (check_input(&info) == -1)
 			// {

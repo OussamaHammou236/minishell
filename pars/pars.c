@@ -30,7 +30,7 @@ int len(char *str)
 	}
 	return data.len;
 }
-char *change_cmd(char *str,int len)
+char *change_cmd(char *str,int len,t_data *info)
 {
 	t_data data;	
 	data.flag = DOUBLE_Q_OFF;
@@ -57,7 +57,7 @@ char *change_cmd(char *str,int len)
 		if (data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
 			data.flag1 = SINGLE_Q_OFF;
 		if(str[data.i] == '$')
-			expande(str,&data);
+			expande(str,&data,info);
 		if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
@@ -68,7 +68,7 @@ char *change_cmd(char *str,int len)
 	return data.str;
 }
 
-void chenge(t_input **list)
+void chenge(t_input **list,t_data *info)
 {
 	int j;
 	int i;
@@ -82,10 +82,7 @@ void chenge(t_input **list)
 			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\''|| (*list)->cmd[j][i] == '$' )
 			{
 				tmp = (*list)->cmd[j];
-				// if(ft_strchr((*list)->cmd[j],'$') == 1)
-				// 	(*list)->cmd[j] = expande((*list)->cmd[j],len((*list)->cmd[j]));
-				// else
-					(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]));
+				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]),info);
 				free(tmp);
 				break ;
 			}
@@ -95,7 +92,7 @@ void chenge(t_input **list)
 	}
 }
 
-void command(char *line,t_input **list)
+void command(char *line,t_input **list,t_data *info)
 {
 	int i;
 	int j;
@@ -109,7 +106,7 @@ void command(char *line,t_input **list)
 	{
 		node = ft_lstnew(ft_mini_split(cmd[j],' '));
 		check_tocken(cmd[j],&node,1);
-		chenge(&node);
+		chenge(&node,info);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;

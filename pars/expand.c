@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
   
-void expande(char *str,t_data *info)
+void expande(char *str,t_data *info,t_data *data)
 {
 	int i;
 	char *s;
@@ -20,6 +20,13 @@ void expande(char *str,t_data *info)
 	i = 0;
 	while(str[info->i + i] != ' ' && str[info->i + i] != '"' && str[info->i + i] != '\'' && str[info->i + i] != '\0')
 		i++;
-	s = ft_substr(str,info->i,i);
-	printf("%s\n",s);
+	s = ft_substr(str + 1,info->i,i);
+	data->i = 0;
+	while(data->env[data->i])
+	{
+		if(ft_strncmp(s,data->env[data->i],i - 1) == 0)
+			printf("%s\n",data->env[data->i]);
+		// printf("%s\n",data->env[data->i]);
+		data->i++;
+	}
 }
