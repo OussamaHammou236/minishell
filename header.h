@@ -47,6 +47,8 @@ typedef struct t_data{
 	char **cmd;
 	int *tab;
 	int j;
+	char *src;
+	int f;
 }t_data;
 
 

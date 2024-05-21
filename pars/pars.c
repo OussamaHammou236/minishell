@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/18 20:32:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:20:12 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char *change_cmd(char *str,int len,t_data *info)
 	t_data data;	
 	data.flag = DOUBLE_Q_OFF;
 	data.flag1 = SINGLE_Q_OFF;
-	data.len = 0;
 	data.i = 0;
+	data.j = len;
 	data.str = malloc(len + 1);
 	data.str[len] = '\0';
 	data.len = 0;
@@ -57,7 +57,7 @@ char *change_cmd(char *str,int len,t_data *info)
 		if (data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
 			data.flag1 = SINGLE_Q_OFF;
 		if(str[data.i] == '$')
-			expande(str,&data,info);
+		 	expande(str ,&data ,info);
 		if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
@@ -73,19 +73,21 @@ void chenge(t_input **list,t_data *info)
 	int j;
 	int i;
 	void *tmp;
+	t_data data;
 	j = 0;
 	while((*list)->cmd[j])
 	{
 		i = 0;
 		while((*list)->cmd[j][i])
 		{
-			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\''|| (*list)->cmd[j][i] == '$' )
+			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'' ||(*list)->cmd[j][i] == '$' )
 			{
 				tmp = (*list)->cmd[j];
 				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]),info);
 				free(tmp);
 				break ;
 			}
+			
 			i++;
 		}
 		j++;
@@ -107,6 +109,8 @@ void command(char *line,t_input **list,t_data *info)
 		node = ft_lstnew(ft_mini_split(cmd[j],' '));
 		check_tocken(cmd[j],&node,1);
 		chenge(&node,info);
+		for(int c = 0;node->cmd[c];c++)
+			printf("%s\n",node->cmd[c]);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;
