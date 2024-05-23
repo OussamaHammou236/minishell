@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/21 21:17:57 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:44:52 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int c_len(t_data *data)
 {
 	int i;
-
 	i = 0;
 	while(data->env[data->i][i] != '=')
 		i++;
@@ -27,12 +26,9 @@ void expande(char *str,t_data *info,t_data *data)
 	char *s;
 	char *src;
 	int f;
-	data->f = 0;
 	i = 0;
 	while(str[info->i + i] != ' ' && str[info->i + i] != '"' && str[info->i + i] != '\'' && str[info->i + i] != '\0')
 		i++;
-	if(str[info->i + i] == ' ' && str[info->i + i] == '"')
-		data->f = 1;
 	s = ft_substr(str + 1,info->i,i);
 	data->i = 0;
 	while(data->env[data->i])
@@ -42,13 +38,16 @@ void expande(char *str,t_data *info,t_data *data)
 		if(ft_strncmp(s,src,ft_strlen(src)) == 0)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
-			data->str = malloc(info->j - i + ft_strlen(data->env[data->i]) - f + 1);
-			ft_strlcpy(data->str,info->str,info->len);
+			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
+			data->str[info->j - i + ft_strlen(data->src)] = '\0';
+			printf("->%d\n",info->j - i + ft_strlen(data->src) + 1);
+			ft_strlcpy(data->str,info->str,info->len + 1);
 			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->env[data->i]) - f);
 			free(info->str);
 			info->str = data->str;
 			info->i += i;
-			info->len += ft_strlen(info->str);
+			info->j = info->j - i + ft_strlen(data->src);
+			info->len += ft_strlen(data->src);
 			return ;
 		}
 		free(src);
