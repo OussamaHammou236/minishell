@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/23 18:44:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:52:35 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char *change_cmd(char *str,int len,t_data *info)
 			data.flag1 = SINGLE_Q_ON;
 			data.i++;
 		}
-		if(str[data.i] == '$')
+		if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
 		  	expande(str ,&data ,info);
 		if (data.flag == DOUBLE_Q_ON && str[data.i] == '"')
 			data.flag = DOUBLE_Q_OFF;

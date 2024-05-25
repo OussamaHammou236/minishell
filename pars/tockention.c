@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/21 15:57:40 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:15:00 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int check(t_data *data)
 		return -1;
 	while(data->i < data->len)
 	{
-		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP&& data->tab[data->i + 1] != WORD)
+		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
 			return -1;
 		data->i++;
 	}
