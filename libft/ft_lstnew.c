@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:17:09 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/25 16:35:51 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:29:09 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ t_input	*ft_lstnew(char **content)
 	node = malloc(sizeof(t_input));
 	if (!node)
 		return (NULL);
-	node->cmd = content;
-	node->type = 0;
+	//node->cmd = content;
 	node->next = 0x0;
 	return (node);
 }

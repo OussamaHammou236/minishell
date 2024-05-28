@@ -12,47 +12,15 @@
 
 int main(int argc, char **argv, char **env)
 {
-    int fd[2];
-    pipe(fd);
-
-    int i = 0;
-
-    while (i < 2)
-    {
-        int id = fork();
-
-        if (!id)
-        {
-            if (i == 0)
-            {
-                close(fd[0]);
-                dup2(fd[1], 1);
-                printf("whatever");
-                close(fd[1]);
-            }
-            else
-            {
-                close(fd[1]);
-                char buff[200];
-                read(fd[0], buff, 200);
-                printf("%s12\n", buff);
-                close(fd[0]);
-            }
-            exit(0);
-        }
-        else
-        {
-            int st;
-            wait(&st);
-            if (i == 2)
-            {
-                close(fd[1]);
-                close(fd[0]);
-            }
-        }
-        i++;
-    }
+	char *cmd[2];
+	cmd[0] = "ls";
+	cmd[1] = ">>";
+	cmd[2] = "der";
+	cmd[3] = NULL;
 
   
 }
 
+//ls -l > out 
+// type
+// out

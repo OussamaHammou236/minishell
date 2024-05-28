@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/24 20:52:35 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:54:16 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,38 @@ char *change_cmd(char *str,int len,t_data *info)
 	return data.str;
 }
 
-void chenge(t_input **list,t_data *info)
+void chenge(t_input **list,t_data *info,char **cmd)
 {
 	int j;
 	int i;
 	void *tmp;
 	t_data data;
+	data.i = 0;
+	data.j = 0;
 	j = 0;
-	while((*list)->cmd[j])
+	while(cmd[j])
 	{
 		i = 0;
-		while((*list)->cmd[j][i])
+		while(cmd[j][i])
 		{
-			if((*list)->cmd[j][i] == '"' || (*list)->cmd[j][i] == '\'' ||(*list)->cmd[j][i] == '$' )
+			if((cmd[j][i] == '>' || cmd[j][i] == '<') && cmd[j + 1])
 			{
-				tmp = (*list)->cmd[j];
-				(*list)->cmd[j] = change_cmd((*list)->cmd[j],len((*list)->cmd[j]),info);
-				free(tmp);
-				break ;
+				(*list)->red[data.i] = ft_strdup(cmd[j]);
+				(*list)->red[data.i + 1] =  ft_strdup(change_cmd(cmd[j + 1],len(cmd[j + 1]),info));
+				free(cmd[j]);
+				j++;
+				data.i += 2;
+				break;
 			}
-			i++;
+			else
+			{
+				(*list)->cmd[data.j] = ft_strdup(change_cmd(cmd[j],len(cmd[j]),info));
+				data.j++;
+				break;
+			}
+			 i++;
 		}
+		free(cmd[j]);
 		j++;
 	}
 }
@@ -107,12 +118,16 @@ void command(char *line,t_input **list,t_data *info)
 	cmd = ft_mini_split(line,'|');
 	while(cmd[j])
 	{
-		node = ft_lstnew(ft_mini_split(cmd[j],' '));
+		node = ft_lstnew(cmd);
 		check_tocken(cmd[j],&node,1);
-		chenge(&node,info);
+		chenge(&node,info,ft_mini_split(cmd[j],' '));
+		// //printf("[%s]\n", node->cmd[0]);
 		for(int c = 0;node->cmd[c];c++)
 			printf("%s\n",node->cmd[c]);
-		ft_lstadd_back(list,node);
+		printf("-----------reds---------------\n");
+		for(int b = 0;node->red[b];b++)
+		  	printf("'%s'\n",node->red[b]);
+		//ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;
 	}

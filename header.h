@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/05/27 17:43:25 by ohammou-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # ifndef HEADER_H
 # define HEADER_H
 
@@ -17,11 +29,12 @@ struct t_flags
 
 typedef struct s_input
 {
-	char **cmd;	
+	char **cmd;
+	char **red;
 	int *type;
 	struct s_input *next;	
 } t_input;
-
+//ls > out > akdk > kckck >> dcc
 typedef struct s_trash
 {
 	void *adr;
@@ -48,6 +61,7 @@ typedef struct t_data{
 	int *tab;
 	int j;
 	char *src;
+	char *s;
 	int f;
 }t_data;
 

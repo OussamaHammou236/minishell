@@ -24,7 +24,7 @@ int main(int argc, char **argv, char **env)
 				// {
 				// 	printf("minishell: command not found: %s\n", info.input.cmd[0]);
 				// }
-				info.flags.is_builtin_cmd = 0;
+				//info.flags.is_builtin_cmd = 0;
 			}
 			else
 				printf("syntax error\n");
