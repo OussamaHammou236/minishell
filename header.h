@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/27 17:43:25 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:46:52 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 struct t_flags
 {
     int is_builtin_cmd; 
+
+	int fd_stdout;
+	int fd_stdin;
+
+	int	dup_stdout_used;
+	int dup_stdin_used;
+
 };
 
 typedef struct s_input
@@ -65,6 +72,12 @@ typedef struct t_data{
 	int f;
 }t_data;
 
+# define PIP 1
+# define WORD 2
+# define IN_F 3
+# define OUT_F 4
+# define RE_INF 5
+# define RE_OUTF 6
 
 
 size_t	ft_strlen(const char *str);
@@ -91,6 +104,8 @@ void    run_unset(t_data *info, t_input temp);
 void    run_exit();
 int    pipe_time(t_data *info);
 int check_built_cmd(t_data *info, t_input temp);
+int    rediction(t_data *info, t_input temp);
+
 
 char **ft_mini_split(char *str,char sp);
 int edit_line(char *str);

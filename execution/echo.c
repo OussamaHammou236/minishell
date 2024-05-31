@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 void    run_echo(t_data *info, t_input temp)
 {

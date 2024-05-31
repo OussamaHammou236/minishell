@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 int    pipe_time(t_data *info)
 {
@@ -17,49 +17,68 @@ int    pipe_time(t_data *info)
         {
             if (i == 0)
             { 
-                if (check_cmd(info, temp->cmd[0]) == 0)
-                {
-                    printf("minishell: command not found: %s\n", temp->cmd[0]);
-                    return (0);
-                }
                 close(fd[i][0]);
                 dup2(fd[i][1], 1);
                 close(fd[i][1]);
-                if (check_built_cmd(info, *temp) == 0)
-                    execve(info->current_path, temp->cmd, info->env);
-                else
+                // -- //
+                if (rediction(info, *temp) == -1)
                     exit(0);
+                // -- //
+                if (!(*temp).cmd[0])
+                    exit(0);
+                // ------ //
+                if (check_built_cmd(info, *temp) == 1)
+                    exit(0);
+                if (check_cmd(info, temp->cmd[0]) == 0)
+                {
+                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    return (0);
+                }
+                execve(info->current_path, temp->cmd, info->env);
+
             }
             else if (!temp->next)
             {
-                if (check_cmd(info, temp->cmd[0]) == 0)
-                {
-                    printf("minishell: command not found: %s\n", temp->cmd[0]);
-                    return (0);
-                }
                 close(fd[i - 1][1]);
                 dup2(fd[i - 1][0], 0);
                 close(fd[i - 1][0]);
-                if (check_built_cmd(info, *temp) == 0)
-                    execve(info->current_path, temp->cmd, info->env);
-                else
+                 // -- //
+                if (rediction(info, *temp) == -1)
                     exit(0);
-            }
-            else
-            {
+                // -- //
+                if (!(*temp).cmd[0])
+                    exit(0);
+                // --//
+                if (check_built_cmd(info, *temp) == 1)
+                    exit(0);
                 if (check_cmd(info, temp->cmd[0]) == 0)
                 {
                     printf("minishell: command not found: %s\n", temp->cmd[0]);
                     return (0);
                 }
+                execve(info->current_path, temp->cmd, info->env);
+            }
+            else
+            {
                 dup2(fd[i - 1][0], 0);
                 close(fd[i -1][0]);
                 dup2(fd[i][1], 1);
                 close(fd[i][1]);
-                if (check_built_cmd(info, *temp) == 0)
-                    execve(info->current_path, temp->cmd, info->env);
-                else
+                // -- //
+                if (rediction(info, *temp) == -1)
                     exit(0);
+                // -- //
+                if (!(*temp).cmd[0])
+                    exit(0);
+                // --//
+                 if (check_built_cmd(info, *temp) == 1)
+                    exit(0);
+                if (check_cmd(info, temp->cmd[0]) == 0)
+                {
+                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    return (0);
+                }
+                execve(info->current_path, temp->cmd, info->env);
             }
         }
         else

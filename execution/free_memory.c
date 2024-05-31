@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 void    ft_free_env(t_data *info, int len)
 {

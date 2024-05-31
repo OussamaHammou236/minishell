@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 char *get_home(t_data *info)
 {

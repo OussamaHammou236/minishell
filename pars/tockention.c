@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tockention.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/28 17:52:35 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:51:53 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int check_tocken(char *str,t_input **list,int flag)
 		(*list)->cmd = malloc((data.i - (data.j * 2) + 1) * sizeof(char *));
 		(*list)->cmd[data.i - (data.j * 2)] = NULL;
 		(*list)->red[(data.j * 2)] = NULL;
-		printf("cmd:%d   red:%d\n",data.i - (data.j * 2),(data.j * 2));
+		// printf("cmd:%d   red:%d\n",data.i - (data.j * 2),(data.j * 2));
 	}
 	if(check(&data) == -1)
 		return -1;

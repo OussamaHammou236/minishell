@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 static int	is_separator(char c, char x)
 {

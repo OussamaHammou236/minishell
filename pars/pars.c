@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/28 17:54:16 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:52:19 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ void command(char *line,t_input **list,t_data *info)
 		check_tocken(cmd[j],&node,1);
 		chenge(&node,info,ft_mini_split(cmd[j],' '));
 		// //printf("[%s]\n", node->cmd[0]);
-		for(int c = 0;node->cmd[c];c++)
-			printf("%s\n",node->cmd[c]);
-		printf("-----------reds---------------\n");
-		for(int b = 0;node->red[b];b++)
-		  	printf("'%s'\n",node->red[b]);
-		//ft_lstadd_back(list,node);
+		// for(int c = 0;node->cmd[c];c++)
+		// 	printf("%s\n",node->cmd[c]);
+		// printf("-----------reds---------------\n");
+		// for(int b = 0;node->red[b];b++)
+		//   	printf("'%s'\n",node->red[b]);
+		ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;
 	}

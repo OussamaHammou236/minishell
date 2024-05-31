@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 int     check_equality(char *str1_env , char *variable)
 {

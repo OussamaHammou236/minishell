@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 int     check_correct_arg(char *str) // -1 for error , 1 for correct , 0 for skip.
 {

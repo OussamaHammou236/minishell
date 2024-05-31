@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 char	*ft_strdup(const char *src)
 {

@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 char    *make_path(char *path, char *input)
 {
@@ -77,11 +77,17 @@ int get_number_cmd(t_data *info)
 
 int     check_input(t_data *info)
 {
-
     info->number_cmd = get_number_cmd(info);
 
     if (info->number_cmd == 1)
     {
+        if (info->input.red[0])
+        {
+            if (rediction(info, info->input) == -1)
+                return (0);
+        }
+        if (!info->input.cmd[0])
+            return (0);
         if (check_built_cmd(info, info->input) == 1)
             info->flags.is_builtin_cmd = 1;
         else if (check_cmd(info, info->input.cmd[0]) == 1)
@@ -90,9 +96,7 @@ int     check_input(t_data *info)
             return (-1);
     }
     else
-    {
         return (pipe_time(info));
-    }
     return (0);
 
 

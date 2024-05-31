@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 void    run_cmd(t_data *info, char **cmd)
 {

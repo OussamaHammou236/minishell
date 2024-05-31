@@ -12,6 +12,8 @@
 
 #include "../minishell.h"
 
+//int g_i;
+
 int c_len(t_data *data)
 {
 	int i;
@@ -67,11 +69,15 @@ void expande(char *str,t_data *info,t_data *data)
 
 	i = 0;
 	data->i = 0;
-	while(str[info->i + i] != ' ' && str[info->i + i] != '"' && str[info->i + i] != '\'' && str[info->i + i] != '\0')
+	if(str[info->i + 1])
 		i++;
-	if(str[info->i + i] == ' ' || str[info->i + i] == '"' || str[info->i + i] == '\'')
+	while((str[info->i + i] > 'a' &&  str[info->i + i] < 'z') || (str[info->i + i] > 'A' &&  str[info->i + i] < 'Z') ||
+		(str[info->i + i] > '0' &&  str[info->i + i] < '9'))
+			i++;
+	if(str[info->i + i] != '\0')
 		s = ft_substr(str + 1,info->i,i - 1);
 	else
 		s = ft_substr(str + 1,info->i,i);
-	etc_of_expande(data,info,i,s);
+	if(s[0])
+		etc_of_expande(data,info,i,s);
 }

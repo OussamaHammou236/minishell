@@ -1,9 +1,14 @@
-#include "header.h"
+#include "../header.h"
 
 void    initialization(t_data *info)
 {
     info->flags.is_builtin_cmd = 0;
     info->number_cmd = 0;
+
+    info->flags.fd_stdout = dup(1);
+    info->flags.fd_stdin = dup(0);
+    info->flags.dup_stdin_used = 0;
+    info->flags.dup_stdout_used = 0;
 
 }
 
@@ -50,7 +55,9 @@ void    extract_path(char **env, t_data *info)
 int cmp_str(char *str1, char *str2)
 {
     int i = 0;
-
+    
+    if (!str1 || !str2)
+        return (0);
     while (str1[i] || str2[i])
     {
         if (str1[i] != str2[i])

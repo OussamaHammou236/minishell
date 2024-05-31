@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 void    run_env(t_data *info, t_input temp)
 {
