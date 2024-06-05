@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/04 20:32:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/06/05 21:02:04 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ int len(char *str)
 	data.flag1 = SINGLE_Q_OFF;
 	data.len = 0;
 	data.i = 0;
-	while(str[data.i])
+	while(1)
 	{
 		double_single_Q(&data,str[data.i]);
 		if ((data.flag1 == SINGLE_Q_ON && str[data.i] == '\'') ||  (data.flag == DOUBLE_Q_ON && str[data.i] == '"'))
 			data.i++;
+		if(!str[data.i])
+			break ;
 		if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\''))
 			data.len++;
 		data.i++;
@@ -38,7 +40,7 @@ char *change_cmd(char *str,int len,t_data *info)
 	data.i = 0;
 	data.j = len;
 	data.str = malloc(len + 1);
-	data.str[len] = '\0';
+	ft_bzero(data.str,len + 1);
 	data.len = 0;
 	while(1)
 	{
@@ -57,6 +59,7 @@ char *change_cmd(char *str,int len,t_data *info)
 	return data.str;
 }
 
+
 void etc_change(t_input **list,t_data *info,char **cmd,t_data *data)
 {
 	int i;
@@ -67,7 +70,7 @@ void etc_change(t_input **list,t_data *info,char **cmd,t_data *data)
 		if((cmd[data->len][i] == '>' || cmd[data->len][i] == '<') && cmd[data->len + 1])
 		{
 			(*list)->red[data->i] = ft_strdup(cmd[data->len]);
-			(*list)->red[data->i + 1] =  ft_strdup(change_cmd(cmd[data->len + 1],len(cmd[data->len + 1]),info));
+			(*list)->red[data->i + 1] =  change_cmd(cmd[data->len + 1],len(cmd[data->len + 1]),info);
 			free(cmd[data->len]);
 			data->len++;
 			data->i += 2;
@@ -75,7 +78,7 @@ void etc_change(t_input **list,t_data *info,char **cmd,t_data *data)
 		}
 		else
 		{
-			(*list)->cmd[data->j] = ft_strdup(change_cmd(cmd[data->len],len(cmd[data->len]),info));
+			(*list)->cmd[data->j] = change_cmd(cmd[data->len],len(cmd[data->len]),info);
 			data->j++;
 			return ;
 		}
@@ -113,7 +116,8 @@ void command(char *line,t_input **list,t_data *info)
 		node = ft_lstnew(cmd);
 		check_tocken(cmd[j],&node,1);
 		change(&node,info,ft_mini_split(cmd[j],' '));
-		// //printf("[%s]\n", node->cmd[0]);
+		// printf("[%s]\n", node->cmd[0]);
+		printf("-----------cmd---------------\n");
 		for(int c = 0;node->cmd[c];c++)
 			printf("%s\n",node->cmd[c]);
 		printf("-----------reds---------------\n");

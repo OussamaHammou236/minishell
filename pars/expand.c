@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/04 21:12:21 by marvin           ###   ########.fr       */
+/*   Updated: 2024/06/05 21:51:26 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ void etc_of_expande(t_data *data,t_data *info,int i,char *s)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
-			data->str[info->j - i + ft_strlen(data->src)] = '\0';
+			ft_bzero(data->str,info->j - i + ft_strlen(data->src)  + 1);
 			ft_strlcpy(data->str,info->str,info->len + 1);
 			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->env[data->i]) - f);
-			free(info->str);
 			info->str = data->str;
 			info->i += i;
 			info->j = info->j - i + ft_strlen(data->src);
 			info->len += ft_strlen(data->src);
-			return ;
+			return (free(info->str));
 		}
 		free(src);
 		data->i++;
@@ -100,6 +99,8 @@ void expande(char *str,t_data *info,t_data *data)
 		s = ft_substr(str + 1,info->i,i - 1);
 	else
 		s = ft_substr(str + 1,info->i,i);
-	if(s[0])
+	if ((str[info->i + 1] == '"' || str[info->i + 1] == '\'') && info->flag == DOUBLE_Q_OFF)
+		info->i++;
+	else if (s[0])
 		etc_of_expande(data,info,i,s);
 }

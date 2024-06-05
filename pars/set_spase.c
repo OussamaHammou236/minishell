@@ -101,7 +101,7 @@ char *set_spase(char *str)
 	data.flag1 = SINGLE_Q_OFF;
 	data.len = edit_line(str);
 	data.str = malloc(data.len + 1);
-	data.str[data.len] = '\0';
+	ft_bzero(data.str,data.len + 1);
 	data.len = 0;
 	while(str[data.i])
 	{

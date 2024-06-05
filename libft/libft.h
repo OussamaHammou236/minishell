@@ -27,6 +27,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 t_input	*ft_lstnew(char **content);
 t_input	*ft_lstlast(t_input *lst);
 void	ft_lstadd_back(t_input **lst, t_input *new);
-;char	*ft_itoa(int n);
+char	*ft_itoa(int n);
+void	ft_bzero(void *s, size_t n);
 
 #endif
