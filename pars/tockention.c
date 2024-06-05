@@ -59,6 +59,8 @@ int check_tocken(char *str,t_input **list,int flag)
 {
 	t_data data;
 	data.len = cont_words(str,' ');
+	if(data.len == 0)
+		return 1;
 	data.tab = (int *)malloc(data.len * sizeof(int));
 	data.j = 0;
 	tockention(str,&data);
@@ -69,7 +71,6 @@ int check_tocken(char *str,t_input **list,int flag)
 		(*list)->cmd = malloc((data.i - (data.j * 2) + 1) * sizeof(char *));
 		(*list)->cmd[data.i - (data.j * 2)] = NULL;
 		(*list)->red[(data.j * 2)] = NULL;
-		// printf("cmd:%d   red:%d\n",data.i - (data.j * 2),(data.j * 2));
 	}
 	if(check(&data) == -1)
 		return -1;

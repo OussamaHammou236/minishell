@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/30 16:52:19 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:32:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,12 @@ char *change_cmd(char *str,int len,t_data *info)
 	data.len = 0;
 	while(1)
 	{
-		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '"')
-		{
-			data.flag = DOUBLE_Q_ON;
-			data.i++;
-		}
-		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '\'')
-		{
-			data.flag1 = SINGLE_Q_ON;
-			data.i++;
-		}
+		double_single_Q(&data,str[data.i]);
 		if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
 		  	expande(str ,&data ,info);
-		if (data.flag == DOUBLE_Q_ON && str[data.i] == '"')
-			data.flag = DOUBLE_Q_OFF;
-		if (data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
-			data.flag1 = SINGLE_Q_OFF;
 		if(str[data.i] == '\0')
 			break ;
-		if((data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON || (str[data.i] != '"' &&  str[data.i] != '\'')))
+		if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
 			data.len++;
@@ -70,39 +57,44 @@ char *change_cmd(char *str,int len,t_data *info)
 	return data.str;
 }
 
-void chenge(t_input **list,t_data *info,char **cmd)
+void etc_change(t_input **list,t_data *info,char **cmd,t_data *data)
 {
-	int j;
+	int i;
+
+	i = 0;
+	while(cmd[data->len][i])
+	{
+		if((cmd[data->len][i] == '>' || cmd[data->len][i] == '<') && cmd[data->len + 1])
+		{
+			(*list)->red[data->i] = ft_strdup(cmd[data->len]);
+			(*list)->red[data->i + 1] =  ft_strdup(change_cmd(cmd[data->len + 1],len(cmd[data->len + 1]),info));
+			free(cmd[data->len]);
+			data->len++;
+			data->i += 2;
+			return ;
+		}
+		else
+		{
+			(*list)->cmd[data->j] = ft_strdup(change_cmd(cmd[data->len],len(cmd[data->len]),info));
+			data->j++;
+			return ;
+		}
+		i++;
+	}
+}
+void change(t_input **list,t_data *info,char **cmd)
+{
 	int i;
 	void *tmp;
 	t_data data;
 	data.i = 0;
 	data.j = 0;
-	j = 0;
-	while(cmd[j])
+	data.len = 0;
+	while(cmd[data.len])
 	{
-		i = 0;
-		while(cmd[j][i])
-		{
-			if((cmd[j][i] == '>' || cmd[j][i] == '<') && cmd[j + 1])
-			{
-				(*list)->red[data.i] = ft_strdup(cmd[j]);
-				(*list)->red[data.i + 1] =  ft_strdup(change_cmd(cmd[j + 1],len(cmd[j + 1]),info));
-				free(cmd[j]);
-				j++;
-				data.i += 2;
-				break;
-			}
-			else
-			{
-				(*list)->cmd[data.j] = ft_strdup(change_cmd(cmd[j],len(cmd[j]),info));
-				data.j++;
-				break;
-			}
-			 i++;
-		}
-		free(cmd[j]);
-		j++;
+		etc_change(list,info,cmd,&data);
+		free(cmd[data.len]);
+		data.len++;
 	}
 }
 
@@ -120,13 +112,13 @@ void command(char *line,t_input **list,t_data *info)
 	{
 		node = ft_lstnew(cmd);
 		check_tocken(cmd[j],&node,1);
-		chenge(&node,info,ft_mini_split(cmd[j],' '));
+		change(&node,info,ft_mini_split(cmd[j],' '));
 		// //printf("[%s]\n", node->cmd[0]);
-		// for(int c = 0;node->cmd[c];c++)
-		// 	printf("%s\n",node->cmd[c]);
-		// printf("-----------reds---------------\n");
-		// for(int b = 0;node->red[b];b++)
-		//   	printf("'%s'\n",node->red[b]);
+		for(int c = 0;node->cmd[c];c++)
+			printf("%s\n",node->cmd[c]);
+		printf("-----------reds---------------\n");
+		for(int b = 0;node->red[b];b++)
+		  	printf("'%s'\n",node->red[b]);
 		ft_lstadd_back(list,node);
 		free(cmd[j]);
 	 	j++;

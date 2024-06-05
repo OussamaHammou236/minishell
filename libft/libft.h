@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/04/25 16:49:27 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:09:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 t_input	*ft_lstnew(char **content);
 t_input	*ft_lstlast(t_input *lst);
 void	ft_lstadd_back(t_input **lst, t_input *new);
+;char	*ft_itoa(int n);
 
 #endif

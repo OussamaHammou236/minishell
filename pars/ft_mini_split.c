@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mini_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/14 15:11:14 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:14:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,28 @@
 
 int cont_words(char *str,char sp)
 {
-	int i;
-	int j;
-	int flag;
+	t_data data;
 
-	i = 0;
-	j = 0;
-	flag = DOUBLE_Q_OFF;
-	int flag2 = SINGLE_Q_OFF;
-	while(str[i])
+	data.i = 0;
+	data.j = 0;
+	data.flag = DOUBLE_Q_OFF;
+	data.flag1 = SINGLE_Q_OFF;
+	while(str[data.i])
 	{
-		if(str[i] && str[i] != sp)
+		if(str[data.i] && str[data.i] != sp)
 		{
-			if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF)
-				j++;
-			while(str[i] && str[i] != sp)
+			if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF)
+				data.j++;
+			while(str[data.i] && str[data.i] != sp)
 			{
-				if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == '"')
-				{
-					flag = DOUBLE_Q_ON;
-					i++;
-				}
-				if(flag == DOUBLE_Q_ON && str[i] == '"')
-					flag = DOUBLE_Q_OFF;
-				if(flag == DOUBLE_Q_OFF && flag2 == SINGLE_Q_OFF && str[i] == 39)
-				{
-					flag2 = SINGLE_Q_ON;
-					i++;
-				}
-				if(flag2 == SINGLE_Q_ON && str[i] == 39)
-					flag2 = SINGLE_Q_OFF;
-				i++;
+				double_single_Q(&data,str[data.i]);
+				data.i++;
 			}
 		}
 		else
-			i++;
+			data.i++;
 	}
-	return j;
+	return data.j;
 }
 
 int len_of_words(char *str,char sp)

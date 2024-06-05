@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/25 20:33:21 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:12:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,23 @@ void etc_of_expande(t_data *data,t_data *info,int i,char *s)
 	}
 	not_find(info,data,i);
 }
+
+void expqnd_status_exit(t_data *info)
+{
+	t_data data;
+
+	info->nb = 50;
+	data.src = ft_itoa(info->nb);
+	data.str = malloc(info->j - 2 + ft_strlen(data.src) + 1);
+	data.str[info->j - 2 + ft_strlen(data.src)] = '\0';
+	ft_strlcpy(data.str,info->str,info->len + 1);
+	ft_strlcat(data.str,data.src,info->len + ft_strlen(data.src) + 1);
+	free(info->str);
+	info->str = data.str;
+	info-> i += 2;
+	info->j = info->j - 2 + ft_strlen(data.src);
+	info->len += ft_strlen(data.src);
+}
 void expande(char *str,t_data *info,t_data *data)
 {
 	int i;
@@ -71,6 +88,11 @@ void expande(char *str,t_data *info,t_data *data)
 	data->i = 0;
 	if(str[info->i + 1])
 		i++;
+	if(str[info->i + 1] == '?')
+	{
+		expqnd_status_exit(info);
+		return ;
+	}
 	while((str[info->i + i] > 'a' &&  str[info->i + i] < 'z') || (str[info->i + i] > 'A' &&  str[info->i + i] < 'Z') ||
 		(str[info->i + i] > '0' &&  str[info->i + i] < '9'))
 			i++;
