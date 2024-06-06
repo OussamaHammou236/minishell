@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/04 21:07:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/06/06 18:01:56 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct t_data{
 size_t	ft_strlen(const char *str);
 char	**ft_split(char const *s, char c);
 int     cmp_str_env(char *str1, const char *str2, int len_str2);
-void    extract_path(char **env, t_data *info);
+void    extract_path(char **env, t_data *info,t_trash **trash);
 char    *make_path(char *path, char *input);
 int check_cmd(t_data *info, char *input);
 int     check_input(t_data *info);
@@ -97,7 +97,7 @@ int cmp_str(char *str1, char *str2);
 void    run_echo(t_data *info, t_input temp);
 void    run_pwd(t_data *info, t_input temp);
 void    run_env(t_data *info, t_input temp);
-char **duplacte_env(char **env);
+char    **duplacte_env(char **env,t_trash **trash);
 char	*ft_strdup(const char *src);
 void    run_export(t_data *info, t_input temp);
 void    ft_free_env(t_data *info, int len);
@@ -108,11 +108,13 @@ int check_built_cmd(t_data *info, t_input temp);
 int    rediction(t_data *info, t_input temp);
 
 
-char **ft_mini_split(char *str,char sp);
+char **ft_mini_split(char *str,char sp,t_trash **trash);
 int edit_line(char *str);
 char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
-void command(char *line,t_input **list,t_data *info);
+void command(char *line,t_input **list,t_data *info,t_trash **trash);
 int check_syntax_error(t_data data);
-int check_tocken(char *str,t_input **list,int flag);
+int check_tocken(char *str,t_input **list,int flag,t_trash **trash);
+void free_trash(t_trash **trash);
+void add_to_trash(void *adr,t_trash **lst);
 #endif

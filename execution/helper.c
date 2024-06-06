@@ -38,7 +38,7 @@ int get_part_input(t_data *info, t_input temp)
     return (i);
 }
 
-void    extract_path(char **env, t_data *info)
+void    extract_path(char **env, t_data *info,t_trash **trash)
 {
     int i = 0;
     while (env[i])
@@ -46,9 +46,16 @@ void    extract_path(char **env, t_data *info)
         if (cmp_str_env(env[i], "PATH=", 5) == 1)
         {
             info->path = ft_split(&env[i][5], ':');
+            add_to_trash(info->path,trash);
             break ;
         }
         i++;
+    }
+    i = 0;
+    while(info->path[i])
+    {
+       add_to_trash(info->path[i],trash);
+       i++; 
     }
 }
 
@@ -67,7 +74,7 @@ int cmp_str(char *str1, char *str2)
     return (1);
 }
 
-char    **duplacte_env(char **env)
+char    **duplacte_env(char **env,t_trash **trash)
 {
     int     i;
     char    **our_env;
@@ -76,10 +83,12 @@ char    **duplacte_env(char **env)
     while (env[i])
         i++;
     our_env = malloc(sizeof(char*) * (i + 1));
+    add_to_trash(our_env,trash);
     i = 0;
     while (env[i])
     {
         our_env[i] = ft_strdup(env[i]);
+        add_to_trash(our_env[i],trash);
         i++;
     }
     our_env[i] = NULL;

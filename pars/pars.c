@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/05 21:02:04 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:27:05 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int len(char *str)
 	}
 	return data.len;
 }
-char *change_cmd(char *str,int len,t_data *info)
+char *change_cmd(char *str,int len,t_data *info,t_trash **trash)
 {
 	t_data data;	
 	data.flag = DOUBLE_Q_OFF;
@@ -40,13 +40,14 @@ char *change_cmd(char *str,int len,t_data *info)
 	data.i = 0;
 	data.j = len;
 	data.str = malloc(len + 1);
+	add_to_trash(data.str,trash);
 	ft_bzero(data.str,len + 1);
 	data.len = 0;
 	while(1)
 	{
 		double_single_Q(&data,str[data.i]);
 		if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
-		  	expande(str ,&data ,info);
+		  	expande(str ,&data ,info,trash);
 		if(str[data.i] == '\0')
 			break ;
 		if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
@@ -59,33 +60,32 @@ char *change_cmd(char *str,int len,t_data *info)
 	return data.str;
 }
 
-
-void etc_change(t_input **list,t_data *info,char **cmd,t_data *data)
+void etc_change(t_input **list,t_data *info,t_data *data,t_trash **trash)
 {
 	int i;
 
 	i = 0;
-	while(cmd[data->len][i])
+	while(data->cmd[data->len][i])
 	{
-		if((cmd[data->len][i] == '>' || cmd[data->len][i] == '<') && cmd[data->len + 1])
+		if((data->cmd[data->len][i] == '>' || data->cmd[data->len][i] == '<') && data->cmd[data->len + 1])
 		{
-			(*list)->red[data->i] = ft_strdup(cmd[data->len]);
-			(*list)->red[data->i + 1] =  change_cmd(cmd[data->len + 1],len(cmd[data->len + 1]),info);
-			free(cmd[data->len]);
+			(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
+			add_to_trash((*list)->red[data->i],trash);
+			(*list)->red[data->i + 1] =  change_cmd(data->cmd[data->len + 1],len(data->cmd[data->len + 1]),info,trash);
 			data->len++;
 			data->i += 2;
 			return ;
 		}
 		else
 		{
-			(*list)->cmd[data->j] = change_cmd(cmd[data->len],len(cmd[data->len]),info);
+			(*list)->cmd[data->j] = change_cmd(data->cmd[data->len],len(data->cmd[data->len]),info,trash);
 			data->j++;
 			return ;
 		}
 		i++;
 	}
 }
-void change(t_input **list,t_data *info,char **cmd)
+void change(t_input **list,t_data *info,char **cmd,t_trash **trash)
 {
 	int i;
 	void *tmp;
@@ -93,30 +93,29 @@ void change(t_input **list,t_data *info,char **cmd)
 	data.i = 0;
 	data.j = 0;
 	data.len = 0;
+	data.cmd = cmd;
 	while(cmd[data.len])
 	{
-		etc_change(list,info,cmd,&data);
-		free(cmd[data.len]);
+		etc_change(list,info,&data,trash);
 		data.len++;
 	}
 }
 
-void command(char *line,t_input **list,t_data *info)
+void command(char *line,t_input **list,t_data *info,t_trash **trash)
 {
 	int i;
 	int j;
 	char **cmd;
 	char **s;
 	t_input *node;
-	void *tmp;
 	j = 0;
-	cmd = ft_mini_split(line,'|');
+	cmd = ft_mini_split(line,'|',trash);
 	while(cmd[j])
 	{
 		node = ft_lstnew(cmd);
-		check_tocken(cmd[j],&node,1);
-		change(&node,info,ft_mini_split(cmd[j],' '));
-		// printf("[%s]\n", node->cmd[0]);
+		add_to_trash(node,trash);
+		check_tocken(cmd[j],&node,1,trash);
+		change(&node,info,ft_mini_split(cmd[j],' ',trash),trash);
 		printf("-----------cmd---------------\n");
 		for(int c = 0;node->cmd[c];c++)
 			printf("%s\n",node->cmd[c]);
@@ -124,10 +123,8 @@ void command(char *line,t_input **list,t_data *info)
 		for(int b = 0;node->red[b];b++)
 		  	printf("'%s'\n",node->red[b]);
 		ft_lstadd_back(list,node);
-		free(cmd[j]);
 	 	j++;
 	}
-	free(cmd);
 }
 
 // int main(int ac,char **av)

@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/05 18:35:06 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:34:11 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 // ls -la > ls | pwd > out | diff out ls | echo $? | echo $PATH
 
-void  tockention(char *str,t_data *data)
+void  tockention(char *str,t_data *data,t_trash **trash)
 {
 	int i;
 	i = 0;
 	data->i = 0;
-	data->cmd = ft_mini_split(str,' ');
+	data->cmd = ft_mini_split(str,' ',trash);
 	while(data->cmd[i] && data->i < data->len)
 	{
 		if (data->cmd[i][0] == '|')
@@ -55,20 +55,23 @@ int check(t_data *data)
 	return 0;
 }
 
-int check_tocken(char *str,t_input **list,int flag)
+int check_tocken(char *str,t_input **list,int flag,t_trash **trash)
 {
 	t_data data;
 	data.len = cont_words(str,' ');
 	if(data.len == 0)
 		return 1;
 	data.tab = (int *)malloc(data.len * sizeof(int));
+	add_to_trash(data.tab,trash);
 	data.j = 0;
-	tockention(str,&data);
+	tockention(str,&data,trash);
 	if(flag)
 	{
 		(*list)->type = data.tab;
 		(*list)->red = malloc(((data.j * 2) + 1) *  sizeof(char *));
 		(*list)->cmd = malloc((data.i - (data.j * 2) + 1) * sizeof(char *));
+		add_to_trash((*list)->red,trash);
+		add_to_trash((*list)->cmd,trash);
 		(*list)->cmd[data.i - (data.j * 2)] = NULL;
 		(*list)->red[(data.j * 2)] = NULL;
 	}

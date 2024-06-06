@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:05:45 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/05/20 18:53:23 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:38:15 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ typedef struct s_list
 #include <sys/wait.h>
 #include <fcntl.h>
 
-char **ft_mini_split(char *str,char sp);
+char **ft_mini_split(char *str,char sp,t_trash **trash);
 int edit_line(char *str);
 char *set_spase(char *str);
 void double_single_Q(t_data *data,char c);
 int cont_words(char *str,char sp);
 char *set_spase(char *str);
-int check_tocken(char *str,t_input **list,int flag);
+int check_tocken(char *str,t_input **list,int flag,t_trash **trash);
 int check_syntax_error(t_data data);
-void expande(char *str,t_data *info,t_data *data);
+void expande(char *str,t_data *info,t_data *data,t_trash **trash);
+void free_trash(t_trash **trash);
+void add_to_trash(void *adr,t_trash **lst);
+void free_trash(t_trash **trash);
 #endif

@@ -4,21 +4,28 @@ int main(int argc, char **argv, char **env)
 {
     t_data info;
     t_data data;
-    info.env = duplacte_env(env);
-    extract_path(env, &info);
+	t_trash *trash = NULL;
+	t_trash *trash1 = NULL;
+    info.env = duplacte_env(env,&trash1);
+    extract_path(env, &info,&trash1);
     initialization(&info);
     t_input *tm;
     while (1)
     {
         char *str = readline("minishell-> ");
+		if(str[0] == '1')
+		{
+			free(str);
+			break;
+		}
         add_history(str);
         tm = NULL;
 		if(str[0])
 		{
         	data.str = set_spase(str);
-			if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0))
+			if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
 			{
-				command(data.str,&tm,&info);
+				command(data.str,&tm,&info,&trash);
 				// info.input = *tm;
 				// if (check_input(&info) == -1)
 				// {
@@ -36,14 +43,16 @@ int main(int argc, char **argv, char **env)
 				// }
 				// info.flags.is_builtin_cmd = 0;
 			}
-			else if (check_tocken(data.str,&tm,0) == 1)
+			else if (check_tocken(data.str,&tm,0,&trash) == 1)
 				continue ;
 			else
 				printf("syntax error\n");
+			 free(data.str);
+			free_trash(&trash);
 		}
 		free(str);
     }
-
+	free_trash(&trash1);
             
 
 }

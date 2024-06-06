@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/05 21:51:26 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:09:19 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ int c_len(t_data *data)
 	return i;
 }
 
-void not_find(t_data *info,t_data *data,int i)
+void not_find(t_data *info,t_data *data,int i,t_trash **trash)
 {
 	data->str = malloc(info->j - i + 1);
+	ft_bzero(data->str,info->j - i + 1);
+	add_to_trash(data->str,trash);
 	ft_strlcpy(data->str,info->str,info->len + 1);
-	free(info->str);
 	info->str = data->str;
-	info->str[info->j - i] = '\0';
 	info->i += i;
 	info->j -= i;
 }
 
-void etc_of_expande(t_data *data,t_data *info,int i,char *s)
+void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 {
 	char *src;
 	int f;
@@ -43,10 +43,12 @@ void etc_of_expande(t_data *data,t_data *info,int i,char *s)
 	{
 		f = c_len(data);
 		src = ft_substr(data->env[data->i],0,f);
-		if(ft_strncmp(s,src,ft_strlen(s)) == 0)
+		add_to_trash(src,trash);
+		if(ft_strncmp(data->s,src,ft_strlen(data->s)) == 0)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
+			add_to_trash(data->str,trash);
 			ft_bzero(data->str,info->j - i + ft_strlen(data->src)  + 1);
 			ft_strlcpy(data->str,info->str,info->len + 1);
 			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->env[data->i]) - f);
@@ -54,34 +56,34 @@ void etc_of_expande(t_data *data,t_data *info,int i,char *s)
 			info->i += i;
 			info->j = info->j - i + ft_strlen(data->src);
 			info->len += ft_strlen(data->src);
-			return (free(info->str));
+			return (free(data->src));;
 		}
-		free(src);
 		data->i++;
 	}
-	not_find(info,data,i);
+	not_find(info,data,i,trash);
 }
 
-void expqnd_status_exit(t_data *info)
+void expand_status_exit(t_data *info,t_trash **trash)
 {
 	t_data data;
 
 	info->nb = 50;
 	data.src = ft_itoa(info->nb);
+	add_to_trash(data.src,trash);
 	data.str = malloc(info->j - 2 + ft_strlen(data.src) + 1);
-	data.str[info->j - 2 + ft_strlen(data.src)] = '\0';
+	ft_bzero(data.str,info->j - 2 + ft_strlen(data.src) + 1);
+	add_to_trash(data.str,trash);
 	ft_strlcpy(data.str,info->str,info->len + 1);
 	ft_strlcat(data.str,data.src,info->len + ft_strlen(data.src) + 1);
-	free(info->str);
 	info->str = data.str;
 	info-> i += 2;
 	info->j = info->j - 2 + ft_strlen(data.src);
 	info->len += ft_strlen(data.src);
 }
-void expande(char *str,t_data *info,t_data *data)
+
+void expande(char *str,t_data *info,t_data *data,t_trash **trash)
 {
 	int i;
-	char *s;
 
 	i = 0;
 	data->i = 0;
@@ -89,18 +91,20 @@ void expande(char *str,t_data *info,t_data *data)
 		i++;
 	if(str[info->i + 1] == '?')
 	{
-		expqnd_status_exit(info);
+		expand_status_exit(info,trash);
 		return ;
 	}
 	while((str[info->i + i] > 'a' &&  str[info->i + i] < 'z') || (str[info->i + i] > 'A' &&  str[info->i + i] < 'Z') ||
 		(str[info->i + i] > '0' &&  str[info->i + i] < '9'))
 			i++;
+	data->i = i;
 	if(str[info->i + i] != '\0')
-		s = ft_substr(str + 1,info->i,i - 1);
+		data->s = ft_substr(str + 1,info->i,i - 1);
 	else
-		s = ft_substr(str + 1,info->i,i);
+		data->s = ft_substr(str + 1,info->i,i);
 	if ((str[info->i + 1] == '"' || str[info->i + 1] == '\'') && info->flag == DOUBLE_Q_OFF)
 		info->i++;
-	else if (s[0])
-		etc_of_expande(data,info,i,s);
+	else if (data->s[0])
+		etc_of_expande(data,info,i,trash);
+	free(data->s);
 }

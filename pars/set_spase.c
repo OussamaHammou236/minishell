@@ -52,6 +52,7 @@ int edit_line(char *str)
 	}
 	return data.len;
 }
+
 int check_syntax_error(t_data data)
 {
 	data.i = 0;
@@ -70,6 +71,7 @@ int check_syntax_error(t_data data)
 		return -1;
 	return 0;
 }
+
 void etc(t_data *data,char *str)
 {
 	if((str[data->i] == '>' && str[data->i + 1] == '>') || (str[data->i] == '<' && str[data->i + 1] == '<'))
@@ -92,6 +94,7 @@ void etc(t_data *data,char *str)
 	else
 		data->str[data->len] = str[data->i];	
 }
+
 char *set_spase(char *str)
 {
 	t_data data;
