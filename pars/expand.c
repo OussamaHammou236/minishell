@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/06 19:09:19 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:57:20 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void not_find(t_data *info,t_data *data,int i,t_trash **trash)
 	add_to_trash(data->str,trash);
 	ft_strlcpy(data->str,info->str,info->len + 1);
 	info->str = data->str;
-	info->i += i;
+	info->i += i -1 ;
 	info->j -= i;
 }
 
@@ -44,7 +44,7 @@ void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 		f = c_len(data);
 		src = ft_substr(data->env[data->i],0,f);
 		add_to_trash(src,trash);
-		if(ft_strncmp(data->s,src,ft_strlen(data->s)) == 0)
+		if(ft_strncmp(data->s,src,ft_strlen(src)) == 0)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
@@ -53,10 +53,10 @@ void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 			ft_strlcpy(data->str,info->str,info->len + 1);
 			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->env[data->i]) - f);
 			info->str = data->str;
-			info->i += i;
+			info->i += i - 1;
 			info->j = info->j - i + ft_strlen(data->src);
 			info->len += ft_strlen(data->src);
-			return (free(data->src));;
+			return (free(data->src));
 		}
 		data->i++;
 	}
@@ -76,7 +76,7 @@ void expand_status_exit(t_data *info,t_trash **trash)
 	ft_strlcpy(data.str,info->str,info->len + 1);
 	ft_strlcat(data.str,data.src,info->len + ft_strlen(data.src) + 1);
 	info->str = data.str;
-	info-> i += 2;
+	info-> i += 1;
 	info->j = info->j - 2 + ft_strlen(data.src);
 	info->len += ft_strlen(data.src);
 }
@@ -90,21 +90,22 @@ void expande(char *str,t_data *info,t_data *data,t_trash **trash)
 	if(str[info->i + 1])
 		i++;
 	if(str[info->i + 1] == '?')
-	{
-		expand_status_exit(info,trash);
-		return ;
-	}
+		return (expand_status_exit(info,trash));
 	while((str[info->i + i] > 'a' &&  str[info->i + i] < 'z') || (str[info->i + i] > 'A' &&  str[info->i + i] < 'Z') ||
 		(str[info->i + i] > '0' &&  str[info->i + i] < '9'))
 			i++;
-	data->i = i;
 	if(str[info->i + i] != '\0')
 		data->s = ft_substr(str + 1,info->i,i - 1);
 	else
 		data->s = ft_substr(str + 1,info->i,i);
 	if ((str[info->i + 1] == '"' || str[info->i + 1] == '\'') && info->flag == DOUBLE_Q_OFF)
-		info->i++;
-	else if (data->s[0])
+		return (free(data->s));
+	if (data->s[0])
 		etc_of_expande(data,info,i,trash);
+	else
+	{
+		info->str[info->len] = '$';
+		info->len++;
+	}
 	free(data->s);
 }

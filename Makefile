@@ -1,7 +1,7 @@
 NAME= minishell
 CC= cc
 #CFLAGS= -Wall -Wextra -Werror
-#CFLAGS= -fsanitize=address -g3
+CFLAGS= -fsanitize=address -g3
 OBJ= pars/pars.c pars/set_spase.c pars/expand.c pars/tockention.c libft/ft_strncmp.c pars/free_trash.c\
 libft/ft_split.c libft/ft_substr.c libft/ft_itoa.c libft/ft_bzero.c libft/ft_strdup.c libft/ft_strlen.c libft/ft_strlcat.c \
 libft/ft_strlcpy.c libft/ft_strjoin.c libft/ft_lstadd_back.c libft/ft_lstlast.c libft/ft_lstnew.c pars/ft_mini_split.c \
@@ -24,4 +24,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY= clean%
+.PHONY= clean

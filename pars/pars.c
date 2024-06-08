@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/06 21:27:05 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:49:47 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,12 @@ char *change_cmd(char *str,int len,t_data *info,t_trash **trash)
 	add_to_trash(data.str,trash);
 	ft_bzero(data.str,len + 1);
 	data.len = 0;
-	while(1)
+	while(str[data.i])
 	{
 		double_single_Q(&data,str[data.i]);
 		if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
 		  	expande(str ,&data ,info,trash);
-		if(str[data.i] == '\0')
-			break ;
-		if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
+		else if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
 			data.len++;
@@ -118,10 +116,10 @@ void command(char *line,t_input **list,t_data *info,t_trash **trash)
 		change(&node,info,ft_mini_split(cmd[j],' ',trash),trash);
 		printf("-----------cmd---------------\n");
 		for(int c = 0;node->cmd[c];c++)
-			printf("%s\n",node->cmd[c]);
+			printf("[%s]\n",node->cmd[c]);
 		printf("-----------reds---------------\n");
 		for(int b = 0;node->red[b];b++)
-		  	printf("'%s'\n",node->red[b]);
+		  	printf("[%s]\n",node->red[b]);
 		ft_lstadd_back(list,node);
 	 	j++;
 	}
