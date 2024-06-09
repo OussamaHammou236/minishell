@@ -47,7 +47,7 @@ int main(int argc, char **argv, char **env)
 				continue ;
 			else
 				printf("syntax error\n");
-			 free(data.str);
+			free(data.str);
 			free_trash(&trash);
 		}
 		free(str);

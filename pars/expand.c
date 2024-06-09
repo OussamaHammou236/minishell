@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/08 16:57:20 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:11:21 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 		f = c_len(data);
 		src = ft_substr(data->env[data->i],0,f);
 		add_to_trash(src,trash);
-		if(ft_strncmp(data->s,src,ft_strlen(src)) == 0)
+		if(ft_strncmp(data->s,src,ft_strlen(src) + 1) == 0)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
