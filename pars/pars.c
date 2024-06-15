@@ -6,11 +6,11 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/08 16:49:47 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:07:21 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../header.h"
 
 int len(char *str)
 {
@@ -46,9 +46,7 @@ char *change_cmd(char *str,int len,t_data *info,t_trash **trash)
 	while(str[data.i])
 	{
 		double_single_Q(&data,str[data.i]);
-		if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
-		  	expande(str ,&data ,info,trash);
-		else if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
+		if((data.flag == DOUBLE_Q_ON && str[data.i] != '"') || (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'') || (str[data.i] != '"' &&  str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
 			data.len++;
@@ -68,8 +66,9 @@ void etc_change(t_input **list,t_data *info,t_data *data,t_trash **trash)
 		if((data->cmd[data->len][i] == '>' || data->cmd[data->len][i] == '<') && data->cmd[data->len + 1])
 		{
 			(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
+			(*list)->red[data->i + 1] =  ft_strdup(data->cmd[data->len + 1]);
 			add_to_trash((*list)->red[data->i],trash);
-			(*list)->red[data->i + 1] =  change_cmd(data->cmd[data->len + 1],len(data->cmd[data->len + 1]),info,trash);
+			add_to_trash((*list)->red[data->i + 1],trash);
 			data->len++;
 			data->i += 2;
 			return ;

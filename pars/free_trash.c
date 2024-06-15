@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_trash.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:15:55 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/06 18:19:53 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:16:46 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../header.h"
 
 t_trash	*lstnew_of_trash(void *adr)
 {

@@ -6,11 +6,11 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/06 15:19:52 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:04:07 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../header.h"
 
 int cont_words(char *str,char sp)
 {
@@ -43,28 +43,22 @@ int len_of_words(char *str,char sp)
 	t_data data;
 	data.i = 0;
 	data.flag = DOUBLE_Q_OFF;
-	data.flag2 = SINGLE_Q_OFF;
+	data.flag1 = SINGLE_Q_OFF;
 	while(str[data.i])
 	{
-		if(data.flag == DOUBLE_Q_OFF && data.flag2 == SINGLE_Q_OFF && str[data.i] == '"')
-		{
+		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '"')
 			data.flag = DOUBLE_Q_ON;
-			data.i++;
-		}
-		if(data.flag == DOUBLE_Q_ON && str[data.i] == '"')
+		else if (data.flag == DOUBLE_Q_ON && str[data.i] == '"')
 			data.flag = DOUBLE_Q_OFF;
-		if(data.flag == DOUBLE_Q_OFF && data.flag2 == SINGLE_Q_OFF && str[data.i] == 39)
-		{
-			data.flag2 = SINGLE_Q_ON;
-			data.i++;
-		}
-		if(data.flag2 == SINGLE_Q_ON && str[data.i] == 39)
-			data.flag2 = SINGLE_Q_OFF;
-		if(data.flag == DOUBLE_Q_OFF && data.flag2 == SINGLE_Q_OFF && str[data.i] == sp)
-			return data.i + 1;
+		if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == '\'')
+			data.flag1 = SINGLE_Q_ON;
+		else if (data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
+			data.flag1 = SINGLE_Q_OFF;
+		else if(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF && str[data.i] == sp)
+			return data.i ;
 		data.i++;
 	}
-	return data.i;
+	return data.i ;
 }
 
 void initialization_of_sp(t_data *data,t_trash **trash,char sp,char *str)
@@ -86,16 +80,8 @@ char **ft_mini_split(char *str,char sp,t_trash **trash)
 		while(*str && *str == sp)
 			str++;
 		j = len_of_words(str,sp);
-		if(*(str + j - 1) != sp)
-		{
-			data.cmd[data.i] = malloc(j + 1);
-			ft_strlcpy(data.cmd[data.i],str,j + 1);
-		}
-		else
-		{
-			data.cmd[data.i] = malloc(j);
-		 	ft_strlcpy(data.cmd[data.i],str,j);
-		}
+		data.cmd[data.i] = malloc(j + 1);
+		ft_strlcpy(data.cmd[data.i],str,j + 1);
 		add_to_trash(data.cmd[data.i],trash);
 		str += j;
 		data.i++;

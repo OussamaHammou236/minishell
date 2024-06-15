@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../header.h"
 
 void double_single_Q(t_data *data,char c)
 {

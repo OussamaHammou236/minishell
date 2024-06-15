@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/09 18:11:21 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:32:56 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../header.h"
 
 //int g_i;
 
@@ -46,7 +46,7 @@ void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 		add_to_trash(src,trash);
 		if(ft_strncmp(data->s,src,ft_strlen(src) + 1) == 0)
 		{
-			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f -1);
+			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f - 1);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
 			add_to_trash(data->str,trash);
 			ft_bzero(data->str,info->j - i + ft_strlen(data->src)  + 1);
@@ -67,7 +67,7 @@ void expand_status_exit(t_data *info,t_trash **trash)
 {
 	t_data data;
 
-	info->nb = 50;
+	info->nb = g_exit_status;
 	data.src = ft_itoa(info->nb);
 	add_to_trash(data.src,trash);
 	data.str = malloc(info->j - 2 + ft_strlen(data.src) + 1);
@@ -76,7 +76,7 @@ void expand_status_exit(t_data *info,t_trash **trash)
 	ft_strlcpy(data.str,info->str,info->len + 1);
 	ft_strlcat(data.str,data.src,info->len + ft_strlen(data.src) + 1);
 	info->str = data.str;
-	info-> i += 1;
+	info->i += 1;
 	info->j = info->j - 2 + ft_strlen(data.src);
 	info->len += ft_strlen(data.src);
 }
@@ -91,8 +91,8 @@ void expande(char *str,t_data *info,t_data *data,t_trash **trash)
 		i++;
 	if(str[info->i + 1] == '?')
 		return (expand_status_exit(info,trash));
-	while((str[info->i + i] > 'a' &&  str[info->i + i] < 'z') || (str[info->i + i] > 'A' &&  str[info->i + i] < 'Z') ||
-		(str[info->i + i] > '0' &&  str[info->i + i] < '9'))
+	while((str[info->i + i] >= 'a' &&  str[info->i + i] <= 'z') || (str[info->i + i] >= 'A' &&  str[info->i + i] <= 'Z') ||
+		(str[info->i + i] >= '0' &&  str[info->i + i] <= '9'))
 			i++;
 	if(str[info->i + i] != '\0')
 		data->s = ft_substr(str + 1,info->i,i - 1);

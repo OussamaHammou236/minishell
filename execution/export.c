@@ -73,11 +73,27 @@ void    display_exporting_var(t_data *info)
     }
 }
 
+static int check_second_error_export(char *str)
+{
+    int     i;
+
+    i = ft_strlen(str);
+    if (str[0] != '-')
+        return (0); // .
+   
+    if (i == 2)
+        if (str[1] == '-')
+            return (2); // 2 . that mean run command without any probelm . 
+    return (3); // 3 . syntax error we search for it . 
+}
+
+
 void    run_export(t_data *info, t_input temp)
 {
     int len_input = get_part_input(info, temp);
     int     i;
     int checker;
+    int checker_second_error = 0;
 
     i = 1;
     checker = 0;
@@ -85,11 +101,42 @@ void    run_export(t_data *info, t_input temp)
         display_exporting_var(info);
     else
     {
+        // error of "-" . 
+        checker_second_error = check_second_error_export(temp.cmd[1]);
+        if (checker_second_error == 2)
+        {
+            display_exporting_var(info);
+            // exit status $? //
+            g_exit_status = 0;
+             // // ------- //
+            return ;
+        }
+        if (checker_second_error == 3)
+        {
+            printf("minishell: export: %s: invalid option\n", temp.cmd[1]);
+            printf("export: usage: export [-fn] [name[=value] ...] or export -p\n");
+            // exit status $? //
+            g_exit_status = 2;
+            // ------- //
+
+            return ;
+        }   
+
+
+        // ---------- ///
+
+
         while (temp.cmd[i])
         {
             checker = check_correct_arg(temp.cmd[i]);
             if (checker == -1)
+            {
                 printf("minishell: export: '%s': not a valid identifier\n", temp.cmd[i]);
+                // exit status $? //
+                g_exit_status = 1;
+                // ------- //
+                return ;
+            }
             else if (checker == 0)
             {
                 i++;
@@ -100,5 +147,9 @@ void    run_export(t_data *info, t_input temp)
             i++;
         }
     }
+    // exit status $? //
+    g_exit_status = 0;
+    // // ------- //
+
 
 }

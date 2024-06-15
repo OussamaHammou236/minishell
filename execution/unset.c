@@ -56,16 +56,44 @@ void    delete_var_from_env(t_data *info, int posi)
     info->env = upd_env;
 }
 
+static int check_second_error_unset(char *str)
+{
+    int     i;
+
+    i = ft_strlen(str);
+    if (str[0] != '-')
+        return (0); // 
+    else if (i == 2)
+        if (str[1] == '-')
+            return (2); // 2 . that mean run command without any probelm . 
+    return (3); // 3 . syntax error we search for it . 
+}
+
+
 void    run_unset(t_data *info, t_input temp)
 {
     int len_input = get_part_input(info, temp);
     int i = 1;
     int posi = 0;
+    int checker_second_error = 0;
 
     if (len_input == 1)
         return ;
     else
     {
+        // check error //
+        checker_second_error = check_second_error_unset(temp.cmd[1]);
+        if (checker_second_error == 3)
+        {
+            printf("minishell: unset: %s: invalid option\n", temp.cmd[1]);
+            printf("unset: usage: unset [-f] [-v] [-n] [name ...]\n");
+            // exit status $? //
+            g_exit_status = 2;
+            // ------- //
+
+            return ;
+        }
+         // ------ //
         while (temp.cmd[i])
         {
             posi = check_var_exist(info, temp.cmd[i]);
@@ -74,4 +102,8 @@ void    run_unset(t_data *info, t_input temp)
             i++;
         }
     }
+    // exit status $? //
+    g_exit_status = 0;
+    // // ------- //
+
 }

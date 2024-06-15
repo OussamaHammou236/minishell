@@ -8,19 +8,30 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "header.h"
+#include <signal.h>
 
+void 	ee(int x)
+{
+	if (x == SIGINT)
+	{
+	}
+}
 
 int main(int argc, char **argv, char **env)
 {
-	char *cmd[2];
-	cmd[0] = "ls";
-	cmd[1] = ">>";
-	cmd[2] = "der";
-	cmd[3] = NULL;
-
-  
+	int id = fork();
+	if (!id)
+	{
+		exit(256);
+	}
+	else
+	{
+		int st;
+		wait(&st);
+		printf("\n%d\n", st);
+	}
+	
 }
+	
 
-//ls -l > out 
-// type
-// out

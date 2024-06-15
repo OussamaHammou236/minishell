@@ -1,35 +1,55 @@
 #include "../header.h"
 
+int	g_exit_status = 0;
+
 int main(int argc, char **argv, char **env)
 {
     t_data info;
     t_data data;
 	t_trash *trash = NULL;
 	t_trash *trash1 = NULL;
-    info.env = duplacte_env(env,&trash1);
-    extract_path(env, &info,&trash1);
+	if(argc != 1)
+	{
+		printf("ERROR: Arguments are not Allowed!\n");
+		exit(1);
+	}
+    info.env = duplacte_env(env);
+    extract_path(env, &info);
     initialization(&info);
     t_input *tm;
+
+	// -signals- //
+	signal(SIGINT, handler_ctrl_c_in_readline);
+	signal(SIGQUIT, handler_ctrl_backslash);
+	// --- // 
     while (1)
     {
-        char *str = readline("minishell-> ");
-		if(str[0] == '1')
-		{
-			free(str);
-			break;
-		}
+		// -signals- //
+		signal(SIGINT, handler_ctrl_c_in_readline);
+		// -- //
+        char *str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
+		// -signals- //
+		signal(SIGINT, handler_ctrl_c_after_readline);
+		// -- //
+		if (!str)
+			exit(0);
         add_history(str);
         tm = NULL;
-		if(str[0])
+		data.str = expand_str(str,&trash,&info);
+		if(data.str[0])
 		{
-        	data.str = set_spase(str);
+        	data.str = set_spase(data.str);
+			add_to_trash(data.str,&trash);
 			if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
 			{
-				command(data.str,&tm,&info,&trash);
+				command(data.str,&tm,&info,&trash);	
 				// info.input = *tm;
 				// if (check_input(&info) == -1)
 				// {
-				// 	printf("minishell: command not found: %s\n", info.input.cmd[0]);
+				// 	write(2, "minishell: command not found: ", 30);
+				// 	write(2, info.input.cmd[0], ft_strlen(info.input.cmd[0]));
+				// 	write(2, "\n", 1);
+				// 	g_exit_status = 127;
 				// }
 				// if (info.flags.dup_stdout_used == 1)
 				// {
@@ -47,12 +67,22 @@ int main(int argc, char **argv, char **env)
 				continue ;
 			else
 				printf("syntax error\n");
-			free(data.str);
-			free_trash(&trash);
 		}
 		free(str);
+		free_trash(&trash);
     }
-	free_trash(&trash1);
-            
-
 }
+
+
+// 1
+// syntax error of the "--eq" error , we must print just the first character ! . "e". 
+// just run in bash : env -eqw and see the display error and compare it with yours .  
+
+// 2
+// grep fd | wc -l << q , something with that test is not logic in bash ,
+// but i think you need to handle it ^^ .
+
+
+// 3
+// epxort += .  
+// export -= .

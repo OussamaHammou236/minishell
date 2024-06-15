@@ -44,7 +44,7 @@ int check_cmd(t_data *info, char *input)
 int check_built_cmd(t_data *info, t_input temp)
 {
     if (cmp_str(temp.cmd[0], "cd") == 1)
-        return (run_cd(info, temp),1);    
+        return (run_cd(info, temp), update_env(info),1);    
     if (cmp_str(temp.cmd[0], "echo") == 1)
         return (run_echo(info, temp),1);
     if (cmp_str(temp.cmd[0], "pwd") == 1)
@@ -78,6 +78,9 @@ int get_number_cmd(t_data *info)
 int     check_input(t_data *info)
 {
     info->number_cmd = get_number_cmd(info);
+
+    // --check --//
+    // --------- // 
 
     if (info->number_cmd == 1)
     {

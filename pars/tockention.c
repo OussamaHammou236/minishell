@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tockention.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/06 15:34:11 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:16:24 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../header.h"
 
 // ls -la > ls | pwd > out | diff out ls | echo $? | echo $PATH
 
@@ -48,10 +48,12 @@ int check(t_data *data)
 		return -1;
 	while(data->i < data->len)
 	{
-		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
+		if (data->tab[data->i] == OUT_F && data->tab[data->i + 1] == IN_F)
+			data->i++;
+		else if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
 			return -1;
 		data->i++;
-	}
+	}	
 	return 0;
 }
 

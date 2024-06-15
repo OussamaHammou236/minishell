@@ -22,4 +22,7 @@ void    run_echo(t_data *info, t_input temp)
         if (cmp_str(temp.cmd[1], "-n") != 1)
             printf("\n");
     }
+    // // exit status $? //
+    g_exit_status = 0;
+    // // ------- //
 }
