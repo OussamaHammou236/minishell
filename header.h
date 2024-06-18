@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/13 21:58:04 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:03:45 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void free_trash(t_trash **trash);
 void expande(char *str,t_data *info,t_data *data,t_trash **trash);
 int cont_words(char *str,char sp);
 // test
-char  *expand_str(char *str,t_trash **trash,t_data *info);
+char *expand_str(char *str, t_trash **trash, t_data *info, int fg);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

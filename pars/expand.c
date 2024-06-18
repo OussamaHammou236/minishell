@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/10 21:32:56 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:04:47 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void expande(char *str,t_data *info,t_data *data,t_trash **trash)
 		data->s = ft_substr(str + 1,info->i,i - 1);
 	else
 		data->s = ft_substr(str + 1,info->i,i);
-	if ((str[info->i + 1] == '"' || str[info->i + 1] == '\'') && info->flag == DOUBLE_Q_OFF)
-		return (free(data->s));
 	if (data->s[0])
 		etc_of_expande(data,info,i,trash);
 	else

@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env)
 			exit(0);
         add_history(str);
         tm = NULL;
-		data.str = expand_str(str,&trash,&info);
+		data.str = expand_str(str, &trash, &info, 1);
 		if(data.str[0])
 		{
         	data.str = set_spase(data.str);
@@ -43,25 +43,25 @@ int main(int argc, char **argv, char **env)
 			if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
 			{
 				command(data.str,&tm,&info,&trash);	
-				// info.input = *tm;
-				// if (check_input(&info) == -1)
-				// {
-				// 	write(2, "minishell: command not found: ", 30);
-				// 	write(2, info.input.cmd[0], ft_strlen(info.input.cmd[0]));
-				// 	write(2, "\n", 1);
-				// 	g_exit_status = 127;
-				// }
-				// if (info.flags.dup_stdout_used == 1)
-				// {
-				// 	dup2(info.flags.fd_stdout, 1);
-				// 	info.flags.dup_stdout_used = 0;
-				// }
-				// if (info.flags.dup_stdin_used == 1)
-				// {
-				// 	dup2(info.flags.fd_stdin, 0);
-				// 	info.flags.dup_stdin_used = 0;
-				// }
-				// info.flags.is_builtin_cmd = 0;
+				info.input = *tm;
+				if (check_input(&info) == -1)
+				{
+					write(2, "minishell: command not found: ", 30);
+					write(2, info.input.cmd[0], ft_strlen(info.input.cmd[0]));
+					write(2, "\n", 1);
+					g_exit_status = 127;
+				}
+				if (info.flags.dup_stdout_used == 1)
+				{
+					dup2(info.flags.fd_stdout, 1);
+					info.flags.dup_stdout_used = 0;
+				}
+				if (info.flags.dup_stdin_used == 1)
+				{
+					dup2(info.flags.fd_stdin, 0);
+					info.flags.dup_stdin_used = 0;
+				}
+				info.flags.is_builtin_cmd = 0;
 			}
 			else if (check_tocken(data.str,&tm,0,&trash) == 1)
 				continue ;

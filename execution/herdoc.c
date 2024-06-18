@@ -24,6 +24,7 @@ int    rediction(t_data *info, t_input temp)
     int     status;
     int     error_file;
     int     posi_error_file;
+    t_trash *trash = NULL;
     int fd[2];
     posi = -1;
     i = 0;
@@ -99,7 +100,8 @@ int    rediction(t_data *info, t_input temp)
                         free(str);
                         break ;
                     }
-                    write(fd[1], str, strlen(str));
+                //  //
+                    write(fd[1], expand_str(str,&trash,info,0), strlen(expand_str(str,&trash,info,0)));
                     write(fd[1], "\n", 1);
                     free(str);
                 }
