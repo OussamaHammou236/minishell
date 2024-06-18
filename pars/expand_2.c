@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 16:15:37 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:58:46 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char *expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	t_data data;	
 	data.flag = DOUBLE_Q_OFF;
 	data.flag1 = SINGLE_Q_OFF;
-    printf("dd\n");
     data.j  = ft_strlen(str) + 1;
     data.str = ft_malloc(data.str, data.j, trash);
     data.len = 0;
@@ -36,7 +35,7 @@ char *expand_str(char *str, t_trash **trash, t_data *info, int fg)
         double_single_Q(&data,str[data.i]);
         if (str[data.i] == '$' && (str[data.i + 1] == '"' || str[data.i + 1] == '\'') && data.flag == DOUBLE_Q_OFF && fg == 1)
             data.i++ ;
-        if(str[data.i] == '$' && data.flag1 == SINGLE_Q_OFF)
+        if(str[data.i] == '$' && (data.flag1 == SINGLE_Q_OFF || fg != 1))
 		  	expande(str ,&data ,info,trash);
         else
         {
