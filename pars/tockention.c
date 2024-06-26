@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 15:49:59 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:10:15 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,13 @@ int check(t_data *data)
 {
 	data->i = 0;
 	if(data->tab[0] == PIP || data->tab[data->len - 1] == PIP)
-	{
-		printf("minishell : syntax error near unexpected token `|'\n");
-		return -1;
-	}
+		return (printf("minishell : syntax error near unexpected token `|'\n"),-1);
 	while(data->i < data->len)
 	{
 		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->i + 1 == data->len)
-		{
-			printf("minishell : syntax error near unexpected token `newline'\n");
-			return -1;
-		}
+			return (printf("minishell : syntax error near unexpected token `newline'\n"),-1);
 		else if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
-		{
-			printf("minishell : syntax error near unexpected token '%s'\n",data->cmd[data->i + 1]);
-			return -1;
-		}
+			return (printf("minishell : syntax error near unexpected token '%s'\n",data->cmd[data->i + 1]),-1);
 		data->i++;
 	}	
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 16:04:47 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/26 19:44:56 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void expande(char *str,t_data *info,t_data *data,t_trash **trash)
 	if(str[info->i + 1] == '?')
 		return (expand_status_exit(info,trash));
 	while((str[info->i + i] >= 'a' &&  str[info->i + i] <= 'z') || (str[info->i + i] >= 'A' &&  str[info->i + i] <= 'Z') ||
-		(str[info->i + i] >= '0' &&  str[info->i + i] <= '9'))
+		(str[info->i + i] >= '0' &&  str[info->i + i] <= '9') || str[info->i + i] == '_' )
 			i++;
 	if(str[info->i + i] != '\0')
 		data->s = ft_substr(str + 1,info->i,i - 1);

@@ -64,11 +64,11 @@ int check_syntax_error(t_data data)
 		if ((data.str[data.i] == ')' || data.str[data.i] == '(' || data.str[data.i] == ';' ||
 			data.str[data.i] == '\\' || data.str[data.i] == '&') &&
 						(data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF))
-					return -1;
+					return (printf("minishell: syntax error near unexpected token '%c'\n",data.str[data.i]),-1);
 		data.i++;
 	}	
 	if(data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON)
-		return -1;
+		return (printf("minishell : syntax error\n"),-1);
 	return 0;
 }
 
