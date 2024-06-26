@@ -44,12 +44,23 @@ void  tockention(char *str,t_data *data,t_trash **trash)
 int check(t_data *data)
 {
 	data->i = 0;
-	if(data->tab[0] == PIP || data->tab[data->len - 1] !=  WORD)
+	if(data->tab[0] == PIP || data->tab[data->len - 1] == PIP)
+	{
+		printf("minishell : syntax error near unexpected token `|'\n");
 		return -1;
+	}
 	while(data->i < data->len)
 	{
-		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
+		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->i + 1 == data->len)
+		{
+			printf("minishell : syntax error near unexpected token `newline'\n");
 			return -1;
+		}
+		else if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->tab[data->i + 1] != WORD)
+		{
+			printf("minishell : syntax error near unexpected token '%s'\n",data->cmd[data->i + 1]);
+			return -1;
+		}
 		data->i++;
 	}	
 	return 0;
@@ -75,7 +86,7 @@ int check_tocken(char *str,t_input **list,int flag,t_trash **trash)
 		(*list)->cmd[data.i - (data.j * 2)] = NULL;
 		(*list)->red[(data.j * 2)] = NULL;
 	}
-	if(check(&data) == -1)
+	if(check(&data) == -1 && !flag)
 		return -1;
 	return 0;
 }

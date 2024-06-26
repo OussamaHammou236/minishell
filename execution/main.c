@@ -33,7 +33,10 @@ int main(int argc, char **argv, char **env)
 		// -- //
 		if (!str)
 			exit(0);
-        add_history(str);
+		if (str[0])
+        	add_history(str);
+		else
+			g_exit_status = 0;
         tm = NULL;
 		data.str = expand_str(str, &trash, &info, 1);
 		if(data.str[0])
@@ -63,10 +66,8 @@ int main(int argc, char **argv, char **env)
 				}
 				info.flags.is_builtin_cmd = 0;
 			}
-			else if (check_tocken(data.str,&tm,0,&trash) == 1)
-				continue ;
 			else
-				printf("syntax error\n");
+				g_exit_status = 2;
 		}
 		free(str);
 		free_trash(&trash);
