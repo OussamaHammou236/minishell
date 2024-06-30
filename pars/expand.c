@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/26 19:44:56 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:40:17 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ void etc_of_expande(t_data *data,t_data *info,int i,t_trash **trash)
 		if(ft_strncmp(data->s,src,ft_strlen(src) + 1) == 0)
 		{
 			data->src = ft_substr(data->env[data->i],f + 1,ft_strlen(data->env[data->i]) - f - 1);
+			if (info->flag == DOUBLE_Q_OFF)
+				data->src = add_qoutes(data->src,trash);
 			data->str = malloc(info->j - i + ft_strlen(data->src)  + 1);
 			add_to_trash(data->str,trash);
 			ft_bzero(data->str,info->j - i + ft_strlen(data->src)  + 1);
 			ft_strlcpy(data->str,info->str,info->len + 1);
-			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->env[data->i]) - f);
-			info->str = data->str;
-			info->i += i - 1;
+			ft_strlcat(data->str,data->src,info->len + ft_strlen(data->src));
 			info->j = info->j - i + ft_strlen(data->src);
 			info->len += ft_strlen(data->src);
-			return (free(data->src));
+			return (info->str = data->str,info->i += i - 1,free(data->src));
 		}
 		data->i++;
 	}

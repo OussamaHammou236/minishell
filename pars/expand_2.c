@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/18 17:58:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:32:41 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,36 @@ char *ft_malloc(char *str, int len, t_trash **trash)
     return str;
 }
 
+char *add_qoutes(char *str, t_trash **trash)
+{
+	t_data data;
+    data.i = 0;
+    data.j = 1;
+    data.len = ft_strlen(str) + (cont_words(str,' ') * 2);
+    data.str = malloc(data.len + 1);
+    ft_bzero(data.str, data.len + 1);
+    data.str[0] = '"';
+    while(str[data.i])
+    {
+        if(str[data.i] != ' ' && str[data.i + 1] == ' ')
+        {
+            data.str[data.j] = str[data.i];
+            data.str[++data.j] = '"';
+            data.str[++data.j] = ' ';
+        }
+        else if (str[data.i] == ' ' && str[data.i + 1] != ' ')
+            data.str[data.j] = '"';
+        else
+            data.str[data.j] = str[data.i];
+        data.i++;
+        data.j++;
+    }
+    data.str[data.j] = '"';
+    //printf("%s\n",data.str);
+    free(str);
+    return data.str;
+}
+// "ls  > out
 char *expand_str(char *str, t_trash **trash, t_data *info, int fg)
 {
 	t_data data;	
@@ -46,3 +76,4 @@ char *expand_str(char *str, t_trash **trash, t_data *info, int fg)
     }
     return data.str;    
 }
+// "ls" "ohammou-" ">" "<"

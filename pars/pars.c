@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 16:08:17 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:28:40 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void command(char *line,t_input **list,t_data *info,t_trash **trash)
 		add_to_trash(node,trash);
 		check_tocken(cmd[j],&node,1,trash);
 		change(&node,info,ft_mini_split(cmd[j],' ',trash),trash);
-		// printf("-----------cmd---------------\n");
-		// for(int c = 0;node->cmd[c];c++)
-		// 	printf("[%s]\n",node->cmd[c]);
+		printf("-----------cmd---------------\n");
+		for(int c = 0;node->cmd[c];c++)
+			printf("[%s]\n",node->cmd[c]);
 		// printf("-----------reds---------------\n");
 		// for(int b = 0;node->red[b];b++)
 		//   	printf("[%s]\n",node->red[b]);

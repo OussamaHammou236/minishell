@@ -30,6 +30,13 @@ int check_cmd(t_data *info, char *input)
 
     int i = 0;
 
+    if (input[0] == '\0')
+        return (0);
+    if(access(input , X_OK) == 0) 
+    {
+        info->current_path = input;
+        return (1);
+    }
     while (info->path[i])
     {
         info->current_path = make_path(info->path[i], input); 
@@ -81,7 +88,6 @@ int     check_input(t_data *info)
 
     // --check --//
     // --------- // 
-
     if (info->number_cmd == 1)
     {
         if (info->input.red[0])
@@ -89,8 +95,6 @@ int     check_input(t_data *info)
             if (rediction(info, info->input) == -1)
                 return (0);
         }
-        if (!info->input.cmd[0])
-            return (0);
         if (check_built_cmd(info, info->input) == 1)
             info->flags.is_builtin_cmd = 1;
         else if (check_cmd(info, info->input.cmd[0]) == 1)

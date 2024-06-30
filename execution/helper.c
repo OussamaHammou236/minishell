@@ -1,5 +1,74 @@
 #include "../header.h"
 
+int get_len_number(int x)
+{
+    int i = 0;
+    int store = 0;
+
+    if (x == 0)
+        return (1);
+    store = x / 10;
+    while (store != 0)
+    {
+        store = store / 10;
+        i++;
+    }
+    i++;
+    return (i);
+}
+char    *make_new_shlvl(t_data *info, int posi)
+{
+    int i;
+    int my_num = 0;
+    char *my_num_in_str;
+    int len = 0;
+    char    *new_shlvl;
+
+    i = 0;
+
+    while (info->env[posi][i] != '=')
+        i++;
+    i++;
+    my_num = ft_atoi(&info->env[posi][i]);
+    my_num++;
+    my_num_in_str = ft_itoa(my_num);
+    len = 6 + get_len_number(my_num);  
+    new_shlvl = malloc(sizeof(char) * len + 1);
+    i = 0;
+    while (info->env[posi][i] != '=')
+    {
+        new_shlvl[i] = info->env[posi][i];
+        i++;
+    }
+    new_shlvl[i] = info->env[posi][i];
+    i++;
+    while (my_num_in_str[i - 6])
+    {
+        new_shlvl[i] = my_num_in_str[i - 6];
+        i++;
+    }
+    new_shlvl[i] = '\0';
+    return (new_shlvl);
+}
+
+void    shlvl_increament(t_data *info)
+{
+    int     i;
+    char *new_shlvl;
+
+    i = 0;
+    while (info->env[i])
+    {
+        if (cmp_str_env(info->env[i], "SHLVL=", 6) == 1)
+        {
+            new_shlvl = make_new_shlvl(info, i);
+            free(info->env[i]);
+            info->env[i] = new_shlvl;
+            return ;
+        }
+        i++;
+    }
+}
 
 void    initialization(t_data *info)
 {
@@ -10,6 +79,8 @@ void    initialization(t_data *info)
     info->flags.fd_stdin = dup(0);
     info->flags.dup_stdin_used = 0;
     info->flags.dup_stdout_used = 0;
+
+    shlvl_increament(info);
 
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 16:03:45 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:03:11 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ void add_to_trash(void *adr,t_trash **lst);
 void free_trash(t_trash **trash);
 void expande(char *str,t_data *info,t_data *data,t_trash **trash);
 int cont_words(char *str,char sp);
-// test
 char *expand_str(char *str, t_trash **trash, t_data *info, int fg);
+char *add_qoutes(char *str, t_trash **trash);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -156,6 +156,7 @@ t_input	*ft_lstlast(t_input *lst);
 void	ft_lstadd_back(t_input **lst, t_input *new);
 char	*ft_itoa(int n);
 void	ft_bzero(void *s, size_t n);
+int	ft_atoi(const char *str);
 
 
 

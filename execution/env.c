@@ -51,8 +51,16 @@ void    run_env(t_data *info, t_input temp)
             return ;
         }
     }
+    // -display last cmd- //
+
+    // ------ //
     while (info->env[i])
     {
+        if (!info->env[i + 1])
+        {
+            printf("_=/usr/bin/env\n");
+            break;
+        }
         printf("%s\n", info->env[i]);
         i++;
     }

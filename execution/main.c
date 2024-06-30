@@ -38,12 +38,12 @@ int main(int argc, char **argv, char **env)
 		else
 			g_exit_status = 0;
         tm = NULL;
-		data.str = expand_str(str, &trash, &info, 1);
-		if(data.str[0])
+		data.str = set_spase(str);
+		add_to_trash(data.str,&trash);
+		if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
 		{
-        	data.str = set_spase(data.str);
-			add_to_trash(data.str,&trash);
-			if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
+			data.str = expand_str(data.str, &trash, &info, 1);
+			if(data.str[0])
 			{
 				command(data.str,&tm,&info,&trash);	
 				info.input = *tm;
@@ -66,15 +66,16 @@ int main(int argc, char **argv, char **env)
 				}
 				info.flags.is_builtin_cmd = 0;
 			}
-			else
-				g_exit_status = 2;
 		}
+		else
+			g_exit_status = 2;
 		free(str);
 		free_trash(&trash);
     }
 }
 
-
+// -- those two error is dosnt matter ! . 
+//--------------------------------------------------------------------- 
 // 1
 // syntax error of the "--eq" error , we must print just the first character ! . "e". 
 // just run in bash : env -eqw and see the display error and compare it with yours .  
@@ -82,8 +83,11 @@ int main(int argc, char **argv, char **env)
 // 2
 // grep fd | wc -l << q , something with that test is not logic in bash ,
 // but i think you need to handle it ^^ .
-
+//--------------------------------------------------------------------- 
 
 // 3
-// epxort += .  
-// export -= .
+// leaks .
+
+// 4
+// norminette . 
+
