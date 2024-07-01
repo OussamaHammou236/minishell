@@ -64,9 +64,9 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	while (str[data.i])
 	{
 		double_single_Q(&data, str[data.i]);
-		if (str[data.i] == '$' && (str[data.i + 1] == '"' || 
-				str[data.i+ 1] == '\'') && data.flag == DOUBLE_Q_OFF
-					&& data.flag1 == SINGLE_Q_OFF && fg == 1)
+		if (str[data.i] == '$' && (str[data.i + 1] == '"' || str[data.i
+				+ 1] == '\'') && data.flag == DOUBLE_Q_OFF
+				&& data.flag1 == SINGLE_Q_OFF && fg == 1)
 			data.i++;
 		if (str[data.i] == '$' && (data.flag1 == SINGLE_Q_OFF || fg != 1))
 			expande(str, &data, info, trash);
