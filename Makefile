@@ -28,5 +28,6 @@ push: fclean
 	git add .
 	git commit -m "beta_v"
 	git push
+	clear
 
-.PHONY= clean%
+.PHONY= clean
