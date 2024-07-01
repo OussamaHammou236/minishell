@@ -28,6 +28,5 @@ push: fclean
 	@git add .
 	@git commit -m "beta_v"
 	@git push
-	@echo "\033[31m Done\033[0m ✅"
 
 .PHONY= clean
