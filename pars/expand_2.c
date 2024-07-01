@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/01 11:32:26 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:49:16 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	data.str = ft_malloc1(data.j, trash);
 	data.len = 0;
 	data.i = 0;
+	data.flag2 = fg;
 	while (str[data.i])
 	{
 		double_single_Q(&data, str[data.i]);
