@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../header.h"
 
 t_trash	*lstnew_of_trash(void *adr)
@@ -47,23 +45,23 @@ void	lstadd_back_to_trash(t_trash **lst, t_trash *new)
 	lstlast(*lst)->next = new;
 }
 
-void add_to_trash(void *adr,t_trash **lst)
+void	add_to_trash(void *adr, t_trash **lst)
 {
-    t_trash *new_adr;
+	t_trash	*new_adr;
 
-    new_adr = lstnew_of_trash(adr);
-    lstadd_back_to_trash(lst,new_adr);
+	new_adr = lstnew_of_trash(adr);
+	lstadd_back_to_trash(lst, new_adr);
 }
 
-void free_trash(t_trash **trash)
+void	free_trash(t_trash **trash)
 {
-    void *tmp;
+	void *tmp;
 
-    while (*trash)
-    {
-        tmp = *trash;
-        free((*trash)->adr);
-        *trash = (*trash)->next;
-        free(tmp);
-    }
+	while (*trash)
+	{
+		tmp = *trash;
+		free((*trash)->adr);
+		*trash = (*trash)->next;
+		free(tmp);
+	}
 }

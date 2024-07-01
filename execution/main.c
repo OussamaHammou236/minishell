@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 			data.str = expand_str(data.str, &trash, &info, 1);
 			if(data.str[0])
 			{
-				command(data.str,&tm,&info,&trash);	
+				command(data.str,&tm,&trash);	
 				info.input = *tm;
 				if (check_input(&info) == -1)
 				{
