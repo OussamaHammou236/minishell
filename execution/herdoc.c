@@ -103,7 +103,7 @@ int    rediction(t_data *info, t_input temp)
                 //  //
                     write(fd[1], expand_str(str,&trash,info,0), strlen(expand_str(str,&trash,info,0)));
                     write(fd[1], "\n", 1);
-                    free(str);
+                    //free(str);
                 }
                 close(fd[1]);
                 exit(0);

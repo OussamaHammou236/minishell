@@ -22,11 +22,6 @@ void    run_cmd(t_data *info, char **cmd)
         signal(SIGQUIT, handler_ctrl_backslash);
         if (g_exit_status == 130)
             return ;
-        if (s == 0)
-            g_exit_status = 0;
-        else if (s == 512)
-            g_exit_status = 2;
-        else // 256 == exit_status 1 .
-            g_exit_status = 1;
+        g_exit_status = get_exit_status(s);
     }
 }

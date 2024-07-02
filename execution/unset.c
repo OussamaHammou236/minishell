@@ -1,6 +1,6 @@
 #include "../header.h"
 
-int     check_equality(char *str1_env , char *variable)
+static int     check_equality(char *str1_env , char *variable)
 {
     int     i;
 
@@ -47,9 +47,10 @@ void    delete_var_from_env(t_data *info, int posi)
     {
         if (i != posi)
             upd_env[j] = ft_strdup(info->env[i]);
-        i++;
         if (i != posi)
             j++;
+        i++;
+       
     }
     upd_env[j] = NULL;
     ft_free_env(info, len);

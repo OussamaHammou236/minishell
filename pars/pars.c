@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/01 11:29:45 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:48:12 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	etc_change(t_input **list, t_data *data, t_trash **trash)
 			&& data->cmd[data->len + 1])
 		{
 			(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
-			(*list)->red[data->i + 1] = ft_strdup(data->cmd[data->len + 1]);
+			(*list)->red[data->i + 1] = change_cmd(data->cmd[data->len + 1],
+					len(data->cmd[data->len + 1]), trash);
 			add_to_trash((*list)->red[data->i], trash);
-			add_to_trash((*list)->red[data->i + 1], trash);
 			data->len++;
 			data->i += 2;
 			return ;

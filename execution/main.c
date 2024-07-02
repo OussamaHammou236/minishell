@@ -7,7 +7,7 @@ int main(int argc, char **argv, char **env)
     t_data info;
     t_data data;
 	t_trash *trash = NULL;
-	t_trash *trash1 = NULL;
+	// t_trash *trash1 = NULL;
 	if(argc != 1)
 	{
 		printf("ERROR: Arguments are not Allowed!\n");
@@ -17,7 +17,9 @@ int main(int argc, char **argv, char **env)
     extract_path(env, &info);
     initialization(&info);
     t_input *tm;
-
+	//---------------//
+	info.trash = &trash;
+	//------------//
 	// -signals- //
 	signal(SIGINT, handler_ctrl_c_in_readline);
 	signal(SIGQUIT, handler_ctrl_backslash);
@@ -31,8 +33,11 @@ int main(int argc, char **argv, char **env)
 		// -signals- //
 		signal(SIGINT, handler_ctrl_c_after_readline);
 		// -- //
-		if (!str)
+		if (!str) // ctrl-D
+		{
+			free_something_after_exit(&info);
 			exit(0);
+		}
 		if (str[0])
         	add_history(str);
 		else
@@ -74,20 +79,23 @@ int main(int argc, char **argv, char **env)
     }
 }
 
-// -- those two error is dosnt matter ! . 
+// -- those two error is dosent matter ! . 
 //--------------------------------------------------------------------- 
 // 1
 // syntax error of the "--eq" error , we must print just the first character ! . "e". 
 // just run in bash : env -eqw and see the display error and compare it with yours .  
 
-// 2
-// grep fd | wc -l << q , something with that test is not logic in bash ,
-// but i think you need to handle it ^^ .
 //--------------------------------------------------------------------- 
 
-// 3
+// 2
+// grep fd | wc -l << q , 
+// you need to handle it.
+// cat | ls
+
+
+// 5
 // leaks .
 
-// 4
+// 6
 // norminette . 
 

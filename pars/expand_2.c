@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/01 20:24:27 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:22:50 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,24 @@ char	*add_qoutes(char *str)
 	data.str[data.j] = '"';
 	return (free(str), data.str);
 }
-// "ls  > out
+
+void initialization_data(t_data *data, int fg)
+{
+	data->flag = DOUBLE_Q_OFF;
+	data->flag1 = SINGLE_Q_OFF;
+	data->len = 0;
+	data->i = 0;
+	data->flag2 = fg;	
+}
+
 char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 {
 	t_data	data;
 
-	data.flag = DOUBLE_Q_OFF;
-	data.flag1 = SINGLE_Q_OFF;
-	data.str = ft_malloc1(ft_strlen(str) + 1, trash);
-	data.len = 0;
-	data.i = 0;
-	data.flag2 = fg;
+	initialization_data(&data,fg);
+	data.j = ft_strlen(str);
+	data.str = ft_malloc1(data.j + 1, trash);
+
 	while (str[data.i])
 	{
 		double_single_Q(&data, str[data.i]);
@@ -79,4 +86,3 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	}
 	return (data.str);
 }
-// "ls" "ohammou-" ">" "<"

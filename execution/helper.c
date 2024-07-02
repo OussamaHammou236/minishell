@@ -48,6 +48,7 @@ char    *make_new_shlvl(t_data *info, int posi)
         i++;
     }
     new_shlvl[i] = '\0';
+    free(my_num_in_str);
     return (new_shlvl);
 }
 
@@ -80,6 +81,7 @@ void    initialization(t_data *info)
     info->flags.dup_stdin_used = 0;
     info->flags.dup_stdout_used = 0;
 
+    info->flag_free_current_path = 0;
     shlvl_increament(info);
 
 }
@@ -160,4 +162,7 @@ char    **duplacte_env(char **env)
     return (our_env);
 }
 
-
+int     get_exit_status(int status)
+{
+    return (status / 256);
+}

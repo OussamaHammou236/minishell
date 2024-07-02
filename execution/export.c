@@ -1,6 +1,51 @@
 #include "../header.h"
 
-int     check_correct_arg(char *str, int *sign_plus) // -1 for error , 1 for correct , 0 for skip. // 2 for correct , += . 
+void    display_exporting_var(t_data *info)
+{
+    int     i;
+    int     j;
+    int     flag;
+
+    flag = 0;
+    j = 0;
+    i = 0;
+    while (info->env[i + 1])
+    {
+        j = 0;
+        flag = 0;
+        printf("declare -x ");
+        while (info->env[i][j])
+        {
+            printf("%c", info->env[i][j]);
+            if (flag == 0 && info->env[i][j] == '=')
+            {
+                printf("\"");
+                flag = 1;
+            }
+            j++;
+        }
+        if (flag == 1)
+            printf("\"");
+        printf("\n");
+        i++;
+    }
+}
+
+int check_second_error_export(char *str)
+{
+    int     i;
+
+    i = ft_strlen(str);
+    if (str[0] != '-')
+        return (0); // .
+   
+    if (i == 2)
+        if (str[1] == '-')
+            return (2); // 2 . that mean run command without any probelm . 
+    return (3); // 3 . syntax error we search for it . 
+}
+
+int     check_correct_arg(char *str, int *sign_plus) 
 {
     int i = 0;
    
@@ -24,10 +69,60 @@ int     check_correct_arg(char *str, int *sign_plus) // -1 for error , 1 for cor
     }
     if (i == 0)
         return (-1);
-    if (!str[i])
-        return (0);
+
     return (1);
 }
+
+static int    check_equality(char *var_env, char *user_var)
+{
+    int     i;
+
+    i = 0;
+    
+    while (var_env[i] != '\0' && var_env[i] != '=')
+    {
+        if (var_env[i] != user_var[i])
+            return (1);
+        i++;
+    }
+    if (var_env[i] == '=' && user_var[i] != '\0')
+    {
+        if (var_env[i] != user_var[i])
+            return (1); 
+    }
+    else if (user_var[i] != '\0' && user_var[i] != '=')
+        return (1);
+    return (0);
+}
+
+int check_is_exist(char **env, char *user_var)
+{ 
+    int     i;
+
+    i = 0;
+    while (env[i])
+    {
+        if (check_equality(env[i], user_var) == 0)
+            return (i);
+        i++;
+    }
+    return (-1);
+}
+
+int     is_containe_equal_flag(char *user_var)
+{
+    int     i;
+
+    i = 0;
+    while (user_var[i])
+    {
+        if (user_var[i] == '=')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 
 int len_str_equal(char *str)
 {
@@ -48,6 +143,9 @@ void    upd_variable(t_data *info, char *variable, int posi)
     int i = 0;
     int len_total;
     int var;
+    int var_not_containes_equal;
+
+    var_not_containes_equal = 0;
     while (variable[i] != '=')
         i++;
     i++;
@@ -56,7 +154,11 @@ void    upd_variable(t_data *info, char *variable, int posi)
         i++;
         len_var++;
     }
-    len_total = len_var + ft_strlen(info->env[posi]) + 1;
+    // --- handle = -- //
+    if (is_containe_equal_flag(info->env[posi]) == 1)
+        var_not_containes_equal = 1;
+    // -- //
+    len_total = len_var + ft_strlen(info->env[posi]) + 1 + var_not_containes_equal;
     new_variable = malloc(sizeof(char) * len_total);
     i = 0;
 
@@ -66,7 +168,14 @@ void    upd_variable(t_data *info, char *variable, int posi)
         if (info->env[posi][i])
             new_variable[i] = info->env[posi][i];
         else
+        {
+            if (var_not_containes_equal == 1)
+            {
+                new_variable[i] = '=';
+                i++;
+            }
             break;
+        }
         i++;
     }
     while (i < len_total)
@@ -86,6 +195,27 @@ void    upd_variable(t_data *info, char *variable, int posi)
     free(info->env[posi]);
     info->env[posi] = new_variable;
 }
+
+
+char    *ft_strdup_export(char *variable)
+{
+    int len = ft_strlen(variable);
+    char *new_var = malloc(len);
+
+    int i = 0;
+    int j = 0;
+    while (i < len)
+    {
+        if (variable[i] == '+')
+            j++;
+        new_var[i] = variable[j];
+        i++;
+        j++;
+    }   
+    return (new_var);
+}
+
+
 
 int    handle_sign_plus(t_data *info, char *variable) // export += . 
 {
@@ -107,8 +237,10 @@ int    handle_sign_plus(t_data *info, char *variable) // export += .
     i = 0;
     while (info->env[i])
     {
-        if (cmp_str_env(info->env[i], new_var, ft_strlen(new_var)) == 1)
+        if (check_equality(info->env[i], new_var) == 0)
         {
+            
+
             upd_variable(info, variable, i);
             free(new_var);
             return 0;
@@ -119,30 +251,15 @@ int    handle_sign_plus(t_data *info, char *variable) // export += .
     return (1);
 }
 
-char    *ft_strdup_export(char *variable)
-{
-    int len = ft_strlen(variable);
-    char *new_var = malloc(len);
-
-    int i = 0;
-    int j = 0;
-    while (i < len)
-    {
-        if (variable[i] == '+')
-            j++;
-        new_var[i] = variable[j];
-        i++;
-        j++;
-    }   
-    return (new_var);
-}
 
 void    add_var_to_env(t_data *info, char *variable , int sign_plus)
 {
     int     i;
     int     len;
     char    **upd_env;
+    int     checker;
 
+    checker = 0;
     i = 0;
     len = 0;
 
@@ -175,49 +292,29 @@ void    add_var_to_env(t_data *info, char *variable , int sign_plus)
     info->env = upd_env;
 }
 
-void    display_exporting_var(t_data *info)
-{
-    int     i;
-    int     j;
-    int     flag;
 
-    flag = 0;
-    j = 0;
-    i = 0;
-    while (info->env[i + 1])
+void    export_operation(t_data *info, char *user_var, int sign_plus)
+{
+    int     check_existance;
+
+
+    // first of all , we need to check if that variable already exist in the env . 
+    check_existance = check_is_exist(info->env, user_var);
+
+    if (check_existance != -1)
     {
-        j = 0;
-        flag = 0;
-        printf("declare -x ");
-        while (info->env[i][j])
+        if (is_containe_equal_flag(user_var) == 1)
+            return ;
+        else
         {
-            printf("%c", info->env[i][j]);
-            if (flag == 0 && info->env[i][j] == '=')
-            {
-                printf("\"");
-                flag = 1;
-            }
-            j++;
+            free(info->env[check_existance]);
+            info->env[check_existance] = ft_strdup(user_var);
+            return ;
         }
-        printf("\"\n");
-        i++;
     }
+    else
+        add_var_to_env(info, user_var, sign_plus);
 }
-
-static int check_second_error_export(char *str)
-{
-    int     i;
-
-    i = ft_strlen(str);
-    if (str[0] != '-')
-        return (0); // .
-   
-    if (i == 2)
-        if (str[1] == '-')
-            return (2); // 2 . that mean run command without any probelm . 
-    return (3); // 3 . syntax error we search for it . 
-}
-
 
 
 void    run_export(t_data *info, t_input temp)
@@ -227,7 +324,9 @@ void    run_export(t_data *info, t_input temp)
     int checker;
     int checker_second_error = 0;
     int sign_plus;
+    int error_occurs;
 
+    error_occurs = 0;
     sign_plus = 0;
     i = 1;
     checker = 0;
@@ -235,56 +334,35 @@ void    run_export(t_data *info, t_input temp)
         display_exporting_var(info);
     else
     {
-        // error of "-" . 
         checker_second_error = check_second_error_export(temp.cmd[1]);
         if (checker_second_error == 2)
         {
             display_exporting_var(info);
-            // exit status $? //
             g_exit_status = 0;
-             // // ------- //
             return ;
         }
-        if (checker_second_error == 3)
+        else if (checker_second_error == 3)
         {
             printf("minishell: export: %s: invalid option\n", temp.cmd[1]);
             printf("export: usage: export [-fn] [name[=value] ...] or export -p\n");
-            // exit status $? //
             g_exit_status = 2;
-            // ------- //
-
             return ;
-        }   
-
-
-        // ---------- ///
-
-
+        }
+        //-----------------//
         while (temp.cmd[i])
         {
-            checker = check_correct_arg(temp.cmd[i], &sign_plus);
-            
+           checker = check_correct_arg(temp.cmd[i], &sign_plus);
             if (checker == -1)
             {
                 printf("minishell: export: '%s': not a valid identifier\n", temp.cmd[i]);
-                // exit status $? //
                 g_exit_status = 1;
-                // ------- //
-                return ;
-            }
-            else if (checker == 0)
-            {
-                i++;
-                continue;
+                error_occurs = 1;
             }
             else
-                add_var_to_env(info, temp.cmd[i], sign_plus);
+                export_operation(info, temp.cmd[i], sign_plus);
             i++;
         }
     }
-    // exit status $? //
-    g_exit_status = 0;
-    // // ------- //
-
-
+    if (error_occurs == 0)
+        g_exit_status = 0;
 }

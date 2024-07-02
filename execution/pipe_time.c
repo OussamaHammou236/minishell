@@ -1,5 +1,6 @@
 #include "../header.h"
 
+
 // hint : 
 /*
 exit(0) == 0
@@ -10,6 +11,11 @@ exit(4) == 1024
 exit(5) == 1280
 */ // those just flags .
 
+
+void    printf_to_stderr(char *str)
+{
+    write(2, str, ft_strlen(str));
+}
 
 static void    flag_of_exit_status(void)
 {
@@ -34,6 +40,7 @@ int    pipe_time(t_data *info)
 
     int fd[info->number_cmd - 1][2]; // fd[0] for read  , fd[1] for write . 
     int i = 0;
+    int st;
 
    while (i < info->number_cmd)
    {
@@ -62,7 +69,9 @@ int    pipe_time(t_data *info)
                    flag_of_exit_status();
                 if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    printf_to_stderr("minishell: command not found: ");
+                    printf_to_stderr(temp->cmd[0]);
+                    printf_to_stderr("\n");
                     exit(4);
                 }
                 execve(info->current_path, temp->cmd, info->env);
@@ -87,7 +96,9 @@ int    pipe_time(t_data *info)
                     flag_of_exit_status();
                 if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    printf_to_stderr("minishell: command not found: ");
+                    printf_to_stderr(temp->cmd[0]);
+                    printf_to_stderr("\n");
                     exit(4);
                 }
                 execve(info->current_path, temp->cmd, info->env);
@@ -112,7 +123,9 @@ int    pipe_time(t_data *info)
                     flag_of_exit_status();
                 if (check_cmd(info, temp->cmd[0]) == 0)
                 {
-                    printf("minishell: command not found: %s\n", temp->cmd[0]);
+                    printf_to_stderr("minishell: command not found: ");
+                    printf_to_stderr(temp->cmd[0]);
+                    printf_to_stderr("\n");
                     exit(4);
                 }
                 execve(info->current_path, temp->cmd, info->env);
@@ -129,25 +142,25 @@ int    pipe_time(t_data *info)
                 close(fd[i - 1][0]);
                 close(fd[i][1]);
             }
-            int st;
-            wait(&st);
-            // if (st == 256 || st == 2)
-            //     return (0);
-            if (st == 0)
-                g_exit_status = 0;
-            else if (st == 256)
-                g_exit_status = 1;
-            else if (st == 512)
-                g_exit_status = 2;
-            else if (st == 768)
-                g_exit_status = 125;
-            else if (st == 1024)
-                g_exit_status = 127;
-            else if (st == 1280 || st == 2)
-                return (g_exit_status = 130, 0);
         }
         i++;
         temp = temp->next;
    }
+   while(waitpid(-1, &st, 0) != -1)
+   {
+        if (st == 0)
+            g_exit_status = 0;
+        else if (st == 256)
+            g_exit_status = 1;
+        else if (st == 512)
+            g_exit_status = 2;
+        else if (st == 768)
+            g_exit_status = 125;
+        else if (st == 1024)
+            g_exit_status = 127;
+        else if (st == 1280 || st == 2)
+            return (g_exit_status = 130, 0);
+   }
+   
     return (0);
 }

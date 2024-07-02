@@ -35,13 +35,14 @@ int check_cmd(t_data *info, char *input)
     if(access(input , X_OK) == 0) 
     {
         info->current_path = input;
+        info->flag_free_current_path = 0;
         return (1);
     }
     while (info->path[i])
     {
         info->current_path = make_path(info->path[i], input); 
         if(access(info->current_path , X_OK) == 0) 
-            return (1);
+            return (info->flag_free_current_path = 1, 1);
         free(info->current_path);
         i++;    
     }
@@ -63,7 +64,7 @@ int check_built_cmd(t_data *info, t_input temp)
     if (cmp_str(temp.cmd[0], "unset") == 1)
         return (run_unset(info, temp), 1);
     if (cmp_str(temp.cmd[0], "exit") == 1)
-        return (run_exit(), 1);
+        return (run_exit(info, temp), 1);
     return (0);
 }
 

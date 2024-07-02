@@ -61,7 +61,8 @@ void    run_env(t_data *info, t_input temp)
             printf("_=/usr/bin/env\n");
             break;
         }
-        printf("%s\n", info->env[i]);
+        if (is_containe_equal_flag(info->env[i]) == 0)
+            printf("%s\n", info->env[i]);
         i++;
     }
     // // exit status $? //
