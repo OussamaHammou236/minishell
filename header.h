@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/02 09:47:03 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:07:11 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ char				*expand_str(char *str, t_trash **trash, t_data *info,
 						int fg);
 char				*add_qoutes(char *str);
 char				*ft_malloc1(int len, t_trash **trash);
+void				initialization_data(t_data *data, int fg);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -27,29 +27,26 @@ void	double_single_Q(t_data *data, char c)
 int	edit_line(char *str)
 {
 	t_data	data;
-	int		i;
 
-	i = 0;
-	data.flag = DOUBLE_Q_OFF;
-	data.flag1 = SINGLE_Q_OFF;
-	data.len = 0;
-	while (str[i])
+	initialization_data(&data, 0);
+	while (str[data.i])
 	{
-		double_single_Q(&data, str[i]);
+		double_single_Q(&data, str[data.i]);
 		if (data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF)
 		{
-			if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i
-					+ 1] == '<'))
+			if ((str[data.i] == '>' && str[data.i + 1] == '>')
+				|| (str[data.i] == '<' && str[data.i + 1] == '<'))
 			{
 				data.len += 3;
-				i++;
+				data.i++;
 			}
-			else if ((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<'
-					&& str[i + 1] != '<') || (str[i] == '|'))
+			else if ((str[data.i] == '>' && str[data.i + 1] != '>')
+				|| (str[data.i] == '<' && str[data.i + 1] != '<')
+				|| str[data.i] == '|')
 				data.len += 2;
 		}
 		data.len++;
-		i++;
+		data.i++;
 	}
 	return (data.len);
 }
