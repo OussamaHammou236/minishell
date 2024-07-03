@@ -47,7 +47,7 @@ int main(int argc, char **argv, char **env)
 		add_to_trash(data.str,&trash);
 		if(check_syntax_error(data) == 0 && !check_tocken(data.str,&tm,0,&trash))
 		{
-			data.str = expand_str(data.str, &trash, &info, 1);
+			data.str = expand_str(data.str, &trash, &info, 0);
 			if(data.str[0])
 			{
 				command(data.str,&tm,&trash);	

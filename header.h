@@ -80,6 +80,8 @@ typedef struct t_data{
 	char *s;
 	int f;
 	int nb;
+	int fg;
+	int v;
 }t_data;
 
 # define PIP 1

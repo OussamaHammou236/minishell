@@ -12,8 +12,6 @@
 
 #include "../header.h"
 
-// int g_i;
-
 int	c_len(t_data *data)
 {
 	int	i;
