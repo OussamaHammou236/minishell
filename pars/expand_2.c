@@ -87,7 +87,7 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 				+ 1] == '\'') && data.flag == DOUBLE_Q_OFF
 				&& data.flag1 == SINGLE_Q_OFF && fg == 1)
 			data.i++;
-		flag_of_expand_herdoc(&data,str);
+		//flag_of_expand_herdoc(&data,str);
 		if (str[data.i] == '$' && (data.flag1 == SINGLE_Q_OFF || fg != 1)
 				&& data.fg == 0)
 			expande(str, &data, info, trash);
