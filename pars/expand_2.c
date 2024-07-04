@@ -61,9 +61,14 @@ void initialization_data(t_data *data, int fg)
 	data->fg = 0;
 	data->v = 0;
 }
-
+/*
+cat      <<     f          $USER
+    data->fg = 1
+*/
 void flag_of_expand_herdoc(t_data *data,char *str)
 {
+	if (str[data->i] != '$' && str[data->i] != ' ' && str[data->i] != '<' && str[data->i + 1] != '<')
+		data->fg = 0;
 	if (data->v == 1)
 		data->fg = 0;
 	else if (data->v == 0 && str[data->i] == '$' && data->flag == DOUBLE_Q_OFF)
@@ -87,7 +92,7 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 				+ 1] == '\'') && data.flag == DOUBLE_Q_OFF
 				&& data.flag1 == SINGLE_Q_OFF && fg == 1)
 			data.i++;
-		//flag_of_expand_herdoc(&data,str);
+		flag_of_expand_herdoc(&data,str);
 		if (str[data.i] == '$' && (data.flag1 == SINGLE_Q_OFF || fg != 1)
 				&& data.fg == 0)
 			expande(str, &data, info, trash);
