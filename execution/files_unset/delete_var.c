@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   delete_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/09 20:58:41 by iahamdan         ###   ########.fr       */
+/*   Created: 2024/07/06 14:06:49 by iahamdan          #+#    #+#             */
+/*   Updated: 2024/07/06 14:06:50 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-void	handler_ctrl_backslash_child(int x)
+void	delete_var_from_env(t_data *info, int posi)
 {
-	(void)x;
-}
+	int		i;
+	int		j;
+	int		len;
+	char	**upd_env;
 
-void	run_cmd(t_data *info, char **cmd)
-{
-	int	pid;
-	int	s;
-
-	pid = fork();
-	g_exit_status = 0;
-	signal(SIGQUIT, handler_ctrl_backslash_child);
-	if (!pid)
-		execve(info->current_path, cmd, info->env);
-	else
+	i = 0;
+	j = 0;
+	len = 0;
+	while (info->env[len])
+		len++;
+	upd_env = malloc(sizeof(char *) * len);
+	while (info->env[i])
 	{
-		wait(&s);
-		signal(SIGQUIT, handler_ctrl_backslash);
-		if (g_exit_status == 130)
-			return ;
-		g_exit_status = get_exit_status(s);
+		if (i != posi)
+			upd_env[j] = ft_strdup(info->env[i]);
+		if (i != posi)
+			j++;
+		i++;
 	}
+	upd_env[j] = NULL;
+	ft_free_env(info, len);
+	info->env = upd_env;
 }

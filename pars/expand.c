@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/02 10:08:52 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:59:36 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	etc_of_expande(t_data *data, t_data *info, int i, t_trash **trash)
 					ft_strlen(data->env[data->i]) - f - 1);
 			if (info->flag == DOUBLE_Q_OFF && info->flag2 == 1)
 				data->src = add_qoutes(data->src);
-			data->str = ft_malloc1(info->j - i + ft_strlen(data->src) + 1, trash);
+			data->str = ftmalloc(info->j - i + ft_strlen(data->src) + 1, trash);
 			ft_strlcpy(data->str, info->str, info->len + 1);
 			ft_strlcat(data->str, data->src, info->len + ft_strlen(data->src)
 				+ 1);
@@ -91,7 +91,8 @@ void	expande(char *str, t_data *info, t_data *data, t_trash **trash)
 	if (str[info->i + 1] == '?')
 		return (expand_status_exit(info, trash));
 	while ((str[info->i + i] >= 'a' && str[info->i + i] <= 'z') || (str[info->i
-			+ i] >= 'A' && str[info->i + i] <= 'Z') || (str[info->i + i] >= '0'
+				+ i] >= 'A' && str[info->i + i] <= 'Z')
+		|| (str[info->i + i] >= '0'
 			&& str[info->i + i] <= '9') || str[info->i + i] == '_')
 		i++;
 	if (str[info->i + i] != '\0')

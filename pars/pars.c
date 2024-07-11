@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/02 13:48:12 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:02:24 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	len(char *str)
 	data.i = 0;
 	while (1)
 	{
-		double_single_Q(&data, str[data.i]);
+		double_single_q(&data, str[data.i]);
 		if ((data.flag1 == SINGLE_Q_ON && str[data.i] == '\'')
-				|| (data.flag == DOUBLE_Q_ON && str[data.i] == '"'))
+			|| (data.flag == DOUBLE_Q_ON && str[data.i] == '"'))
 			data.i++;
 		if (!str[data.i])
 			break ;
@@ -50,10 +50,10 @@ char	*change_cmd(char *str, int len, t_trash **trash)
 	data.len = 0;
 	while (str[data.i])
 	{
-		double_single_Q(&data, str[data.i]);
+		double_single_q(&data, str[data.i]);
 		if ((data.flag == DOUBLE_Q_ON && str[data.i] != '"')
 			|| (data.flag1 == SINGLE_Q_ON && str[data.i] != '\'')
-				|| (str[data.i] != '"' && str[data.i] != '\''))
+			|| (str[data.i] != '"' && str[data.i] != '\''))
 		{
 			data.str[data.len] = str[data.i];
 			data.len++;
@@ -91,6 +91,7 @@ void	etc_change(t_input **list, t_data *data, t_trash **trash)
 		i++;
 	}
 }
+
 void	change(t_input **list, char **cmd, t_trash **trash)
 {
 	t_data	data;

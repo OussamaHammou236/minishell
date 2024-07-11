@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_trash.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 11:56:12 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/25 11:56:13 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:00:33 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	add_to_trash(void *adr, t_trash **lst)
 
 void	free_trash(t_trash **trash)
 {
-	void *tmp;
+	void	*tmp;
 
 	while (*trash)
 	{

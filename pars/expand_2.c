@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/02 13:22:50 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:58:31 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	*ft_malloc1(int len, t_trash **trash)
+char	*ftmalloc(int len, t_trash **trash)
 {
 	char	*str;
 
@@ -51,7 +51,7 @@ char	*add_qoutes(char *str)
 	return (free(str), data.str);
 }
 
-void initialization_data(t_data *data, int fg)
+void	initialization_data(t_data *data, int fg)
 {
 	data->flag = DOUBLE_Q_OFF;
 	data->flag1 = SINGLE_Q_OFF;
@@ -61,10 +61,7 @@ void initialization_data(t_data *data, int fg)
 	data->fg = 0;
 	data->v = 0;
 }
-/*
-cat      <<     f          $USER
-    data->fg = 1
-*/
+
 void flag_of_expand_herdoc(t_data *data,char *str)
 {
 	if (str[data->i] != '$' && str[data->i] != ' ' && str[data->i] != '<' && str[data->i + 1] != '<')
@@ -81,20 +78,19 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 {
 	t_data	data;
 
-	initialization_data(&data,fg);
+	initialization_data(&data, fg);
 	data.j = ft_strlen(str);
-	data.str = ft_malloc1(data.j + 1, trash);
-
+	data.str = ftmalloc(data.j + 1, trash);
 	while (str[data.i])
 	{
-		double_single_Q(&data, str[data.i]);
-		if (str[data.i] == '$' && (str[data.i + 1] == '"' || str[data.i
-				+ 1] == '\'') && data.flag == DOUBLE_Q_OFF
-				&& data.flag1 == SINGLE_Q_OFF && fg == 1)
+		double_single_q(&data, str[data.i]);
+		if (str[data.i] == '$' && (str[data.i + 1] == '"'
+				|| str[data.i + 1] == '\'') && data.flag == DOUBLE_Q_OFF
+			&& data.flag1 == SINGLE_Q_OFF && fg == 1)
 			data.i++;
-		flag_of_expand_herdoc(&data,str);
+		flag_of_expand_herdoc(&data, str);
 		if (str[data.i] == '$' && (data.flag1 == SINGLE_Q_OFF || fg != 1)
-				&& data.fg == 0)
+			&& data.fg == 0)
 			expande(str, &data, info, trash);
 		else
 		{

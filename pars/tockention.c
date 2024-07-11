@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tockention.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/26 14:10:15 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:08:16 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,18 @@ int	check(t_data *data)
 	{
 		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP && data->i
 			+ 1 == data->len)
-			return (printf("minishell : syntax error near unexpected token `newline'\n"),
-				-1);
+		{
+			printf("minishell : syntax error near ");
+			printf("unexpected token `newline'\n");
+			return (-1);
+		}
 		else if (data->tab[data->i] != WORD && data->tab[data->i] != PIP
 			&& data->tab[data->i + 1] != WORD)
-			return (printf("minishell : syntax error near unexpected token '%s'\n",
-					data->cmd[data->i + 1]), -1);
+		{
+			printf("minishell : syntax error near unexpected token '%s'\n",
+				data->cmd[data->i + 1]);
+			return (-1);
+		}
 		data->i++;
 	}
 	return (0);

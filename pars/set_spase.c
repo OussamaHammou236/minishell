@@ -12,7 +12,7 @@
 
 #include "../header.h"
 
-void	double_single_Q(t_data *data, char c)
+void	double_single_q(t_data *data, char c)
 {
 	if (data->flag == DOUBLE_Q_OFF && data->flag1 == SINGLE_Q_OFF && c == '"')
 		data->flag = DOUBLE_Q_ON;
@@ -31,7 +31,7 @@ int	edit_line(char *str)
 	initialization_data(&data, 0);
 	while (str[data.i])
 	{
-		double_single_Q(&data, str[data.i]);
+		double_single_q(&data, str[data.i]);
 		if (data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF)
 		{
 			if ((str[data.i] == '>' && str[data.i + 1] == '>')
@@ -58,13 +58,16 @@ int	check_syntax_error(t_data data)
 	data.flag1 = SINGLE_Q_OFF;
 	while (data.str[data.i])
 	{
-		double_single_Q(&data, data.str[data.i]);
+		double_single_q(&data, data.str[data.i]);
 		if ((data.str[data.i] == ')' || data.str[data.i] == '('
 				|| data.str[data.i] == ';' || data.str[data.i] == '\\'
 				|| data.str[data.i] == '&') && (data.flag == DOUBLE_Q_OFF
 				&& data.flag1 == SINGLE_Q_OFF))
-			return (printf("minishell: syntax error near unexpected token '%c'\n",
-					data.str[data.i]), -1);
+		{
+			printf("minishell: syntax error near unexpected token '%c'\n",
+				data.str[data.i]);
+			return (-1);
+		}
 		data.i++;
 	}
 	if (data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON)
@@ -78,9 +81,10 @@ void	etc(t_data *data, char *str)
 			&& str[data->i + 1] == '<'))
 	{
 		data->str[data->len] = ' ';
-		data->str[data->len += 1] = str[data->i];
-		data->str[data->len += 1] = str[data->i + 1];
-		data->str[data->len += 1] = ' ';
+		data->str[data->len + 1] = str[data->i];
+		data->str[data->len + 2] = str[data->i + 1];
+		data->str[data->len + 3] = ' ';
+		data->len += 3;
 		data->i++;
 	}
 	else if ((str[data->i] == '>' && str[data->i + 1] != '>')
@@ -88,8 +92,9 @@ void	etc(t_data *data, char *str)
 		|| (str[data->i] == '|'))
 	{
 		data->str[data->len] = ' ';
-		data->str[data->len += 1] = str[data->i];
-		data->str[data->len += 1] = ' ';
+		data->str[data->len + 1] = str[data->i];
+		data->str[data->len + 2] = ' ';
+		data->len += 2;
 	}
 	else if (str[data->i] >= 9 && str[data->i] <= 13)
 		data->str[data->len] = ' ';
@@ -110,7 +115,7 @@ char	*set_spase(char *str)
 	data.len = 0;
 	while (str[data.i])
 	{
-		double_single_Q(&data, str[data.i]);
+		double_single_q(&data, str[data.i]);
 		if (data.flag == DOUBLE_Q_OFF && data.flag1 == SINGLE_Q_OFF)
 			etc(&data, str);
 		else

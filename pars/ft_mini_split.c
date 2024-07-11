@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mini_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/06/15 15:04:07 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:34:08 by oumondad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	cont_words(char *str, char sp)
 				data.j++;
 			while (str[data.i] && str[data.i] != sp)
 			{
-				double_single_Q(&data, str[data.i]);
+				double_single_q(&data, str[data.i]);
 				data.i++;
 			}
 		}
