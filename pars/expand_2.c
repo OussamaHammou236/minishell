@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/04 17:58:31 by oumondad         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:39:18 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ void	initialization_data(t_data *data, int fg)
 
 void flag_of_expand_herdoc(t_data *data,char *str)
 {
-	if (str[data->i] != '$' && str[data->i] != ' ' && str[data->i] != '<' && str[data->i + 1] != '<')
+	if (str[data->i] != '$' && str[data->i] != ' ' &&
+			str[data->i] != '<' && str[data->i + 1] != '<')
 		data->fg = 0;
 	if (data->v == 1)
 		data->fg = 0;
 	else if (data->v == 0 && str[data->i] == '$' && data->flag == DOUBLE_Q_OFF)
 		data->v = 1;
-	if (str[data->i] == '<' && str[data->i + 1] == '<' && data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
+	if (str[data->i] == '<' && str[data->i + 1] == '<'
+			&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->fg = 1;
 }
 
