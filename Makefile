@@ -13,9 +13,11 @@ execution/files_herdoc/herdoc.c execution/files_herdoc/rediriction.c execution/s
 
 OBJ_O= $(OBJ:.c=.o)
 
-all: $(OBJ_O)
+all: $(NAME)
+
+$(NAME): $(OBJ_O)
 	$(CC)  $(OBJ_O) $(CFLAGS) -lreadline -o $(NAME)
-	rm -rf $(OBJ_O)
+
 
 clean:
 	rm -rf $(OBJ_O)
