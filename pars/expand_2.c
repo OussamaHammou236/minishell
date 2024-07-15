@@ -62,17 +62,17 @@ void	initialization_data(t_data *data, int fg)
 	data->v = 0;
 }
 
-void flag_of_expand_herdoc(t_data *data,char *str)
+void	flag_of_expand_herdoc(t_data *data, char *str)
 {
-	if (str[data->i] != '$' && str[data->i] != ' ' &&
-			str[data->i] != '<' && str[data->i + 1] != '<')
+	if (str[data->i] != '$' && str[data->i] != ' '
+		&& str[data->i] != '<' && str[data->i + 1] != '<')
 		data->fg = 0;
 	if (data->v == 1)
 		data->fg = 0;
 	else if (data->v == 0 && str[data->i] == '$' && data->flag == DOUBLE_Q_OFF)
 		data->v = 1;
 	if (str[data->i] == '<' && str[data->i + 1] == '<'
-			&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
+		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->fg = 1;
 }
 
