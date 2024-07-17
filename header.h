@@ -105,6 +105,7 @@ typedef struct t_data{
 	int nb;
 	int fg;
 	int v;
+	char *sm;
 }t_data;
 
 # define PIP 1

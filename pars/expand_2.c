@@ -61,15 +61,21 @@ void	initialization_data(t_data *data, int fg)
 	data->fg = 0;
 	data->v = 0;
 }
+/* 
+	fg = 1;  | data->v = 0
+	cat << $USER $PWD
 
+*/
 void	flag_of_expand_herdoc(t_data *data, char *str)
 {
 	if (str[data->i] != '$' && str[data->i] != ' '
-		&& str[data->i] != '<' && str[data->i + 1] != '<')
+		&& str[data->i] != '<' && str[data->i + 1] != '<'
+		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->fg = 0;
 	if (data->v == 1)
 		data->fg = 0;
-	else if (data->v == 0 && str[data->i] == '$' && data->flag == DOUBLE_Q_OFF)
+	else if (data->v == 0 && str[data->i] == '$'
+		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->v = 1;
 	if (str[data->i] == '<' && str[data->i + 1] == '<'
 		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
@@ -81,6 +87,7 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	t_data	data;
 
 	initialization_data(&data, fg);
+	data.sm = str;
 	data.j = ft_strlen(str);
 	data.str = ftmalloc(data.j + 1, trash);
 	while (str[data.i])

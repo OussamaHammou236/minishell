@@ -57,9 +57,11 @@ int	check(t_data *data)
 			printf("unexpected token `newline'\n");
 			return (-1);
 		}
-		else if (data->tab[data->i] != WORD && data->tab[data->i] != PIP
+		else if ((data->tab[data->i] != WORD && data->tab[data->i] != PIP
 			&& data->tab[data->i + 1] != WORD)
+			|| (data->tab[data->i] == PIP && data->tab[data->i + 1] == PIP))
 		{
+			
 			printf("minishell : syntax error near unexpected token '%s'\n",
 				data->cmd[data->i + 1]);
 			return (-1);

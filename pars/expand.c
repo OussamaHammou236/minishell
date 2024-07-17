@@ -22,13 +22,53 @@ int	c_len(t_data *data)
 	return (i);
 }
 
+int check_befor_dollar(t_data *info, int i)
+{
+	int c;
+
+	c = i;
+	while(info->i + c > 0 && info->sm[info->i + c] != '$')
+		c--;
+	c--;
+	while (info->i + c > 0 && info->sm[info->i + c] != '|')
+	{
+		if (info->sm[info->i + c] != ' ' && info->sm[info->i + c] != '|')
+			return -1;
+		c--;
+	}
+	while (info->sm[info->i + i] && info->sm[info->i + i] != '|')
+	{
+		if (info->sm[info->i + i] != ' ' && info->sm[info->i + i] != '|')
+			return -1;
+		i++;
+	}
+	return 0;
+}
+
 void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 {
-	data->str = malloc(info->j - i + 1);
-	ft_bzero(data->str, info->j - i + 1);
-	add_to_trash(data->str, trash);
-	ft_strlcpy(data->str, info->str, info->len + 1);
-	info->str = data->str;
+	if(!check_befor_dollar(info, i))
+	{
+		if(info->len == 0)
+		{
+			info->str = ft_strdup("true");
+			add_to_trash(info->str, trash);
+		}
+		else
+		{
+			data->str = ftmalloc(info->j - i + 4 + 1,trash);
+			ft_strlcpy(data->str, info->str, info->len + 1);
+			ft_strlcat(data->str,"true",info->len + 5);
+			info->str = data->str;
+		}
+		info->len = ft_strlen(info->str);
+	}
+	else
+	{
+		data->str = ftmalloc(info->j - i + 1, trash);
+		ft_strlcpy(data->str, info->str, info->len + 1);
+		info->str = data->str;
+	}
 	info->i += i - 1;
 	info->j -= i;
 }
