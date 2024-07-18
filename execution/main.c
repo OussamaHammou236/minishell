@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 15:27:44 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:54:45 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 	if (check_syntax_error(*data) == 0 && !check_tocken(data->str, &tm, 0,
 			&trash))
 	{
-		command(data->str, &tm,&trash);
+		command(data->str, &tm, &trash);
 		info->input = *tm;
 		if (check_input(info) == -1)
 		{
 			error_print("minishell: command not found: ", info->input.cmd[0],
 				"\n", NULL);
 			g_exit_status = 127;
+			change_cmd_var_env(info, info->input.cmd);
 		}
 		reset_fds(info);
-		info->flags.is_builtin_cmd = 0;
 	}
 	else
 		g_exit_status = 2;
@@ -59,7 +59,7 @@ void	begining_minishell(t_data *info, t_trash **trash, char **env, int argc)
 		exit(1);
 	}
 	info->env = duplacte_env(env);
-	extract_path(env, info);
+	extract_path(info->env, info);
 	initialization(info);
 	info->trash = trash;
 	signal(SIGQUIT, handler_ctrl_backslash);
@@ -89,11 +89,20 @@ int	main(int argc, char **argv, char **env)
 		data.str = expand_str(str, &trash, &info, 1);
 		if (data.str[0])
 			run_minishell(&info, trash, tm, &data);
+		unlink(".herdoc_buff");
 		free(str);
 		free_trash(&trash);
+		if (info.flag_free_current_path == 1)
+		{
+			free(info.current_path);
+			info.flag_free_current_path = 0;
+		}
 	}
 }
 
-// -- unset PATH then export PATH . 
+// env , printenv problem with "$_" expand . (the solution : fake env).
+// pwd . when we delete the dirctory we are in . minishell will block .
 // -- leaks
 // ctrl -d , you must print exit . 
+// you must print exit in exit cmd . 
+// check all function that can fail with NULL . 

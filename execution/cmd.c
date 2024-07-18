@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/09 20:58:41 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:22:33 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	run_cmd(t_data *info, char **cmd)
 	int	pid;
 	int	s;
 
+	change_cmd_var_env(info, cmd);
 	pid = fork();
 	g_exit_status = 0;
 	signal(SIGQUIT, handler_ctrl_backslash_child);

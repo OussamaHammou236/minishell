@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_input	*ft_lstnew()
+t_input	*ft_lstnew(char **content)
 {
 	t_input	*node;
 

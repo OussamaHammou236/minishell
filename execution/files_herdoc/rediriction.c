@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:21:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/05 15:24:34 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:51:19 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,40 +58,41 @@ int	in_file(t_data *info, t_input temp, t_herdoc *arg)
 
 void	child_part(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 {
+	unlink(".herdoc_buff");
 	signal(SIGINT, signal_handler_for_childs);
-	close(arg->fd[0]);
 	dup2(info->flags.fd_stdin, 0);
 	dup2(info->flags.fd_stdout, 1);
+	arg->fd_herdoc = open(".herdoc_buff", O_CREAT | O_APPEND | O_RDWR, 0644);
 	while (1)
 	{
 		arg->str = readline("> ");
+		if (!arg->str)
+			handle_ctrl_d_in_herdoc(arg);
 		if (cmp_str(arg->str, temp.red[arg->posi + 1]) == 1)
 		{
 			free(arg->str);
 			break ;
 		}
-		write(arg->fd[1], expand_str(arg->str, &trash, info, 0),
+		write(arg->fd_herdoc, expand_str(arg->str, &trash, info, 0),
 			strlen(expand_str(arg->str, &trash, info, 0)));
-		write(arg->fd[1], "\n", 1);
+		write(arg->fd_herdoc, "\n", 1);
 		free(arg->str);
 	}
-	close(arg->fd[1]);
+	close(arg->fd_herdoc);
 	exit(0);
 }
 
 int	herdoc(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 {
-	int	id;
-	int	st;
+	int		id;
+	int		st;
 
-	pipe(arg->fd);
 	arg->posi = arg->i;
 	id = fork();
 	if (!id)
 		child_part(info, temp, arg, trash);
 	else
 	{
-		close(arg->fd[1]);
 		wait(&st);
 		if (st == 1280)
 			return (-1);

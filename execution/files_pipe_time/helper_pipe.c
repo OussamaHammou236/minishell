@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:07:19 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 16:15:49 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:06:52 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	first_cmd(t_data *info, t_input *temp, int **fd, int *i)
 		flag_of_exit_status();
 	if (check_cmd(info, temp->cmd[0]) == 0)
 	{
-		error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
+		if (info->flags.unset_path == 0)
+			error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
 		exit(4);
 	}
 	execve(info->current_path, temp->cmd, info->env);
@@ -62,7 +63,8 @@ void	middle_cmd(t_data *info, t_input *temp, int **fd, int *i)
 		flag_of_exit_status();
 	if (check_cmd(info, temp->cmd[0]) == 0)
 	{
-		error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
+		if (info->flags.unset_path == 0)
+			error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
 		exit(4);
 	}
 	execve(info->current_path, temp->cmd, info->env);
@@ -83,7 +85,8 @@ void	last_cmd(t_data *info, t_input *temp, int **fd, int *i)
 		flag_of_exit_status();
 	if (check_cmd(info, temp->cmd[0]) == 0)
 	{
-		error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
+		if (info->flags.unset_path == 0)
+			error_print("minishell: command not found: ", temp->cmd[0], "\n", NULL);
 		exit(4);
 	}
 	execve(info->current_path, temp->cmd, info->env);

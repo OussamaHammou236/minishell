@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/04 00:24:58 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:38:07 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	shlvl_increament(t_data *info)
 
 void	initialization(t_data *info)
 {
-	info->flags.is_builtin_cmd = 0;
 	info->number_cmd = 0;
 	info->flags.fd_stdout = dup(1);
 	info->flags.fd_stdin = dup(0);
 	info->flags.dup_stdin_used = 0;
 	info->flags.dup_stdout_used = 0;
 	info->flag_free_current_path = 0;
+	info->flags.unset_path = 0;
 	shlvl_increament(info);
 }
 

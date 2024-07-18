@@ -6,11 +6,11 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:50:12 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/09 00:33:52 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:39:08 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
 char	*make_path(char *path, char *input)
 {
@@ -51,6 +51,8 @@ int	check_cmd(t_data *info, char *input)
 		info->flag_free_current_path = 0;
 		return (1);
 	}
+	if (check_path(info, input) == 1)
+		return (0);
 	while (info->path[i])
 	{
 		info->current_path = make_path(info->path[i], input);
@@ -71,7 +73,11 @@ int	check_built_cmd(t_data *info, t_input temp)
 	if (cmp_str(temp.cmd[0], "pwd") == 1)
 		return (run_pwd(info, temp), 1);
 	if (cmp_str(temp.cmd[0], "env") == 1)
+	{
+		if (check_path(info, temp.cmd[0]) == 1)
+			return (1);
 		return (run_env(info, temp), 1);
+	}
 	if (cmp_str(temp.cmd[0], "export") == 1)
 		return (run_export(info, temp), 1);
 	if (cmp_str(temp.cmd[0], "unset") == 1)
@@ -109,11 +115,15 @@ int	check_input(t_data *info)
 		if (!info->input.cmd[0])
 			return (0);
 		if (check_built_cmd(info, info->input) == 1)
-			info->flags.is_builtin_cmd = 1;
+			change_cmd_var_env(info, info->input.cmd);
 		else if (check_cmd(info, info->input.cmd[0]) == 1)
 			run_cmd(info, info->input.cmd);
 		else
+		{
+			if (info->flags.unset_path == 1)
+				return (0);
 			return (-1);
+		}
 	}
 	else
 		return (pipe_time(info));

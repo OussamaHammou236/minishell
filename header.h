@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/18 15:24:39 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:52:06 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ extern int g_exit_status;
 typedef struct s_herdoc_arg_norm
 {
 	int fd[2];
+	int		fd_herdoc;
 	int     i;
     int     posi;
     int     our_fd_in;
@@ -51,14 +52,13 @@ typedef struct s_export_norm
 
 struct t_flags
 {
-    int is_builtin_cmd; 
-
 	int fd_stdout;
 	int fd_stdin;
 
 	int	dup_stdout_used;
 	int dup_stdin_used;
 	
+	int	unset_path;
 
 };
 
@@ -81,7 +81,7 @@ typedef struct t_data{
     char *current_path;
     char **env;
     int number_cmd;
-	
+
 	
 	
     struct t_flags flags;
@@ -107,6 +107,7 @@ typedef struct t_data{
 	int v;
 	char *sm;
 	int nb_of_herdoc;
+
 }t_data;
 
 # define PIP 1
@@ -185,7 +186,7 @@ char				*add_qoutes(char *str);
 char				*ftmalloc(int len, t_trash **trash);
 void				initialization_data(t_data *data, int fg);
 int					check_befor_dollar(t_data *info, int i);
-void    check_herdoc(t_data *data);
+void				check_herdoc(t_data *data);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -249,6 +250,9 @@ int	handle_sign_plus(t_data *info, char *variable);
 char	*part_handle_sign_plus(t_data *info, char *variable);
 int	check_equality_export(char *var_env, char *user_var);
 void	print_error_permi(char *str, t_data *info);
+int     check_path(t_data *info, char *input);
+void	change_cmd_var_env(t_data *info, char **cmd);
+void	handle_ctrl_d_in_herdoc(t_herdoc *arg);
 // test//
 
 

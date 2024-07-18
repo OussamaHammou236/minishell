@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:55 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 23:47:03 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:22:16 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	free_something_after_exit(t_data *info)
 	free_trash(info->trash);
 	free_env_new(info);
 	if (info->flag_free_current_path == 1)
+	{
 		free(info->current_path);
+		info->flag_free_current_path = 1;
+	}
 	ft_free_path(info);
 }

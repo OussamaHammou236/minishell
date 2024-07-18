@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:30:25 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 14:42:34 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:51:56 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,10 @@ char	*make_new_shlvl(t_data *info, int posi)
 	shlvl_part_two(info, posi, new_shlvl, my_num_in_str);
 	free(my_num_in_str);
 	return (new_shlvl);
+}
+
+void	handle_ctrl_d_in_herdoc(t_herdoc *arg)
+{
+	close(arg->fd_herdoc);
+	exit(0);
 }
