@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/08 23:39:29 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:24:39 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct t_data{
 	int fg;
 	int v;
 	char *sm;
+	int nb_of_herdoc;
 }t_data;
 
 # define PIP 1
@@ -183,6 +184,8 @@ char				*expand_str(char *str, t_trash **trash, t_data *info,
 char				*add_qoutes(char *str);
 char				*ftmalloc(int len, t_trash **trash);
 void				initialization_data(t_data *data, int fg);
+int					check_befor_dollar(t_data *info, int i);
+void    check_herdoc(t_data *data);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -61,11 +61,7 @@ void	initialization_data(t_data *data, int fg)
 	data->fg = 0;
 	data->v = 0;
 }
-/* 
-	fg = 1;  | data->v = 0
-	cat << $USER $PWD
 
-*/
 void	flag_of_expand_herdoc(t_data *data, char *str)
 {
 	if (str[data->i] != '$' && str[data->i] != ' '

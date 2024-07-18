@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tockention.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/04 18:08:16 by oumondad         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:09:59 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	tockention(char *str, t_data *data, t_trash **trash)
 			data->tab[data->i] = WORD;
 		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP)
 			data->j++;
+		check_herdoc(data);
 		data->i++;
 		i++;
 	}
@@ -58,10 +59,9 @@ int	check(t_data *data)
 			return (-1);
 		}
 		else if ((data->tab[data->i] != WORD && data->tab[data->i] != PIP
-			&& data->tab[data->i + 1] != WORD)
+				&& data->tab[data->i + 1] != WORD)
 			|| (data->tab[data->i] == PIP && data->tab[data->i + 1] == PIP))
 		{
-			
 			printf("minishell : syntax error near unexpected token '%s'\n",
 				data->cmd[data->i + 1]);
 			return (-1);
@@ -76,6 +76,7 @@ int	check_tocken(char *str, t_input **list, int flag, t_trash **trash)
 	t_data	data;
 
 	data.len = cont_words(str, ' ');
+	data.nb_of_herdoc = 0;
 	if (data.len == 0)
 		return (1);
 	data.tab = (int *)malloc(data.len * sizeof(int));

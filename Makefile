@@ -2,7 +2,7 @@ NAME= minishell
 CC= cc
 #CFLAGS= -Wall -Wextra -Werror
 #CFLAGS= -fsanitize=address -g3
-OBJ= pars/pars.c pars/set_spase.c pars/expand.c pars/tockention.c libft/ft_strncmp.c pars/free_trash.c pars/expand_2.c\
+OBJ= pars/pars.c pars/set_spase.c pars/expand.c pars/tockention.c pars/check_str.c  pars/check_herdoc.c libft/ft_strncmp.c pars/free_trash.c pars/expand_2.c\
 libft/ft_split.c libft/ft_substr.c libft/ft_itoa.c libft/ft_bzero.c libft/ft_strdup.c libft/ft_strlen.c libft/ft_strlcat.c \
 libft/ft_strlcpy.c libft/ft_strjoin.c libft/ft_lstadd_back.c libft/ft_lstlast.c libft/ft_lstnew.c pars/ft_mini_split.c  libft/ft_atoi.c \
 execution/files_cd/cd.c execution/files_cd/helper_cd.c execution/cmd.c execution/echo.c execution/env.c execution/exit.c execution/files_export/export.c execution/free_memory.c\

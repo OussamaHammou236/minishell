@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/04 17:59:36 by oumondad         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:11:43 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,20 @@ int	c_len(t_data *data)
 	return (i);
 }
 
-int check_befor_dollar(t_data *info, int i)
-{
-	int c;
-
-	c = i;
-	while(info->i + c > 0 && info->sm[info->i + c] != '$')
-		c--;
-	c--;
-	while (info->i + c > 0 && info->sm[info->i + c] != '|')
-	{
-		if (info->sm[info->i + c] != ' ' && info->sm[info->i + c] != '|')
-			return -1;
-		c--;
-	}
-	while (info->sm[info->i + i] && info->sm[info->i + i] != '|')
-	{
-		if (info->sm[info->i + i] != ' ' && info->sm[info->i + i] != '|')
-			return -1;
-		i++;
-	}
-	return 0;
-}
-
 void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 {
-	if(!check_befor_dollar(info, i))
+	if (!check_befor_dollar(info, i))
 	{
-		if(info->len == 0)
+		if (info->len == 0)
 		{
 			info->str = ft_strdup("true");
 			add_to_trash(info->str, trash);
 		}
 		else
 		{
-			data->str = ftmalloc(info->j - i + 4 + 1,trash);
+			data->str = ftmalloc(info->j - i + 4 + 1, trash);
 			ft_strlcpy(data->str, info->str, info->len + 1);
-			ft_strlcat(data->str,"true",info->len + 5);
+			ft_strlcat(data->str, "true", info->len + 5);
 			info->str = data->str;
 		}
 		info->len = ft_strlen(info->str);
