@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 09:36:21 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 11:58:09 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:22:41 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info)
 	char	*s;
 
 	(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
+	add_to_trash((*list)->red[data->i], trash);
 	if (data->cmd[data->len + 1][0] == '$' && data->cmd[data->len][1] != '<')
 	{
 		s = expand_str(data->cmd[data->len + 1], trash, info, 0);
@@ -56,7 +57,6 @@ void	check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info)
 	}
 	(*list)->red[data->i + 1] = change_cmd(data->cmd[data->len + 1],
 			len(data->cmd[data->len + 1]), trash);
-	add_to_trash((*list)->red[data->i], trash);
 	data->len++;
 	data->i += 2;
 }
