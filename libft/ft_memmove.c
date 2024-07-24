@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:36:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:44:22 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/01 12:30:15 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/25 10:37:16 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int	i;
-	int	s;
-	int	r;
+	char		*d;
+	const char	*s;
+	size_t		i;
 
 	i = 0;
-	r = 0;
-	s = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	d = dst;
+	s = src;
+	if (!dst && !src)
+		return (NULL);
+	if (dst == src)
+		return (dst);
+	if (s < d)
 	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
+		while (len--)
+			d[len] = s[len];
 	}
-	while (str[i] >= 48 && str[i] <= '9' && str[i])
+	else
 	{
-		r = r * 10 + (str[i] - 48);
-		i++;
+		while (i < len)
+		{
+			d[i] = s[i];
+			i++;
+		}
 	}
-	return (r * s);
+	return (dst);
 }

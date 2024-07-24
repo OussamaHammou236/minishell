@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/18 19:06:49 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:31:03 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ struct t_flags
 
 };
 
-typedef struct s_input
-{
-	char **cmd;
-	char **red;
-	int *type;
-	struct s_input *next;	
-} t_input;
 
 typedef struct s_trash
 {
@@ -107,6 +100,7 @@ typedef struct t_data{
 	int v;
 	char *sm;
 	int nb_of_herdoc;
+	int n;
 
 }t_data;
 
@@ -168,7 +162,7 @@ char				**ft_mini_split(char *str, char sp, t_trash **trash);
 int					edit_line(char *str);
 char				*set_spase(char *str);
 void				double_single_q(t_data *data, char c);
-void				command(char *line, t_input **list, t_trash **trash);
+void	command(char *line, t_input **list, t_trash **trash, t_data *info);
 int					check_syntax_error(t_data data);
 int					check_tocken(char *str, t_input **list, int flag,
 						t_trash **trash);
@@ -187,6 +181,10 @@ char				*ftmalloc(int len, t_trash **trash);
 void				initialization_data(t_data *data, int fg);
 int					check_befor_dollar(t_data *info, int i);
 void				check_herdoc(t_data *data);
+char	*change_cmd(char *str, int len, t_trash **trash);
+void check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info);
+int red_check(char *str);
+int	len(char *str);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

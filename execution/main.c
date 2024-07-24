@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 14:54:45 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:49:41 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 	if (check_syntax_error(*data) == 0 && !check_tocken(data->str, &tm, 0,
 			&trash))
 	{
-		command(data->str, &tm, &trash);
+		command(data->str, &tm, &trash, info);
 		info->input = *tm;
 		if (check_input(info) == -1)
 		{

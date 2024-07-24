@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 09:36:21 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/18 16:10:37 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:44:46 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,30 @@ int	check_befor_dollar(t_data *info, int i)
 		i++;
 	}
 	return (0);
+}
+
+void	check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info)
+{
+	char	*s;
+
+	(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
+	if (data->cmd[data->len + 1][0] == '$')
+	{
+		s = expand_str(data->cmd[data->len + 1], trash, info, 0);
+		if (red_check(s) == -1)
+		{
+			printf("minishell: %s: ambiguous redirect\n",
+				data->cmd[data->len + 1]);
+			s = NULL;
+		}
+		(*list)->red[data->i + 1] = s;
+		data->len++;
+		data->i += 2;
+		return ;
+	}
+	(*list)->red[data->i + 1] = change_cmd(data->cmd[data->len + 1],
+			len(data->cmd[data->len + 1]), trash);
+	add_to_trash((*list)->red[data->i], trash);
+	data->len++;
+	data->i += 2;
 }

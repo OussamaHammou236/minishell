@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:36:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:44:22 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/05 17:30:29 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/25 09:29:24 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+char	*ft_strtrim(const char *s1, const char *set)
 {
-	int	i;
-	int	s;
-	int	r;
+	size_t	i;
+	size_t	j;
+	char	*d;
 
 	i = 0;
-	r = 0;
-	s = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	if (!s1 || !set)
+		return (NULL);
+	j = ft_strlen(s1) - 1;
+	if (s1[i] == '\0')
+		return (ft_strdup(""));
+	while (s1[i] && ft_strchr(set, s1[i]))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= '9' && str[i])
-	{
-		r = r * 10 + (str[i] - 48);
-		i++;
-	}
-	return (r * s);
+	while (j > i && ft_strchr(set, s1[j]))
+		j--;
+	d = (char *)malloc(j - i + 2);
+	if (!d)
+		return (NULL);
+	ft_strlcpy(d, &s1[i], j - i + 2);
+	return (d);
 }

@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:36:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:44:22 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/17 15:17:09 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/07/24 10:48:41 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+t_input	*ft_lstnew(void)
 {
-	int	i;
-	int	s;
-	int	r;
+	t_input	*node;
 
-	i = 0;
-	r = 0;
-	s = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= '9' && str[i])
-	{
-		r = r * 10 + (str[i] - 48);
-		i++;
-	}
-	return (r * s);
+	node = malloc(sizeof(t_input));
+	if (!node)
+		return (NULL);
+	node->next = 0x0;
+	return (node);
 }

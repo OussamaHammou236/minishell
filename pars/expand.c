@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/18 16:11:43 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:33:33 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	c_len(t_data *data)
 
 void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 {
-	if (!check_befor_dollar(info, i))
+	if (!check_befor_dollar(info, i) && data->n == 1)
 	{
 		if (info->len == 0)
 		{
@@ -107,10 +107,7 @@ void	expande(char *str, t_data *info, t_data *data, t_trash **trash)
 		i++;
 	if (str[info->i + 1] == '?')
 		return (expand_status_exit(info, trash));
-	while ((str[info->i + i] >= 'a' && str[info->i + i] <= 'z') || (str[info->i
-				+ i] >= 'A' && str[info->i + i] <= 'Z')
-		|| (str[info->i + i] >= '0'
-			&& str[info->i + i] <= '9') || str[info->i + i] == '_')
+	while (ft_isalnum(str[info->i + i]) || str[info->i + i] == '_')
 		i++;
 	if (str[info->i + i] != '\0')
 		data->s = ft_substr(str + 1, info->i, i - 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/04 18:02:24 by oumondad         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:00:56 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*change_cmd(char *str, int len, t_trash **trash)
 	return (data.str);
 }
 
-void	etc_change(t_input **list, t_data *data, t_trash **trash)
+void	etc_change(t_input **list, t_data *data, t_trash **trash, t_data *info)
 {
 	int	i;
 
@@ -73,12 +73,7 @@ void	etc_change(t_input **list, t_data *data, t_trash **trash)
 		if ((data->cmd[data->len][i] == '>' || data->cmd[data->len][i] == '<')
 			&& data->cmd[data->len + 1])
 		{
-			(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
-			(*list)->red[data->i + 1] = change_cmd(data->cmd[data->len + 1],
-					len(data->cmd[data->len + 1]), trash);
-			add_to_trash((*list)->red[data->i], trash);
-			data->len++;
-			data->i += 2;
+			check_imbg(list, data, trash, info);
 			return ;
 		}
 		else
@@ -92,7 +87,7 @@ void	etc_change(t_input **list, t_data *data, t_trash **trash)
 	}
 }
 
-void	change(t_input **list, char **cmd, t_trash **trash)
+void	change(t_input **list, char **cmd, t_trash **trash, t_data *info)
 {
 	t_data	data;
 
@@ -102,12 +97,12 @@ void	change(t_input **list, char **cmd, t_trash **trash)
 	data.cmd = cmd;
 	while (cmd[data.len])
 	{
-		etc_change(list, &data, trash);
+		etc_change(list, &data, trash, info);
 		data.len++;
 	}
 }
 
-void	command(char *line, t_input **list, t_trash **trash)
+void	command(char *line, t_input **list, t_trash **trash, t_data *info)
 {
 	int		j;
 	char	**cmd;
@@ -117,10 +112,10 @@ void	command(char *line, t_input **list, t_trash **trash)
 	cmd = ft_mini_split(line, '|', trash);
 	while (cmd[j])
 	{
-		node = ft_lstnew(cmd);
+		node = ft_lstnew();
 		add_to_trash(node, trash);
 		check_tocken(cmd[j], &node, 1, trash);
-		change(&node, ft_mini_split(cmd[j], ' ', trash), trash);
+		change(&node, ft_mini_split(cmd[j], ' ', trash), trash, info);
 		ft_lstadd_back(list, node);
 		j++;
 	}

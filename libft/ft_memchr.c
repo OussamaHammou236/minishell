@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:36:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:44:22 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/01 11:39:17 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/24 15:21:45 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int	i;
-	int	s;
-	int	r;
+	size_t	i;
 
 	i = 0;
-	r = 0;
-	s = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < n)
 	{
-		if (str[i] == '-')
-			s = -1;
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)(s + i));
 		i++;
 	}
-	while (str[i] >= 48 && str[i] <= '9' && str[i])
-	{
-		r = r * 10 + (str[i] - 48);
-		i++;
-	}
-	return (r * s);
+	return (NULL);
 }

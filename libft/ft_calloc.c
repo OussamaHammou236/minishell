@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 22:41:18 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:43:45 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/04 10:42:29 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/24 15:03:02 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_input	*ft_lstlast(t_input *lst)
+void	*ft_calloc(size_t count, size_t size)
 {
-	if (!lst)
+	void	*ret;
+
+	if (size != 0 && count > SIZE_MAX / size)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	ret = malloc(count * size);
+	if (!ret)
+		return (NULL);
+	ft_bzero(ret, count * size);
+	return (ret);
 }

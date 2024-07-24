@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:36:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2023/11/25 09:44:22 by ohammou-         ###   ########.fr       */
+/*   Created: 2023/11/01 12:03:46 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/15 11:55:20 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
-	int	s;
-	int	r;
+	size_t	i;
 
 	i = 0;
-	r = 0;
-	s = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (n > i)
 	{
-		if (str[i] == '-')
-			s = -1;
+		if (((unsigned char *)s1)[i] != ((unsigned char *)s2)[i])
+			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 		i++;
 	}
-	while (str[i] >= 48 && str[i] <= '9' && str[i])
-	{
-		r = r * 10 + (str[i] - 48);
-		i++;
-	}
-	return (r * s);
+	return (0);
 }

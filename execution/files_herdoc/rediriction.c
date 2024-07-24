@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rediriction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:21:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 14:51:19 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:41:44 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	out_file(t_data *info, t_input temp, t_herdoc *arg)
 	arg->posi = arg->i;
 	if (arg->error_file != 1)
 	{
+		if (temp.red[arg->posi + 1] == NULL)
+			return -1;
 		arg->our_fd_in = open(temp.red[arg->posi + 1], O_CREAT | O_RDWR, 0644);
 		if (access(temp.red[arg->posi + 1], W_OK) == -1)
 			return (print_error_permi(temp.red[arg->posi + 1], info), -1);

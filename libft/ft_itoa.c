@@ -3,78 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 20:54:46 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/06/27 16:02:29 by iahamdan         ###   ########.fr       */
+/*   Created: 2023/11/07 14:28:59 by ohammou-          #+#    #+#             */
+/*   Updated: 2023/11/24 15:03:27 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*zero_error(void)
+static int	ft_digitlen(int n)
 {
-	char	*str;
+	int	j;
 
-	str = (char *)malloc(sizeof(char) * 2);
-	if (!str)
-		return (NULL);
-	str[0] = 48;
-	str[1] = '\0';
-	return (str);
-}
-
-static int	calcule_len(long n)
-{
-	long	div;
-	int		len;
-
-	div = n;
-	len = 0;
-	while (div > 0)
+	j = 0;
+	if (n == 0)
+		j++;
+	while (n != 0)
 	{
-		len++;
-		div = div / 10;
+		n /= 10;
+		j++;
 	}
-	return (len);
-}
-
-static void	my_loop(long div, int len, char *str, int x)
-{
-	long	mod;
-
-	while (len - 1 >= x)
-	{
-		mod = div % 10;
-		div = div / 10;
-		str[len - 1] = mod + 48;
-		len--;
-	}
+	return (j);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		len;
-	long	div;
-	int		x;
+	int		c;
+	int		j;
+	char	*l;
+	long	g;
 
-	x = 0;
-	div = n;
-	if (div == 0)
-		return (zero_error());
-	if (div < 0)
+	g = n;
+	j = ft_digitlen(g);
+	c = 0;
+	if (g < 0)
 	{
-		div *= -1;
-		x++;
+		g *= -1;
+		c = 1;
 	}
-	len = calcule_len(div) + x;
-	str = (char *)malloc(sizeof(char) * len + 1);
-	if (!str)
+	l = malloc((c + j + 1) * sizeof(char));
+	if (!l)
 		return (NULL);
-	if (x == 1)
-		str[0] = '-';
-	my_loop(div, len, str, x);
-	str[calcule_len(div) + x] = '\0';
-	return (str);
+	if (c)
+		l[0] = '-';
+	l[j + c] = '\0';
+	while (j-- > 0)
+	{
+		l[j + c] = (g % 10) + '0';
+		g /= 10;
+	}
+	return (l);
 }
