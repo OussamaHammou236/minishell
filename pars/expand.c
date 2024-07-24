@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 14:18:37 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:47:59 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	etc_of_expande(t_data *data, t_data *info, int i, t_trash **trash)
 			data->src = ft_substr(data->env[data->i], f + 1,
 					ft_strlen(data->env[data->i]) - f - 1);
 			if (info->flag == DOUBLE_Q_OFF && info->flag2 == 1)
-				data->src = add_qoutes(data->src);
+				data->src = add_single_double_q(data->src);
 			data->str = ftmalloc(info->j - i + ft_strlen(data->src) + 1, trash);
 			ft_strlcpy(data->str, info->str, info->len + 1);
 			ft_strlcat(data->str, data->src, info->len + ft_strlen(data->src)

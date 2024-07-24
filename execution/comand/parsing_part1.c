@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_part1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:50:12 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 10:39:08 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:27:02 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	check_built_cmd(t_data *info, t_input temp)
 		return (run_unset(info, temp), 1);
 	if (cmp_str(temp.cmd[0], "exit") == 1)
 		return (run_exit(info, temp), 1);
+	if (cmp_str(temp.cmd[0], "true") == 1)
+		return (run_true(), 1);
 	return (0);
 }
 

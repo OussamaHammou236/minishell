@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 10:31:03 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:47:33 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,16 @@ void				expande(char *str, t_data *info, t_data *data,
 int					cont_words(char *str, char sp);
 char				*expand_str(char *str, t_trash **trash, t_data *info,
 						int fg);
-char				*add_qoutes(char *str);
+char				*add_qoutes(char *str, char c);
 char				*ftmalloc(int len, t_trash **trash);
 void				initialization_data(t_data *data, int fg);
 int					check_befor_dollar(t_data *info, int i);
 void				check_herdoc(t_data *data);
 char	*change_cmd(char *str, int len, t_trash **trash);
 void check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info);
+void	run_true(void);
 int red_check(char *str);
+char	*add_single_double_q(char *str);
 int	len(char *str);
 // libft
 

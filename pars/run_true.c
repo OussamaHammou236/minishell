@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   run_true.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:34:10 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:25 by ohammou-         ###   ########.fr       */
+/*   Created: 2024/07/24 19:05:43 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/07/24 19:50:59 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "../header.h"
 
-char	*ft_strchr(const char *s, int c)
+void	run_true(void)
 {
-	int	i;
+	return ;
+}
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i++;
-	}
-	if ((char)c == '\0')
-		return (char *)(s + i);
-
-	return (0);
+char	*add_single_double_q(char *str)
+{
+	char	*s;
+	if (ft_strchr(str, '\''))
+		s = add_qoutes(str, '"');
+	else
+		s = add_qoutes(str, '\'');
+	return s;
 }

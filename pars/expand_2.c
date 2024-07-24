@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 14:18:44 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:50:47 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ftmalloc(int len, t_trash **trash)
 	return (str);
 }
 
-char	*add_qoutes(char *str)
+char	*add_qoutes(char *str, char c)
 {
 	t_data	data;
 
@@ -31,23 +31,23 @@ char	*add_qoutes(char *str)
 	data.len = ft_strlen(str) + (cont_words(str, ' ') * 2);
 	data.str = malloc(data.len + 1);
 	ft_bzero(data.str, data.len + 1);
-	data.str[0] = '"';
+	data.str[0] = c;
 	while (str[data.i])
 	{
 		if (str[data.i] != ' ' && str[data.i + 1] == ' ')
 		{
 			data.str[data.j] = str[data.i];
-			data.str[++data.j] = '"';
+			data.str[++data.j] = c;
 			data.str[++data.j] = ' ';
 		}
 		else if (str[data.i] == ' ' && str[data.i + 1] != ' ')
-			data.str[data.j] = '"';
+			data.str[data.j] = c;
 		else
 			data.str[data.j] = str[data.i];
 		data.i++;
 		data.j++;
 	}
-	data.str[data.j] = '"';
+	data.str[data.j] = c;
 	return (free(str), data.str);
 }
 

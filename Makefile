@@ -1,11 +1,11 @@
 NAME		=	minishell
 CC			=	cc
-#CFLAGS		=	-Wall -Wextra -Werror
+#CFLAGS		=	-fsanitize=address
 LIBFT_PATH	=	libft/
 LIBFT 		=	libft/libft.a
 
 OBJ			=	pars/pars.c pars/set_spase.c pars/expand.c pars/check_herdoc.c pars/check_str.c pars/tockention.c pars/free_trash.c pars/expand_2.c \
-    			pars/ft_mini_split.c \
+    			pars/ft_mini_split.c pars/run_true.c\
     			execution/files_cd/cd.c execution/files_cd/helper_cd.c execution/cmd.c execution/echo.c execution/env.c execution/exit.c execution/files_export/export.c execution/free_memory.c \
     			execution/files_export/export_part_two.c execution/files_export/export_part_three.c execution/files_export/export_part_four.c \
     			execution/helper_func/helper.c execution/helper_func/helper_part_one.c execution/helper_func/helper_part_two.c execution/main.c execution/comand/parsing_part1.c \
