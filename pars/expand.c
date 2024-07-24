@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 10:33:33 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:18:37 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	c_len(t_data *data)
 
 void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 {
-	if (!check_befor_dollar(info, i) && data->n == 1)
+	if (!check_befor_dollar(info, i) && info->n == 1)
 	{
 		if (info->len == 0)
 		{
