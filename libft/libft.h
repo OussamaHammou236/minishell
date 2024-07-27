@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:51:00 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:10 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:44:32 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ typedef struct s_input
 	char			**cmd;
 	char			**red;
 	int				*type;
+	int				*is_qouts;
+	int				len;
 	struct s_input	*next;
 }	t_input;
+/*
 
+*/
 // parte 1
 
 void				*ft_memcpy(void *dst, const void *src, size_t n);

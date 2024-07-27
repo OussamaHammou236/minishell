@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:19 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 10:48:10 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:23:38 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	change_cmd_var_env(t_data *info, char **cmd)
 	int		i;
 	int		posi;
 	
-	if (!cmd[0])
+	if (!cmd[0] || !info->env[0])
 		return ;
 	posi = 0;
 	i = 0;

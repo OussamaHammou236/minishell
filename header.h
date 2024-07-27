@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:47:33 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:57:00 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct t_data{
 size_t	ft_strlen(const char *str);
 char	**ft_split(char const *s, char c);
 int		cmp_str_env(char *str1, const char *str2, int len_str2);
-void    extract_path(char **env, t_data *info);
+void    extract_path(char **env, t_data *info, char *input);
 char    *make_path(char *path, char *input);
 int		check_cmd(t_data *info, char *input);
 int     check_input(t_data *info);
@@ -181,12 +181,14 @@ char				*ftmalloc(int len, t_trash **trash);
 void				initialization_data(t_data *data, int fg);
 int					check_befor_dollar(t_data *info, int i);
 void				check_herdoc(t_data *data);
-char	*change_cmd(char *str, int len, t_trash **trash);
-void check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info);
-void	run_true(void);
-int red_check(char *str);
-char	*add_single_double_q(char *str);
-int	len(char *str);
+int					is_white_space(char c);
+char				*change_cmd(char *str, int len, t_trash **trash);
+void				check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info);
+void				run_true(void);
+int					red_check(char *str);
+char				*add_single_double_q(char *str);
+int					len(char *str);
+int					cont_words_spaces(char *str);
 // libft
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -237,7 +239,6 @@ void	shlvl_increament(t_data *info);
 void	initialization(t_data *info);
 int	cmp_str_env(char *str1, const char *str2, int len_str2);
 int	get_part_input(t_data *info, t_input temp);
-void	extract_path(char **env, t_data *info);
 void	error_print(char *str1, char *str2, char *str3, char *str4);
 int	get_len_number(int x);
 void	shlvl_part_two(t_data *info, int posi, char *new_shlvl,
@@ -253,6 +254,9 @@ void	print_error_permi(char *str, t_data *info);
 int     check_path(t_data *info, char *input);
 void	change_cmd_var_env(t_data *info, char **cmd);
 void	handle_ctrl_d_in_herdoc(t_herdoc *arg);
+void	export_operation(t_data *info, char *user_var, int sign_plus);
+char    **make_mini_env();
+void	ft_free_path(t_data *info);
 // test//
 
 

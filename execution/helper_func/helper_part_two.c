@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 10:38:07 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:56:31 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,30 @@ int	get_part_input(t_data *info, t_input temp)
 	return (i);
 }
 
-void	extract_path(char **env, t_data *info)
+void	extract_path(char **env, t_data *info, char *input)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	i = 0;
 	while (env[i])
 	{
 		if (cmp_str_env(env[i], "PATH=", 5) == 1)
 		{
 			info->path = ft_split(&env[i][5], ':');
+			flag = 1;
+			info->flags.unset_path = 0;
 			break ;
 		}
 		i++;
 	}
+	if (flag == 0)
+	{
+		error_print("minishell: ", input, ": No such file or directory\n", NULL);
+		g_exit_status = 127;
+		info->flags.unset_path = 1;
+		info->path = NULL;
+	}
+	
 }

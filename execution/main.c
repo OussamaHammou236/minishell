@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/23 19:49:41 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:50:02 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	reset_fds(t_data *info)
 void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 {
 	data->str = set_spase(data->str);
+	if (!data->str)
+		return ;
 	add_to_trash(data->str, &trash);
 	if (check_syntax_error(*data) == 0 && !check_tocken(data->str, &tm, 0,
 			&trash))
@@ -58,8 +60,10 @@ void	begining_minishell(t_data *info, t_trash **trash, char **env, int argc)
 		error_print("ERROR: Arguments are not Allowed!\n", NULL, NULL, NULL);
 		exit(1);
 	}
-	info->env = duplacte_env(env);
-	extract_path(info->env, info);
+	if (!env[0])
+		info->env = make_mini_env();
+	else
+		info->env = duplacte_env(env);
 	initialization(info);
 	info->trash = trash;
 	signal(SIGQUIT, handler_ctrl_backslash);
@@ -82,6 +86,7 @@ int	main(int argc, char **argv, char **env)
 		if (!str)
 		{
 			free_something_after_exit(&info);
+			printf("exit\n");
 			exit(0);
 		}
 		add_history(str);
@@ -100,9 +105,7 @@ int	main(int argc, char **argv, char **env)
 	}
 }
 
-// env , printenv problem with "$_" expand . (the solution : fake env).
 // pwd . when we delete the dirctory we are in . minishell will block .
 // -- leaks
-// ctrl -d , you must print exit . 
-// you must print exit in exit cmd . 
 // check all function that can fail with NULL . 
+// export +=ew

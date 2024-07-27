@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:50:47 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:04:26 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,53 @@ char	*ftmalloc(int len, t_trash **trash)
 	return (str);
 }
 
+void	etc_of_add_qoutes(char *str, t_data *data, char c)
+{
+	if ((!is_white_space(str[data->i]) && data->i == 0) || (data->i > 0
+		&& !is_white_space(str[data->i]) && is_white_space(str[data->i - 1])))
+	{
+		data->str[data->j] = c;
+		data->str[++data->j] = str[data->i];
+	}
+	else if (!is_white_space(str[data->i]) &&
+		(is_white_space(str[data->i + 1]) || !str[data->i + 1]))
+	{
+		data->str[data->j] = str[data->i];
+		data->str[++data->j] = c;
+	}
+	else
+		data->str[data->j] = str[data->i];	
+}
+
 char	*add_qoutes(char *str, char c)
 {
 	t_data	data;
 
 	data.i = 0;
-	data.j = 1;
-	data.len = ft_strlen(str) + (cont_words(str, ' ') * 2);
+	data.j = 0;
+	data.len = ft_strlen(str) + (cont_words_spaces(str) * 2);
 	data.str = malloc(data.len + 1);
 	ft_bzero(data.str, data.len + 1);
-	data.str[0] = c;
 	while (str[data.i])
 	{
-		if (str[data.i] != ' ' && str[data.i + 1] == ' ')
-		{
-			data.str[data.j] = str[data.i];
-			data.str[++data.j] = c;
-			data.str[++data.j] = ' ';
-		}
-		else if (str[data.i] == ' ' && str[data.i + 1] != ' ')
-			data.str[data.j] = c;
-		else
-			data.str[data.j] = str[data.i];
-		data.i++;
+		// if ((!is_white_space(str[data.i]) && data.i == 0) || (data.i > 0
+		// 	&& !is_white_space(str[data.i]) && is_white_space(str[data.i - 1])))
+		// {
+		// 	data.str[data.j] = c;
+		// 	data.str[++data.j] = str[data.i];
+		// }
+		// else if (!is_white_space(str[data.i]) &&
+		// 	(is_white_space(str[data.i + 1]) || !str[data.i + 1]))
+		// {
+		// 	data.str[data.j] = str[data.i];
+		// 	data.str[++data.j] = c;
+		// }
+		// else
+		// 	data.str[data.j] = str[data.i];
+		etc_of_add_qoutes(str, &data, c);
 		data.j++;
+		data.i++;	
 	}
-	data.str[data.j] = c;
 	return (free(str), data.str);
 }
 

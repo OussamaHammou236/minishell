@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:47:59 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:04:15 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 	{
 		if (info->len == 0)
 		{
-			info->str = ft_strdup("true");
-			add_to_trash(info->str, trash);
+			data->str = ftmalloc(info->j - i + 4 + 1, trash);
+			ft_strlcpy(data->str, "true", 5);
+			info->str = data->str;
 		}
 		else
 		{

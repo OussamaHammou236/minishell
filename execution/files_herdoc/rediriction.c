@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:21:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/23 21:41:44 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:32:25 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	out_file_append(t_data *info, t_input temp, t_herdoc *arg)
 	arg->posi = arg->i;
 	if (arg->error_file != 1)
 	{
+		if (temp.red[arg->posi + 1] == NULL)
+			return -1;
 		arg->our_fd_in = open(temp.red[arg->posi + 1],
 				O_APPEND | O_RDWR | O_CREAT, 0644);
 		if (access(temp.red[arg->posi + 1], W_OK) == -1)
@@ -42,6 +44,8 @@ int	out_file_append(t_data *info, t_input temp, t_herdoc *arg)
 int	in_file(t_data *info, t_input temp, t_herdoc *arg)
 {
 	arg->posi = arg->i;
+	if (temp.red[arg->posi + 1] == NULL)
+		return -1;
 	if (access(temp.red[arg->posi + 1], F_OK) != 0)
 	{
 		if (arg->error_file != 1)
@@ -75,8 +79,11 @@ void	child_part(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 			free(arg->str);
 			break ;
 		}
-		write(arg->fd_herdoc, expand_str(arg->str, &trash, info, 0),
-			strlen(expand_str(arg->str, &trash, info, 0)));
+		if (temp.is_qouts[(arg->i) / 2] == 0)
+			write(arg->fd_herdoc, expand_str(arg->str, &trash, info, 0),
+				strlen(expand_str(arg->str, &trash, info, 0)));
+		else
+			write(arg->fd_herdoc, arg->str,strlen(arg->str));
 		write(arg->fd_herdoc, "\n", 1);
 		free(arg->str);
 	}

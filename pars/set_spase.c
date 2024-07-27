@@ -59,15 +59,6 @@ int	check_syntax_error(t_data data)
 	while (data.str[data.i])
 	{
 		double_single_q(&data, data.str[data.i]);
-		if ((data.str[data.i] == ')' || data.str[data.i] == '('
-				|| data.str[data.i] == ';' || data.str[data.i] == '\\'
-				|| data.str[data.i] == '&') && (data.flag == DOUBLE_Q_OFF
-				&& data.flag1 == SINGLE_Q_OFF))
-		{
-			printf("minishell: syntax error near unexpected token '%c'\n",
-				data.str[data.i]);
-			return (-1);
-		}
 		data.i++;
 	}
 	if (data.flag == DOUBLE_Q_ON || data.flag1 == SINGLE_Q_ON)
@@ -96,7 +87,7 @@ void	etc(t_data *data, char *str)
 		data->str[data->len + 2] = ' ';
 		data->len += 2;
 	}
-	else if (str[data->i] >= 9 && str[data->i] <= 13)
+	else if (is_white_space(str[data->i]))
 		data->str[data->len] = ' ';
 	else
 		data->str[data->len] = str[data->i];
@@ -111,6 +102,8 @@ char	*set_spase(char *str)
 	data.flag1 = SINGLE_Q_OFF;
 	data.len = edit_line(str);
 	data.str = malloc(data.len + 1);
+	if (!data.str)
+		return NULL;
 	ft_bzero(data.str, data.len + 1);
 	data.len = 0;
 	while (str[data.i])

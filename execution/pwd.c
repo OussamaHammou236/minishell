@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:10:04 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/05 18:10:05 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:07:50 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,15 @@ int	error_finding(t_data *info, t_input temp)
 
 void	run_pwd(t_data *info, t_input temp)
 {
-	char	*buf;
 	char	*p;
-	int		i;
 	int		checker_second_error;
-	int		len_input;
 
 	checker_second_error = 0;
 	if (error_finding(info, temp) == -1)
 		return ;
-	i = 1;
-	p = NULL;
-	while (!p)
-	{
-		if (i > 1)
-			free(buf);
-		buf = malloc(sizeof(char) * (i * 10));
-		p = getcwd(buf, i * 10);
-		i++;
-	}
+	p = getcwd(NULL, 0);
+	if (!p)
+		return ;
 	printf("%s\n", p);
 	free(p);
 	g_exit_status = 0;

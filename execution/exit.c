@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:05:58 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/14 21:12:38 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/19 09:55:32 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	part_two_exit(t_data *info, t_input temp, int len_input, int store)
 		{
 			store = ft_atoi(temp.cmd[1]);
 			free_something_after_exit(info);
+			printf("exit\n");
 			exit(store);
 		}
 	}
@@ -48,6 +49,7 @@ int	part_two_exit(t_data *info, t_input temp, int len_input, int store)
 		error_print("minishell: exit: ", temp.cmd[1],
 			": numeric argument required\n", NULL);
 		free_something_after_exit(info);
+		printf("exit\n");
 		exit(2);
 	}
 	return (0);

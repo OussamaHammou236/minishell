@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 10:45:47 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:23:07 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	red_check(char *str)
 		return (-1);
 	while (str[i])
 	{
-		if (str[i] == ' ')
+		if (is_white_space(str[i]))
 			return (-1);
 		i++;
 	}

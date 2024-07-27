@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/18 16:09:59 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:47:59 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,23 @@ int	check(t_data *data)
 	return (0);
 }
 
+int malloc_of_node(t_input **list, t_trash **trash, t_data *data)
+{
+	(*list)->type = data->tab;
+	(*list)->red = malloc(((data->j * 2) + 1) * sizeof(char *));
+	(*list)->cmd = malloc((data->i - (data->j * 2) + 1) * sizeof(char *));
+	(*list)->is_qouts = malloc((data->j) * sizeof(int));
+	(*list)->len = data->j;
+	add_to_trash((*list)->is_qouts, trash);
+	add_to_trash((*list)->red, trash);
+	add_to_trash((*list)->cmd, trash);
+	if (!(*list)->red || !(*list)->cmd || !(*list)->is_qouts)
+		return (-1);
+	(*list)->cmd[data->i - (data->j * 2)] = NULL;
+	(*list)->red[(data->j * 2)] = NULL;
+	return (0);
+}
+
 int	check_tocken(char *str, t_input **list, int flag, t_trash **trash)
 {
 	t_data	data;
@@ -85,13 +102,8 @@ int	check_tocken(char *str, t_input **list, int flag, t_trash **trash)
 	tockention(str, &data, trash);
 	if (flag)
 	{
-		(*list)->type = data.tab;
-		(*list)->red = malloc(((data.j * 2) + 1) * sizeof(char *));
-		(*list)->cmd = malloc((data.i - (data.j * 2) + 1) * sizeof(char *));
-		add_to_trash((*list)->red, trash);
-		add_to_trash((*list)->cmd, trash);
-		(*list)->cmd[data.i - (data.j * 2)] = NULL;
-		(*list)->red[(data.j * 2)] = NULL;
+		if (malloc_of_node(list, trash, &data) == -1)
+			return (-1);
 	}
 	if (check(&data) == -1 && !flag)
 		return (-1);
