@@ -6,13 +6,11 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/27 17:47:59 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 10:58:03 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-// ls -la > ls | pwd > out | diff out ls | echo $? | echo $PATH
 
 void	tockention(char *str, t_data *data, t_trash **trash)
 {
@@ -71,7 +69,7 @@ int	check(t_data *data)
 	return (0);
 }
 
-int malloc_of_node(t_input **list, t_trash **trash, t_data *data)
+int	malloc_of_node(t_input **list, t_trash **trash, t_data *data)
 {
 	(*list)->type = data->tab;
 	(*list)->red = malloc(((data->j * 2) + 1) * sizeof(char *));

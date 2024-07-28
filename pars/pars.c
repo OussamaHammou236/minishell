@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/27 21:07:14 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 10:57:50 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*change_cmd(char *str, int len, t_trash **trash)
 	data.j = len;
 	data.str = malloc(len + 1);
 	if (!data.str)
-		return NULL;
+		return (NULL);
 	add_to_trash(data.str, trash);
 	ft_bzero(data.str, len + 1);
 	data.len = 0;

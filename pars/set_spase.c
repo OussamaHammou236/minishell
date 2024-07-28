@@ -103,7 +103,7 @@ char	*set_spase(char *str)
 	data.len = edit_line(str);
 	data.str = malloc(data.len + 1);
 	if (!data.str)
-		return NULL;
+		return (NULL);
 	ft_bzero(data.str, data.len + 1);
 	data.len = 0;
 	while (str[data.i])

@@ -6,38 +6,29 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/27 21:04:26 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 10:56:59 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char	*ftmalloc(int len, t_trash **trash)
-{
-	char	*str;
-
-	str = malloc(len);
-	ft_bzero(str, len);
-	add_to_trash(str, trash);
-	return (str);
-}
-
 void	etc_of_add_qoutes(char *str, t_data *data, char c)
 {
 	if ((!is_white_space(str[data->i]) && data->i == 0) || (data->i > 0
-		&& !is_white_space(str[data->i]) && is_white_space(str[data->i - 1])))
+			&& !is_white_space(str[data->i])
+			&& is_white_space(str[data->i - 1])))
 	{
 		data->str[data->j] = c;
 		data->str[++data->j] = str[data->i];
 	}
-	else if (!is_white_space(str[data->i]) &&
-		(is_white_space(str[data->i + 1]) || !str[data->i + 1]))
+	else if (!is_white_space(str[data->i])
+		&& (is_white_space(str[data->i + 1]) || !str[data->i + 1]))
 	{
 		data->str[data->j] = str[data->i];
 		data->str[++data->j] = c;
 	}
 	else
-		data->str[data->j] = str[data->i];	
+		data->str[data->j] = str[data->i];
 }
 
 char	*add_qoutes(char *str, char c)
@@ -51,23 +42,9 @@ char	*add_qoutes(char *str, char c)
 	ft_bzero(data.str, data.len + 1);
 	while (str[data.i])
 	{
-		// if ((!is_white_space(str[data.i]) && data.i == 0) || (data.i > 0
-		// 	&& !is_white_space(str[data.i]) && is_white_space(str[data.i - 1])))
-		// {
-		// 	data.str[data.j] = c;
-		// 	data.str[++data.j] = str[data.i];
-		// }
-		// else if (!is_white_space(str[data.i]) &&
-		// 	(is_white_space(str[data.i + 1]) || !str[data.i + 1]))
-		// {
-		// 	data.str[data.j] = str[data.i];
-		// 	data.str[++data.j] = c;
-		// }
-		// else
-		// 	data.str[data.j] = str[data.i];
 		etc_of_add_qoutes(str, &data, c);
 		data.j++;
-		data.i++;	
+		data.i++;
 	}
 	return (free(str), data.str);
 }
