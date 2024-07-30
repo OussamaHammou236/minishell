@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 10:56:59 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:43:18 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	etc_of_add_qoutes(char *str, t_data *data, char c)
 		data->str[data->j] = c;
 		data->str[++data->j] = str[data->i];
 	}
-	else if (!is_white_space(str[data->i])
+	if (!is_white_space(str[data->i])
 		&& (is_white_space(str[data->i + 1]) || !str[data->i + 1]))
 	{
 		data->str[data->j] = str[data->i];
@@ -34,6 +34,7 @@ void	etc_of_add_qoutes(char *str, t_data *data, char c)
 char	*add_qoutes(char *str, char c)
 {
 	t_data	data;
+	void	*tmp;
 
 	data.i = 0;
 	data.j = 0;

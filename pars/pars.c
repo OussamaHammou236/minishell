@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 10:57:50 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:59:17 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	etc_change(t_input **list, t_data *data, t_trash **trash, t_data *info)
 		{
 			if (data->n < (*list)->len)
 				(*list)->is_qouts[data->n] = 0;
+			(*list)->red[data->i] = ft_strdup(data->cmd[data->len]);
 			check_imbg(list, data, trash, info);
 			return ;
 		}

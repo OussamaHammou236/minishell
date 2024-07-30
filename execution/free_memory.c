@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:55 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/25 11:42:57 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:35:57 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ void	free_something_after_exit(t_data *info)
 		free(info->current_path);
 		info->flag_free_current_path = 1;
 	}
-	// ft_free_path(info);
 }

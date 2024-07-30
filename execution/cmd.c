@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 10:22:33 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:24:13 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ void	run_cmd(t_data *info, char **cmd)
 	g_exit_status = 0;
 	signal(SIGQUIT, handler_ctrl_backslash_child);
 	if (!pid)
-		execve(info->current_path, cmd, info->env);
+	{
+		if (execve(info->current_path, cmd, info->env) == -1)
+		{
+			perror("minishell");
+			exit(1);
+		}
+	}
 	else
 	{
 		wait(&s);

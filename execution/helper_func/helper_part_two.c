@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/25 11:56:31 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:24:00 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	initialization(t_data *info)
 	info->flags.dup_stdout_used = 0;
 	info->flag_free_current_path = 0;
 	info->flags.unset_path = 0;
+	info->flags.number_files = 0;
+	info->flags.index = -1;
 	shlvl_increament(info);
+	
 }
 
 int	cmp_str_env(char *str1, const char *str2, int len_str2)

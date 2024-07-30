@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:17:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/16 23:34:52 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:23:26 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,12 @@ int	last_oper(t_data *info, t_input temp, t_herdoc *arg)
 	}
 	else if (arg->status == 2)
 	{
-		arg->fd_herdoc = open(".herdoc_buff", O_RDWR, 0644);
+		if (info->number_cmd == 1)
+			arg->fd_herdoc = open(".herdoc_buff", O_RDWR, 0644);
+		else
+		{
+			arg->fd_herdoc = open(info->flags.names[info->flags.index], O_RDWR, 0644);
+		}
 		dup2(arg->fd_herdoc, 0);
 		close(arg->fd_herdoc);
 		info->flags.dup_stdin_used = 1;
@@ -81,8 +86,16 @@ int	run_redi(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 	}
 	else if (cmp_str(temp.red[arg->i], "<<") == 1)
 	{
-		if (herdoc(info, temp, arg, trash) == -1)
-			return (-1);
+		if (info->number_cmd == 1)
+		{
+			if (herdoc(info, temp, arg, trash) == -1)
+				return (-1);
+		}
+		else
+		{
+			arg->status = 2;
+			arg->posi = arg->i;
+		}
 	}
 	return (0);
 }

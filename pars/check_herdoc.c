@@ -6,17 +6,18 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/27 20:23:07 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 12:34:38 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	check_herdoc(t_data *data)
+void	check_herdoc(t_data *data, t_trash **trash)
 {
 	if (data->nb_of_herdoc > 16)
 	{
 		printf("minishell: maximum here-document count exceeded \n");
+		free_trash(trash);
 		exit(2);
 	}
 	else if (data->tab[data->i] == RE_OUTF)

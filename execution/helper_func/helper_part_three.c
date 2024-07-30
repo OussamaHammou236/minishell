@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:43:23 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/25 14:39:22 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:22:13 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,20 @@ char    **make_mini_env()
     new_env[2] = make_last();
     new_env[3] = NULL;
     return (new_env);
+}
+
+int    check_is_there_a_herdoc(t_input temp)
+{
+    int     i;
+
+    i = 0;
+    while(temp.red[i])
+    {
+        if (cmp_str(temp.red[i], "<<") == 1)
+	    {
+            return (1);
+	    }
+        i++;
+    }
+    return (0);
 }

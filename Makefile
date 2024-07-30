@@ -1,6 +1,6 @@
 NAME		=	minishell
 CC			=	cc
-CFLAGS		=	-fsanitize=address
+#CFLAGS		=	-fsanitize=address
 LIBFT_PATH	=	libft/
 LIBFT 		=	libft/libft.a
 
@@ -11,7 +11,7 @@ OBJ			=	pars/pars.c pars/set_spase.c pars/expand.c pars/check_herdoc.c pars/chec
     			execution/helper_func/helper.c execution/helper_func/helper_part_one.c execution/helper_func/helper_part_two.c execution/main.c execution/comand/parsing_part1.c \
     			execution/files_pipe_time/pipe_time.c execution/files_pipe_time/helper_pipe.c execution/pwd.c execution/files_unset/unset.c execution/files_unset/delete_var.c \
     			execution/files_herdoc/herdoc.c execution/files_herdoc/rediriction.c execution/signals.c execution/comand/p_part2.c \
-				execution/helper_func/helper_part_three.c
+				execution/helper_func/helper_part_three.c execution/files_pipe_time/process_first_herdocs.c
 
 OBJ_O		=	$(OBJ:.c=.o)
 

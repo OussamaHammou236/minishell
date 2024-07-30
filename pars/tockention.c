@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 21:34:34 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 10:58:03 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/28 12:33:32 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	tockention(char *str, t_data *data, t_trash **trash)
 			data->tab[data->i] = WORD;
 		if (data->tab[data->i] != WORD && data->tab[data->i] != PIP)
 			data->j++;
-		check_herdoc(data);
+		check_herdoc(data, trash);
 		data->i++;
 		i++;
 	}

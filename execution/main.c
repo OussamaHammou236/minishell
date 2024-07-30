@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/27 17:50:02 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:31:07 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	reset_fds(t_data *info)
 void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 {
 	data->str = set_spase(data->str);
-	if (!data->str)
-		return ;
 	add_to_trash(data->str, &trash);
 	if (check_syntax_error(*data) == 0 && !check_tocken(data->str, &tm, 0,
 			&trash))
@@ -50,6 +48,7 @@ void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 	}
 	else
 		g_exit_status = 2;
+	info->flags.index = -1;
 }
 
 void	begining_minishell(t_data *info, t_trash **trash, char **env, int argc)
@@ -69,6 +68,19 @@ void	begining_minishell(t_data *info, t_trash **trash, char **env, int argc)
 	signal(SIGQUIT, handler_ctrl_backslash);
 }
 
+void	delete_files(t_data *info)
+{
+	int		i;
+
+	i = 0;
+	while (i < info->flags.number_files)
+	{
+		unlink(info->flags.names[i]);
+		i++;
+	}
+	unlink(".herdoc_buff");
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data		info;
@@ -81,7 +93,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		signal(SIGINT, handler_ctrl_c_in_readline);
-		str = readline("\033[1;36m❖ minishell\033[1;33m →$\033[0m \033[0m");
+		str = readline("minishell-> ");
 		signal(SIGINT, handler_ctrl_c_after_readline);
 		if (!str)
 		{
@@ -94,7 +106,7 @@ int	main(int argc, char **argv, char **env)
 		data.str = expand_str(str, &trash, &info, 1);
 		if (data.str[0])
 			run_minishell(&info, trash, tm, &data);
-		unlink(".herdoc_buff");
+		delete_files(&info);
 		free(str);
 		free_trash(&trash);
 		if (info.flag_free_current_path == 1)
@@ -108,4 +120,6 @@ int	main(int argc, char **argv, char **env)
 // pwd . when we delete the dirctory we are in . minishell will block .
 // -- leaks
 // check all function that can fail with NULL . 
-// export +=ew
+// ././
+// export tartibe . 
+

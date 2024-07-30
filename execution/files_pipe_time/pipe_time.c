@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:07:23 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 23:52:41 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:39:32 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	pipe_time(t_data *info)
 	int		i;
 	int		id;
 
+	if (run_herdoc_first(info) == -1)
+		return (0);
 	fd = allocate_fds(info->number_cmd - 1);
 	temp = &info->input;
 	i = 0;
@@ -77,6 +79,8 @@ int	pipe_time(t_data *info)
 	{
 		if (i < info->number_cmd - 1)
 			pipe(fd[i]);
+		if (check_is_there_a_herdoc(*temp) == 1)
+			info->flags.index++;
 		id = fork();
 		if (!id)
 			child(info, temp, fd, &i);
