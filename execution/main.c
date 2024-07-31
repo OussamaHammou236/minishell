@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/29 17:31:07 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:31:12 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int		g_exit_status = 0;
+t_data	g_data;
 
 void	reset_fds(t_data *info)
 {
@@ -31,23 +31,26 @@ void	reset_fds(t_data *info)
 void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 {
 	data->str = set_spase(data->str);
+	if (!data->str)
+		return ;
 	add_to_trash(data->str, &trash);
 	if (check_syntax_error(*data) == 0 && !check_tocken(data->str, &tm, 0,
 			&trash))
 	{
-		command(data->str, &tm, &trash, info);
+		if (command(data->str, &tm, &trash, info) == -1)
+			return ;
 		info->input = *tm;
 		if (check_input(info) == -1)
 		{
 			error_print("minishell: command not found: ", info->input.cmd[0],
 				"\n", NULL);
-			g_exit_status = 127;
+			g_data.exit_status = 127;
 			change_cmd_var_env(info, info->input.cmd);
 		}
 		reset_fds(info);
 	}
 	else
-		g_exit_status = 2;
+		g_data.exit_status = 2;
 	info->flags.index = -1;
 }
 
@@ -63,8 +66,9 @@ void	begining_minishell(t_data *info, t_trash **trash, char **env, int argc)
 		info->env = make_mini_env();
 	else
 		info->env = duplacte_env(env);
+	g_data.env = info->env;
 	initialization(info);
-	info->trash = trash;
+	info->trash = *trash;
 	signal(SIGQUIT, handler_ctrl_backslash);
 }
 
@@ -89,6 +93,7 @@ int	main(int argc, char **argv, char **env)
 	t_input		*tm;
 	char		*str;
 
+	g_data.exit_status = 0;
 	begining_minishell(&info, &trash, env, argc);
 	while (1)
 	{
@@ -104,15 +109,18 @@ int	main(int argc, char **argv, char **env)
 		add_history(str);
 		tm = NULL;
 		data.str = expand_str(str, &trash, &info, 1);
-		if (data.str[0])
-			run_minishell(&info, trash, tm, &data);
-		delete_files(&info);
-		free(str);
-		free_trash(&trash);
-		if (info.flag_free_current_path == 1)
+		if (data.str)
 		{
-			free(info.current_path);
-			info.flag_free_current_path = 0;
+			if (data.str[0])
+				run_minishell(&info, trash, tm, &data);
+			delete_files(&info);
+			free(str);
+			free_trash(&trash);
+			if (info.flag_free_current_path == 1)
+			{
+				free(info.current_path);
+				info.flag_free_current_path = 0;
+			}
 		}
 	}
 }

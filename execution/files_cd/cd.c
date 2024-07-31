@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:23:29 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/09 20:59:30 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:42:46 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ void	part_two_run_cd(t_data *info, t_input temp)
 	if (checker_second_error == 2)
 	{
 		chdir(get_home(info));
-		g_exit_status = 0;
+		g_data.exit_status = 0;
 		return ;
 	}
 	else if (checker_second_error == 3)
 	{
 		error_print("minishell: cd: ", temp.cmd[1], ": invalid option\n",
 			"cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
-		g_exit_status = 2;
+		g_data.exit_status = 2;
 		return ;
 	}
 	if (access(temp.cmd[1], X_OK) == 0)
 	{
 		chdir(temp.cmd[1]);
-		g_exit_status = 0;
+		g_data.exit_status = 0;
 		return ;
 	}
 	else
-		g_exit_status = 1;
+		g_data.exit_status = 1;
 	error_print("cd: no such file or directory: ", temp.cmd[1], "\n", NULL);
 }
 
@@ -93,7 +93,7 @@ void	run_cd(t_data *info, t_input temp)
 	if (len_input == 1)
 	{
 		chdir(get_home(info));
-		g_exit_status = 0;
+		g_data.exit_status = 0;
 		return ;
 	}
 	if (len_input == 2)
@@ -101,7 +101,7 @@ void	run_cd(t_data *info, t_input temp)
 		if (check_specifique_case(info, temp) == 1)
 		{
 			chdir(get_home(info));
-			g_exit_status = 0;
+			g_data.exit_status = 0;
 			return ;
 		}
 		part_two_run_cd(info, temp);
@@ -109,6 +109,6 @@ void	run_cd(t_data *info, t_input temp)
 	else
 	{
 		error_print("minishell: cd: too many arguments\n", NULL, NULL, NULL);
-		g_exit_status = 1;
+		g_data.exit_status = 1;
 	}
 }

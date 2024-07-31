@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:07:19 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/29 15:38:52 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:44:24 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	flag_of_exit_status(void)
 {
-	if (g_exit_status == 1)
+	if (g_data.exit_status == 1)
 		exit(1);
-	else if (g_exit_status == 2)
+	else if (g_data.exit_status == 2)
 		exit(2);
-	else if (g_exit_status == 125)
+	else if (g_data.exit_status == 125)
 		exit(3);
-	else if (g_exit_status == 127)
+	else if (g_data.exit_status == 127)
 		exit(4);
-	else if (g_exit_status == 130)
+	else if (g_data.exit_status == 130)
 		exit(5);
 	else
 		exit(0);
@@ -99,17 +99,17 @@ int	waiting_childs(void)
 	while (waitpid(-1, &st, 0) != -1)
 	{
 		if (st == 0)
-			g_exit_status = 0;
+			g_data.exit_status = 0;
 		else if (st == 256)
-			g_exit_status = 1;
+			g_data.exit_status = 1;
 		else if (st == 512)
-			g_exit_status = 2;
+			g_data.exit_status = 2;
 		else if (st == 768)
-			g_exit_status = 125;
+			g_data.exit_status = 125;
 		else if (st == 1024)
-			g_exit_status = 127;
+			g_data.exit_status = 127;
 		else if (st == 1280 || st == 2)
-			return (g_exit_status = 130, 0);
+			return (g_data.exit_status = 130, 0);
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:05:58 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/19 09:55:32 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:40:18 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	part_two_exit(t_data *info, t_input temp, int len_input, int store)
 		if (len_input != 2)
 		{
 			write(2, "exit: too many arguments\n", 25);
-			g_exit_status = 1;
+			g_data.exit_status = 1;
 			return (1);
 		}
 		else

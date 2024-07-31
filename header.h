@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/29 17:39:41 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:41:53 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int			g_exit_status;
 
 typedef struct s_herdoc_arg_norm
 {
@@ -70,7 +69,7 @@ typedef struct s_trash
 	struct s_trash	*next;
 }					t_trash;
 
-typedef struct t_data
+typedef struct s_data
 {
 	char			**path;
 	char			*current_path;
@@ -80,7 +79,7 @@ typedef struct t_data
 	struct t_flags	flags;
 	struct s_input	input;
 
-	struct s_trash	**trash;
+	struct s_trash	*trash;
 
 	int				flag_free_current_path;
 	int				flag;
@@ -101,8 +100,12 @@ typedef struct t_data
 	char			*sm;
 	int				nb_of_herdoc;
 	int				n;
+	int				exit_status;
+	int				check;
 
 }					t_data;
+
+extern t_data		g_data;
 
 # define PIP 1
 # define WORD 2
@@ -155,12 +158,12 @@ int					get_exit_status(int status);
 int					is_containe_equal_flag(char *user_var);
 void				printf_to_stderr(char *str);
 void				error_print(char *str1, char *str2, char *str3, char *str4);
-
+void				free_env_new(t_data *info);
 char				**ft_mini_split(char *str, char sp, t_trash **trash);
 int					edit_line(char *str);
 char				*set_spase(char *str);
 void				double_single_q(t_data *data, char c);
-void				command(char *line, t_input **list, t_trash **trash,
+int					command(char *line, t_input **list, t_trash **trash,
 						t_data *info);
 int					check_syntax_error(t_data data);
 int					check_tocken(char *str, t_input **list, int flag,
@@ -185,26 +188,12 @@ char				*change_cmd(char *str, int len, t_trash **trash);
 void				check_imbg(t_input **list, t_data *data, t_trash **trash,
 						t_data *info);
 void				run_true(void);
-int					red_check(char *str);
+int	red_check(char *str, t_trash **trash);
 char				*add_single_double_q(char *str);
 int					len(char *str);
 int					cont_words_spaces(char *str);
-// libft
-
-int					ft_strncmp(const char *s1, const char *s2, size_t n);
-char				**ft_split(char const *s, char c);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
-char				*ft_strdup(const char *s1);
-size_t				ft_strlen(const char *str);
-char				*ft_strjoin(char const *s1, char const *s2);
-size_t				ft_strlcat(char *dst, const char *src, size_t n);
-size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
-t_input				*ft_lstnew(void);
-t_input				*ft_lstlast(t_input *lst);
-void				ft_lstadd_back(t_input **lst, t_input *new);
-char				*ft_itoa(int n);
-void				ft_bzero(void *s, size_t n);
-int					ft_atoi(const char *str);
+int					set_value(t_data *data, t_data *info, int i,
+						t_trash **trash);
 
 // new
 int					out_file(t_data *info, t_input temp, t_herdoc *arg);

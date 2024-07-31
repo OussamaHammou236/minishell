@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 18:43:18 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:08:42 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*add_qoutes(char *str, char c)
 	data.j = 0;
 	data.len = ft_strlen(str) + (cont_words_spaces(str) * 2);
 	data.str = malloc(data.len + 1);
+	if (!data.str)
+		return (NULL);
 	ft_bzero(data.str, data.len + 1);
 	while (str[data.i])
 	{
@@ -93,7 +95,7 @@ char	*expand_str(char *str, t_trash **trash, t_data *info, int fg)
 	data.sm = str;
 	data.j = ft_strlen(str);
 	data.str = ftmalloc(data.j + 1, trash);
-	while (str[data.i])
+	while (str[data.i] && data.str)
 	{
 		double_single_q(&data, str[data.i]);
 		flag_of_expand_herdoc(&data, str);

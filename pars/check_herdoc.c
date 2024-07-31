@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 12:34:38 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:12:17 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	check_herdoc(t_data *data, t_trash **trash)
 	if (data->nb_of_herdoc > 16)
 	{
 		printf("minishell: maximum here-document count exceeded \n");
+		free_env_new(&g_data);
 		free_trash(trash);
 		exit(2);
 	}
@@ -24,18 +25,35 @@ void	check_herdoc(t_data *data, t_trash **trash)
 		data->nb_of_herdoc++;
 }
 
-int	red_check(char *str)
+int	red_check(char *str, t_trash **trash)
 {
 	int	i;
 
 	i = 0;
-	if (!*str)
+	g_data.i = 0;
+	g_data.j = ft_strlen(str) - 1;
+	if (!*str || cont_words_spaces(str) > 1 || cont_words_spaces(str) == 0)
 		return (-1);
-	while (str[i])
-	{
-		if (is_white_space(str[i]))
-			return (-1);
-		i++;
-	}
+	while (str[g_data.i] && is_white_space(str[g_data.i]))
+		g_data.i++;
+	while (g_data.j > g_data.i && is_white_space(str[g_data.j]))
+		g_data.j--;
+	g_data.str = ft_substr(str, g_data.i, g_data.j - g_data.i + 1);
+	add_to_trash(g_data.str, trash);
 	return (0);
+}
+
+int	set_value(t_data *data, t_data *info, int i, t_trash **trash)
+{
+	if (info->flag == DOUBLE_Q_OFF && info->flag2 == 1)
+		data->src = add_single_double_q(data->src);
+	data->str = ftmalloc(info->j - i + ft_strlen(data->src) + 1, trash);
+	if (!data->src || !data->str)
+		return (info->str = NULL, g_data.exit_status = 2, 0);
+	ft_strlcpy(data->str, info->str, info->len + 1);
+	ft_strlcat(data->str, data->src, info->len + ft_strlen(data->src)
+		+ 1);
+	info->j = info->j - i + ft_strlen(data->src);
+	info->len += ft_strlen(data->src);
+	return (1);
 }

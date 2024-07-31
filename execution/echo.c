@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:41:03 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/03 11:42:50 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:39:58 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ void	run_echo(t_data *info, t_input temp)
 		if (cmp_str(temp.cmd[1], "-n") != 1)
 			printf("\n");
 	}
-	g_exit_status = 0;
+	g_data.exit_status = 0;
 }

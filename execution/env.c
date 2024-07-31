@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:43:28 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 10:36:45 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:40:13 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	part_two_env(t_data *info)
 			printf("%s\n", info->env[i]);
 		i++;
 	}
-	g_exit_status = 0;
+	g_data.exit_status = 0;
 }
 
 void	run_env(t_data *info, t_input temp)
@@ -60,15 +60,15 @@ void	run_env(t_data *info, t_input temp)
 		{
 			error_print("env: '", temp.cmd[1], "': No such file or directory\n",
 				NULL);
-			g_exit_status = 127;
+			g_data.exit_status = 127;
 		}
 		else if (check_error == 1)
-			g_exit_status = 0;
+			g_data.exit_status = 0;
 		else if (check_error == 3)
 		{
 			error_print("env: invalid option -- '", temp.cmd[1], "'\n",
 				"Try 'env --help' for more information.\n");
-			g_exit_status = 125;
+			g_data.exit_status = 125;
 			return ;
 		}
 	}

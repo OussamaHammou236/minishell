@@ -95,7 +95,7 @@ int    start_process(t_data *info, t_input temp, t_trash *trash)
                 info->flags.number_files++;
             }
             if (herdoc_sp(info, temp, trash, i) == -1)
-                return(g_exit_status = 130, -1);
+                return(g_data.exit_status = 130, -1);
 	    }
         i++;
     }

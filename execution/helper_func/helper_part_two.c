@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_part_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/29 17:24:00 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:45:08 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	extract_path(char **env, t_data *info, char *input)
 	if (flag == 0)
 	{
 		error_print("minishell: ", input, ": No such file or directory\n", NULL);
-		g_exit_status = 127;
+		g_data.exit_status = 127;
 		info->flags.unset_path = 1;
 		info->path = NULL;
 	}

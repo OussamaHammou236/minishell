@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/26 15:24:13 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:39:49 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	run_cmd(t_data *info, char **cmd)
 
 	change_cmd_var_env(info, cmd);
 	pid = fork();
-	g_exit_status = 0;
+	g_data.exit_status = 0;
 	signal(SIGQUIT, handler_ctrl_backslash_child);
 	if (!pid)
 	{
@@ -38,8 +38,8 @@ void	run_cmd(t_data *info, char **cmd)
 	{
 		wait(&s);
 		signal(SIGQUIT, handler_ctrl_backslash);
-		if (g_exit_status == 130)
+		if (g_data.exit_status == 130)
 			return ;
-		g_exit_status = get_exit_status(s);
+		g_data.exit_status = get_exit_status(s);
 	}
 }

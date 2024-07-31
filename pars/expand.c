@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/26 10:04:15 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:11:50 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,48 @@ void	not_find(t_data *info, t_data *data, int i, t_trash **trash)
 	info->j -= i;
 }
 
-void	etc_of_expande(t_data *data, t_data *info, int i, t_trash **trash)
+int	etc_of_expande(t_data *data, t_data *info, int i, t_trash **trash)
 {
 	char	*src;
 	int		f;
+	int		b;
 
 	while (data->env[data->i])
 	{
 		f = c_len(data);
 		src = ft_substr(data->env[data->i], 0, f);
+		if (!src)
+			return (info->str = NULL, g_data.exit_status = 2, 0);
 		add_to_trash(src, trash);
 		if (ft_strncmp(data->s, src, ft_strlen(src) + 1) == 0)
 		{
 			data->src = ft_substr(data->env[data->i], f + 1,
 					ft_strlen(data->env[data->i]) - f - 1);
-			if (info->flag == DOUBLE_Q_OFF && info->flag2 == 1)
-				data->src = add_single_double_q(data->src);
-			data->str = ftmalloc(info->j - i + ft_strlen(data->src) + 1, trash);
-			ft_strlcpy(data->str, info->str, info->len + 1);
-			ft_strlcat(data->str, data->src, info->len + ft_strlen(data->src)
-				+ 1);
-			info->j = info->j - i + ft_strlen(data->src);
-			info->len += ft_strlen(data->src);
-			return (info->str = data->str, info->i += i - 1, free(data->src));
+			b = set_value(data, info, i, trash);
+			info->str = data->str;
+			return (info->i += i - 1, free(data->src), b);
 		}
 		data->i++;
 	}
 	not_find(info, data, i, trash);
+	return (1);
 }
 
 void	expand_status_exit(t_data *info, t_trash **trash)
 {
 	t_data	data;
 
-	info->nb = g_exit_status;
+	info->nb = g_data.exit_status;
 	data.src = ft_itoa(info->nb);
 	add_to_trash(data.src, trash);
 	data.str = malloc(info->j - 2 + ft_strlen(data.src) + 1);
+	if (!data.str)
+	{
+		info->str = NULL;
+		g_data.exit_status = 2;
+		printf("malloc failed: try again !\n");
+		return ;
+	}
 	ft_bzero(data.str, info->j - 2 + ft_strlen(data.src) + 1);
 	add_to_trash(data.str, trash);
 	ft_strlcpy(data.str, info->str, info->len + 1);
@@ -103,6 +108,7 @@ void	expande(char *str, t_data *info, t_data *data, t_trash **trash)
 	int	i;
 
 	i = 0;
+	data->check = 0;
 	data->i = 0;
 	if (str[info->i + 1])
 		i++;
@@ -115,11 +121,13 @@ void	expande(char *str, t_data *info, t_data *data, t_trash **trash)
 	else
 		data->s = ft_substr(str + 1, info->i, i);
 	if (data->s[0])
-		etc_of_expande(data, info, i, trash);
+		data->check = etc_of_expande(data, info, i, trash);
 	else
 	{
 		info->str[info->len] = '$';
 		info->len++;
 	}
+	if (!data->check)
+		printf("malloc failed: try again !\n");
 	free(data->s);
 }

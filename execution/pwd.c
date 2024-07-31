@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:10:04 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/25 14:07:50 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:42:04 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	error_finding(t_data *info, t_input temp)
 			error_print("minishell: pwd: ", temp.cmd[1], ": invalid option\n",
 				NULL);
 			error_print("pwd: usage: pwd [-LP]\n", NULL, NULL, NULL);
-			g_exit_status = 2;
+			g_data.exit_status = 2;
 			return (-1);
 		}
 	}
@@ -60,5 +60,5 @@ void	run_pwd(t_data *info, t_input temp)
 		return ;
 	printf("%s\n", p);
 	free(p);
-	g_exit_status = 0;
+	g_data.exit_status = 0;
 }

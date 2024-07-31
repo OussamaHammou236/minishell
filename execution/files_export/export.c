@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:37:27 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 23:14:04 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:43:11 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ int	part_two_export(t_data *info, t_input temp)
 	if (checker_second_error == 2)
 	{
 		display_exporting_var(info);
-		g_exit_status = 0;
+		g_data.exit_status = 0;
 		return (1);
 	}
 	else if (checker_second_error == 3)
 	{
 		error_print("minishell: export: ", temp.cmd[1], ": invalid option\n",
 			"export: usage: export [-fn] [name[=value] ...] or export -p\n");
-		g_exit_status = 2;
+		g_data.exit_status = 2;
 		return (1);
 	}
 	return (0);
@@ -70,7 +70,7 @@ void	part_three_export(t_data *info, t_input temp, int *error_occurs)
 		{
 			error_print("minishell: export: '", temp.cmd[i],
 				"': not a valid identifier\n", NULL);
-			g_exit_status = 1;
+			g_data.exit_status = 1;
 			*error_occurs = 1;
 		}
 		else
@@ -95,5 +95,5 @@ void	run_export(t_data *info, t_input temp)
 		part_three_export(info, temp, &error_occurs);
 	}
 	if (error_occurs == 0)
-		g_exit_status = 0;
+		g_data.exit_status = 0;
 }

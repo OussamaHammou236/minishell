@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:55 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/27 21:35:57 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:56:08 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_free_path(t_data *info)
 
 void	free_something_after_exit(t_data *info)
 {
-	free_trash(info->trash);
+	free_trash(&info->trash);
 	free_env_new(info);
 	if (info->flag_free_current_path == 1)
 	{

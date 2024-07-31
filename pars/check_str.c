@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 09:36:21 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 18:01:01 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:42:01 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info)
 	if (data->cmd[data->len + 1][0] == '$' && data->cmd[data->len][1] != '<')
 	{
 		s = expand_str(data->cmd[data->len + 1], trash, info, 0);
-		if (red_check(s) == -1)
+		if (red_check(s, trash) == -1)
 		{
 			printf("minishell: %s: ambiguous redirect\n",
 				data->cmd[data->len + 1]);
-			s = NULL;
+			g_data.str = NULL;
 		}
-		(*list)->red[data->i + 1] = s;
+		(*list)->red[data->i + 1] = g_data.str;
 	}
 	else
 		(*list)->red[data->i + 1] = change_cmd(data->cmd[data->len + 1],

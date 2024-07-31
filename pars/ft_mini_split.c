@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mini_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumondad <oumondad@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:56:42 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/04 17:34:08 by oumondad         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:08:26 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,16 @@ char	**ft_mini_split(char *str, char sp, t_trash **trash)
 	t_data	data;
 
 	initialization_of_sp(&data, trash, sp, str);
-	while (data.i < data.len && *str)
+	while (data.i < data.len && *str && data.cmd)
 	{
 		while (*str && *str == sp)
 			str++;
 		j = len_of_words(str, sp);
 		data.cmd[data.i] = malloc(j + 1);
-		ft_strlcpy(data.cmd[data.i], str, j + 1);
 		add_to_trash(data.cmd[data.i], trash);
+		if (!data.cmd[data.i])
+			return (NULL);
+		ft_strlcpy(data.cmd[data.i], str, j + 1);
 		str += j;
 		data.i++;
 	}

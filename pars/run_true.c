@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:05:43 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/28 18:24:08 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:08:06 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*add_single_double_q(char *str)
 {
 	char	*s;
 
+	if (!str)
+		return (NULL);
 	if (ft_strchr(str, '\''))
 		s = add_qoutes(str, '"');
 	else
@@ -60,6 +62,12 @@ char	*ftmalloc(int len, t_trash **trash)
 	char	*str;
 
 	str = malloc(len);
+	if (!str)
+	{
+		g_data.exit_status = 2;
+		printf("malloc failed: try again !\n");
+		return (NULL);
+	}
 	ft_bzero(str, len);
 	add_to_trash(str, trash);
 	return (str);

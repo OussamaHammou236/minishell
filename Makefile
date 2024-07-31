@@ -1,6 +1,6 @@
 NAME		=	minishell
 CC			=	cc
-#CFLAGS		=	-fsanitize=address
+CFLAGS		=	-fsanitize=address
 LIBFT_PATH	=	libft/
 LIBFT 		=	libft/libft.a
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:10:33 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/05 18:10:33 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:42:20 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handler_ctrl_c_in_readline(int x)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	g_exit_status = 130;
+	g_data.exit_status = 130;
 }
 
 void	handler_ctrl_c_after_readline(int x)
@@ -30,7 +30,7 @@ void	handler_ctrl_c_after_readline(int x)
 	{
 		printf("\n");
 	}
-	g_exit_status = 130;
+	g_data.exit_status = 130;
 }
 
 void	handler_ctrl_backslash(int x)
@@ -46,7 +46,7 @@ void	signal_handler_for_childs(int x)
 {
 	if (x == SIGINT)
 	{
-		g_exit_status = 130;
+		g_data.exit_status = 130;
 		exit(5);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:17:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/29 17:23:26 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:43:41 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_error_permi(char *str, t_data *info)
 	write(2, str, ft_strlen(str));
 	write(2, ": Permission denied", 19);
 	write(2, "\n", 1);
-	g_exit_status = 1;
+	g_data.exit_status = 1;
 }
 
 void	intialization_norm_var(t_herdoc *arg)
@@ -38,7 +38,7 @@ int	last_oper(t_data *info, t_input temp, t_herdoc *arg)
 	{
 		error_print("minishell: ", temp.red[arg->posi_error_file],
 			": No such file or directory\n", NULL);
-		g_exit_status = 1;
+		g_data.exit_status = 1;
 		return (-1);
 	}
 	if (arg->status == 1)
