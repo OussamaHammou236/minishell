@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   mainc_part.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:02:24 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/01 16:05:11 by iahamdan         ###   ########.fr       */
+/*   Created: 2024/08/01 17:03:09 by iahamdan          #+#    #+#             */
+/*   Updated: 2024/08/01 17:03:37 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../header.h"
 
-size_t	ft_strlen(const char *str)
+void	norm_mai(t_data *info)
 {
-	size_t		i;
-
-	i = 0;
-	while (((char *)str)[i])
-		i++;
-	return (i);
+	info->flags.number_files = 0;
+	signal(SIGINT, handler_ctrl_c_in_readline);
 }

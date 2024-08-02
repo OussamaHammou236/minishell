@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:10:04 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 18:42:04 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:15:48 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static int	check_second_error_pwd(char *str)
 	return (3);
 }
 
-int	error_finding(t_data *info, t_input temp)
+int	error_finding(t_input temp)
 {
 	int	checker_second_error;
 	int	len_input;
 
 	checker_second_error = 0;
-	len_input = get_part_input(info, temp);
+	len_input = get_part_input(temp);
 	if (len_input > 1)
 	{
 		checker_second_error = check_second_error_pwd(temp.cmd[1]);
@@ -40,7 +40,7 @@ int	error_finding(t_data *info, t_input temp)
 			error_print("minishell: pwd: ", temp.cmd[1], ": invalid option\n",
 				NULL);
 			error_print("pwd: usage: pwd [-LP]\n", NULL, NULL, NULL);
-			g_data.exit_status = 2;
+			ft_status(2, 0);
 			return (-1);
 		}
 	}
@@ -53,12 +53,16 @@ void	run_pwd(t_data *info, t_input temp)
 	int		checker_second_error;
 
 	checker_second_error = 0;
-	if (error_finding(info, temp) == -1)
+	if (error_finding(temp) == -1)
 		return ;
 	p = getcwd(NULL, 0);
 	if (!p)
+	{
+		if (info->flags.store_path_currnt_dir)
+			printf("%s\n", info->flags.store_path_currnt_dir);
 		return ;
+	}
 	printf("%s\n", p);
 	free(p);
-	g_data.exit_status = 0;
+	ft_status(0, 0);
 }

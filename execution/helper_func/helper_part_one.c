@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:30:25 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/18 14:51:56 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:12:49 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*make_new_shlvl(t_data *info, int posi)
 	my_num++;
 	my_num_in_str = ft_itoa(my_num);
 	len = 6 + get_len_number(my_num);
-	new_shlvl = malloc(sizeof(char) * len + 1);
+	new_shlvl = manage_malloc_one(len + 1);
 	shlvl_part_two(info, posi, new_shlvl, my_num_in_str);
 	free(my_num_in_str);
 	return (new_shlvl);

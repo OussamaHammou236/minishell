@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:19 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/19 11:23:38 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:18:56 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**duplacte_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	our_env = malloc(sizeof(char *) * (i + 1));
+	our_env = manage_malloc_two(i + 1);
 	i = 0;
 	while (env[i])
 	{
@@ -60,7 +60,7 @@ char	*new_path_cmd(char *cmd)
 
 	i = 2;
 	len_path = ft_strlen(cmd);
-	our_path = malloc(sizeof(char) * (len_path + 3));
+	our_path = manage_malloc_one(len_path + 3);
 	our_path[0] = '_';
 	our_path[1] = '=';
 	while (i - 2 < len_path)
@@ -76,7 +76,7 @@ void	change_cmd_var_env(t_data *info, char **cmd)
 {
 	int		i;
 	int		posi;
-	
+
 	if (!cmd[0] || !info->env[0])
 		return ;
 	posi = 0;

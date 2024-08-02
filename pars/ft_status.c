@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_status.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 11:41:03 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:15:18 by ohammou-         ###   ########.fr       */
+/*   Created: 2024/08/02 19:52:38 by ohammou-          #+#    #+#             */
+/*   Updated: 2024/08/02 19:59:19 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	run_echo(t_input temp)
+int ft_status(int b, int fg)
 {
-	int	len_input;
-	int	i;
+    static int exit;
+    if (!fg)
+        exit = b;
+    return (exit);
+}
 
-	len_input = get_part_input(temp);
-	i = 1;
-	if (len_input == 1)
-		printf("\n");
-	else
-	{
-		if (cmp_str(temp.cmd[1], "-n") == 1)
-			i++;
-		while (temp.cmd[i])
-		{
-			printf("%s", temp.cmd[i]);
-			if (temp.cmd[i + 1])
-				printf(" ");
-			i++;
-		}
-		if (cmp_str(temp.cmd[1], "-n") != 1)
-			printf("\n");
-	}
-	ft_status(0, 0);
+t_data *data_global(t_data *data, int fg)
+{
+    static t_data *data_gl;
+
+    if (!fg)
+        data_gl = data;
+    return data_gl;
 }

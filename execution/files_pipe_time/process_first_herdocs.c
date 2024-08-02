@@ -1,24 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_first_herdocs.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 16:26:08 by iahamdan          #+#    #+#             */
+/*   Updated: 2024/08/02 22:13:26 by ohammou-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../header.h"
 
-static  void create_name_file(t_data *info)
+static void	create_name_file(t_data *info)
 {
-    int     i;
-    char    *str;
-    char    *store;
-    i = 0;
-    while (i < 2147483647)
-    {
-        store = ft_itoa(i);
-        str = ft_strjoin(".", store);
-        free(store);
-        if (access(str, F_OK) == -1)
-        {
-            info->flags.names[info->flags.number_files] = str;
-            return ;
-        }
-        free(str);
-        i++;
-    }
+	int		i;
+	char	*str;
+	char	*store;
+
+	i = 0;
+	while (i < 2147483647)
+	{
+		store = ft_itoa(i);
+		str = ft_strjoin(".", store);
+		free(store);
+		if (access(str, F_OK) == -1)
+		{
+			info->flags.names[info->flags.number_files] = str;
+			return ;
+		}
+		free(str);
+		i++;
+	}
 }
 
 static void	handle_ctrl_d_in_herdoc_sp(int fd_herdoc)
@@ -29,13 +42,10 @@ static void	handle_ctrl_d_in_herdoc_sp(int fd_herdoc)
 
 static void	child_part_sp(t_data *info, t_input temp, t_trash *trash, int posi)
 {
-    int     fd_herdoc;
-    char    *str;
+	int		fd_herdoc;
+	char	*str;
 
-	signal(SIGINT, signal_handler_for_childs);
-	dup2(info->flags.fd_stdin, 0);
-	dup2(info->flags.fd_stdout, 1);
-	fd_herdoc = open(info->flags.names[info->flags.number_files -1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd_herdoc = norm(info);
 	while (1)
 	{
 		str = readline("> ");
@@ -50,7 +60,7 @@ static void	child_part_sp(t_data *info, t_input temp, t_trash *trash, int posi)
 			write(fd_herdoc, expand_str(str, &trash, info, 0),
 				strlen(expand_str(str, &trash, info, 0)));
 		else
-			write(fd_herdoc, str,strlen(str));
+			write(fd_herdoc, str, strlen(str));
 		write(fd_herdoc, "\n", 1);
 		free(str);
 	}
@@ -60,8 +70,8 @@ static void	child_part_sp(t_data *info, t_input temp, t_trash *trash, int posi)
 
 static int	herdoc_sp(t_data *info, t_input temp, t_trash *trash, int posi)
 {
-	int		id;
-	int		st;
+	int	id;
+	int	st;
 
 	id = fork();
 	if (!id)
@@ -75,48 +85,27 @@ static int	herdoc_sp(t_data *info, t_input temp, t_trash *trash, int posi)
 	return (0);
 }
 
-
-
-int    start_process(t_data *info, t_input temp, t_trash *trash)
+int	start_process(t_data *info, t_input temp, t_trash *trash)
 {
-    int     i;
-    int     flag;
+	int	i;
+	int	flag;
 
-    flag = 0;
-    i = 0;
-    while(temp.red[i])
-    {
-        if (cmp_str(temp.red[i], "<<") == 1)
-	    {
-            if (flag == 0)
-            {
-                flag = 1;
-                create_name_file(info);
-                info->flags.number_files++;
-            }
-            if (herdoc_sp(info, temp, trash, i) == -1)
-                return(g_data.exit_status = 130, -1);
-	    }
-        i++;
-    }
-    return (0);
-}
-
-int    run_herdoc_first(t_data *info)
-{
-    int     i;
-    t_input	*temp;
-    t_trash		*trash;
-
-	trash = NULL;
-    i = 0;
-    temp = &info->input;
-    while (i < info->number_cmd)
-    {
-        if (start_process(info, *temp, trash) == -1)
-            return (-1);
-        i++;
-        temp = temp->next;
-    }
-    return (0);
+	flag = 0;
+	i = 0;
+	while (temp.red[i])
+	{
+		if (cmp_str(temp.red[i], "<<") == 1)
+		{
+			if (flag == 0)
+			{
+				flag = 1;
+				create_name_file(info);
+				info->flags.number_files++;
+			}
+			if (herdoc_sp(info, temp, trash, i) == -1)
+				return (ft_status(130, 0), -1);
+		}
+		i++;
+	}
+	return (0);
 }

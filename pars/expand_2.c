@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/31 15:08:42 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:10:17 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	etc_of_add_qoutes(char *str, t_data *data, char c)
 char	*add_qoutes(char *str, char c)
 {
 	t_data	data;
-	void	*tmp;
 
 	data.i = 0;
 	data.j = 0;
@@ -66,6 +65,8 @@ void	initialization_data(t_data *data, int fg)
 
 void	flag_of_expand_herdoc(t_data *data, char *str)
 {
+	if (!str[data->i])
+		return ;
 	if (str[data->i] != '$' && str[data->i] != ' '
 		&& str[data->i] != '<' && str[data->i + 1] != '<'
 		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)

@@ -6,46 +6,46 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:21:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/27 21:50:04 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:59:28 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-int	out_file(t_data *info, t_input temp, t_herdoc *arg)
+int	out_file(t_input temp, t_herdoc *arg)
 {
 	arg->posi = arg->i;
 	if (arg->error_file != 1)
 	{
 		if (temp.red[arg->posi + 1] == NULL)
-			return -1;
+			return (-1);
 		arg->our_fd_in = open(temp.red[arg->posi + 1], O_CREAT | O_RDWR, 0644);
 		if (access(temp.red[arg->posi + 1], W_OK) == -1)
-			return (print_error_permi(temp.red[arg->posi + 1], info), -1);
+			return (print_error_permi(temp.red[arg->posi + 1]), -1);
 	}
 	return (0);
 }
 
-int	out_file_append(t_data *info, t_input temp, t_herdoc *arg)
+int	out_file_append(t_input temp, t_herdoc *arg)
 {
 	arg->posi = arg->i;
 	if (arg->error_file != 1)
 	{
 		if (temp.red[arg->posi + 1] == NULL)
-			return -1;
+			return (-1);
 		arg->our_fd_in = open(temp.red[arg->posi + 1],
 				O_APPEND | O_RDWR | O_CREAT, 0644);
 		if (access(temp.red[arg->posi + 1], W_OK) == -1)
-			return (print_error_permi(temp.red[arg->posi + 1], info), -1);
+			return (print_error_permi(temp.red[arg->posi + 1]), -1);
 	}
 	return (0);
 }
 
-int	in_file(t_data *info, t_input temp, t_herdoc *arg)
+int	in_file(t_input temp, t_herdoc *arg)
 {
 	arg->posi = arg->i;
 	if (temp.red[arg->posi + 1] == NULL)
-		return -1;
+		return (-1);
 	if (access(temp.red[arg->posi + 1], F_OK) != 0)
 	{
 		if (arg->error_file != 1)
@@ -55,7 +55,7 @@ int	in_file(t_data *info, t_input temp, t_herdoc *arg)
 	else
 	{
 		if (access(temp.red[arg->posi + 1], R_OK) == -1)
-			return (print_error_permi(temp.red[arg->posi + 1], info), -1);
+			return (print_error_permi(temp.red[arg->posi + 1]), -1);
 		arg->our_fd_out = open(temp.red[arg->posi + 1], O_RDONLY, 0644);
 		arg->status = 1;
 	}
@@ -83,7 +83,7 @@ void	child_part(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 			write(arg->fd_herdoc, expand_str(arg->str, &trash, info, 0),
 				strlen(expand_str(arg->str, &trash, info, 0)));
 		else
-			write(arg->fd_herdoc, arg->str,strlen(arg->str));
+			write(arg->fd_herdoc, arg->str, strlen(arg->str));
 		write(arg->fd_herdoc, "\n", 1);
 		free(arg->str);
 	}
@@ -93,8 +93,8 @@ void	child_part(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 
 int	herdoc(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 {
-	int		id;
-	int		st;
+	int	id;
+	int	st;
 
 	arg->posi = arg->i;
 	id = fork();

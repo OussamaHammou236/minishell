@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 20:34:10 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:25 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:40:17 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	if ((char)c == '\0')
-		return (char *)(s + i);
-
+		return ((char *)(s + i));
 	return (0);
 }

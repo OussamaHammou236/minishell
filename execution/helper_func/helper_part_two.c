@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_part_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 18:45:08 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:54:37 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	initialization(t_data *info)
 	info->flags.unset_path = 0;
 	info->flags.number_files = 0;
 	info->flags.index = -1;
+	info->flags.store_path_currnt_dir = NULL;
 	shlvl_increament(info);
-	
 }
 
 int	cmp_str_env(char *str1, const char *str2, int len_str2)
@@ -62,7 +62,7 @@ int	cmp_str_env(char *str1, const char *str2, int len_str2)
 	return (1);
 }
 
-int	get_part_input(t_data *info, t_input temp)
+int	get_part_input(t_input temp)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ int	get_part_input(t_data *info, t_input temp)
 	return (i);
 }
 
-void	extract_path(char **env, t_data *info, char *input)
+void	extract_path(char **env, t_data *info)
 {
 	int	i;
 	int	flag;
@@ -94,10 +94,7 @@ void	extract_path(char **env, t_data *info, char *input)
 	}
 	if (flag == 0)
 	{
-		error_print("minishell: ", input, ": No such file or directory\n", NULL);
-		g_data.exit_status = 127;
 		info->flags.unset_path = 1;
 		info->path = NULL;
 	}
-	
 }

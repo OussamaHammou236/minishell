@@ -6,13 +6,13 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 14:26:26 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/08 23:51:44 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:51:14 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-char	*part_handle_sign_plus(t_data *info, char *variable)
+char	*part_handle_sign_plus(char *variable)
 {
 	char	*new_var;
 	int		len;
@@ -22,7 +22,7 @@ char	*part_handle_sign_plus(t_data *info, char *variable)
 	j = 0;
 	i = 0;
 	len = len_str_equal(variable);
-	new_var = malloc(sizeof(char) * len);
+	new_var = manage_malloc_one(len);
 	while (i < len - 1)
 	{
 		if (variable[i] == '+')
@@ -40,7 +40,7 @@ int	handle_sign_plus(t_data *info, char *variable)
 	char	*new_var;
 	int		i;
 
-	new_var = part_handle_sign_plus(info, variable);
+	new_var = part_handle_sign_plus(variable);
 	i = 0;
 	while (info->env[i])
 	{
@@ -85,7 +85,7 @@ void	add_var_to_env(t_data *info, char *variable, int sign_plus)
 	}
 	while (info->env[len])
 		len++;
-	upd_env = malloc(sizeof(char *) * (len + 2));
+	upd_env = manage_malloc_two(len + 2);
 	part_add_var_to_env(info, &i, upd_env, len);
 	if (sign_plus == 1)
 		upd_env[++i] = ft_strdup_export(variable);

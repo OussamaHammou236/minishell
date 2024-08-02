@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 14:24:44 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/06 14:26:20 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:50:05 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	len_str_equal(char *str)
 	return (i + 1);
 }
 
-void	part_one_upd_var(s_export *arg_export, char *variable, int posi,
+void	part_one_upd_var(t_export *arg_export, char *variable, int posi,
 		t_data *info)
 {
 	arg_export->i = 0;
@@ -42,12 +42,12 @@ void	part_one_upd_var(s_export *arg_export, char *variable, int posi,
 		arg_export->var_not_containes_equal = 1;
 	arg_export->len_total = arg_export->len_var + ft_strlen(info->env[posi]) + 1
 		+ arg_export->var_not_containes_equal;
-	arg_export->new_variable = malloc(sizeof(char) * arg_export->len_total);
+	arg_export->new_variable = manage_malloc_one(arg_export->len_total);
 	arg_export->i = 0;
 	arg_export->var = ft_strlen(variable) - arg_export->len_var;
 }
 
-void	part_two_upd_var(s_export *arg_export, char *variable, int posi,
+void	part_two_upd_var(t_export *arg_export, int posi,
 		t_data *info)
 {
 	while (arg_export->i < arg_export->len_total)
@@ -70,10 +70,10 @@ void	part_two_upd_var(s_export *arg_export, char *variable, int posi,
 
 void	upd_variable(t_data *info, char *variable, int posi)
 {
-	s_export	arg_export;
+	t_export	arg_export;
 
 	part_one_upd_var(&arg_export, variable, posi, info);
-	part_two_upd_var(&arg_export, variable, posi, info);
+	part_two_upd_var(&arg_export, posi, info);
 	while (arg_export.i < arg_export.len_total)
 	{
 		if (variable[arg_export.var])
@@ -98,8 +98,8 @@ char	*ft_strdup_export(char *variable)
 
 	i = 0;
 	j = 0;
-	new_var = malloc(len);
 	len = ft_strlen(variable);
+	new_var = manage_malloc_one(len);
 	while (i < len)
 	{
 		if (variable[i] == '+')

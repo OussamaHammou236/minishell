@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   helper_exit_part.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:02:24 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/01 16:05:11 by iahamdan         ###   ########.fr       */
+/*   Created: 2024/08/01 14:44:51 by iahamdan          #+#    #+#             */
+/*   Updated: 2024/08/01 14:44:51 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../header.h"
 
-size_t	ft_strlen(const char *str)
+char	*skip_zero(char *str, int is_negative)
 {
-	size_t		i;
+	int	i;
 
 	i = 0;
-	while (((char *)str)[i])
+	if (is_negative == 1)
+	{
 		i++;
-	return (i);
+		while (str[i])
+		{
+			if (str[i] != '0')
+				return (ft_strjoin("-", &str[i]));
+			i++;
+		}
+		return (ft_strdup(str));
+	}
+	while (str[i])
+	{
+		if (str[i] != '0')
+			return (ft_strdup(&str[i]));
+		i++;
+	}
+	return (ft_strdup(str));
 }

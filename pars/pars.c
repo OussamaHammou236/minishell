@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:54:06 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/31 15:12:38 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:51:31 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	change(t_input **list, char **cmd, t_trash **trash, t_data *info)
 	if (!cmd)
 	{
 		(*list) = NULL;
-		g_data.exit_status = 2;
 		return ;
 	}
 	while (cmd[data.len])
@@ -125,10 +124,7 @@ int	command(char *line, t_input **list, t_trash **trash, t_data *info)
 	j = 0;
 	cmd = ft_mini_split(line, '|', trash);
 	if (!cmd)
-	{
-		g_data.exit_status = 2;
-		return (printf("malloc failed: try again !\n"), -1);
-	}
+		return (-1);
 	while (cmd[j])
 	{
 		node = ft_lstnew();
@@ -136,7 +132,7 @@ int	command(char *line, t_input **list, t_trash **trash, t_data *info)
 		check_tocken(cmd[j], &node, 1, trash);
 		change(&node, ft_mini_split(cmd[j], ' ', trash), trash, info);
 		if (!node)
-			return (printf("malloc failed: try again !\n"), -1);
+			return (-1);
 		ft_lstadd_back(list, node);
 		j++;
 	}

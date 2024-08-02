@@ -6,19 +6,19 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:17:57 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 18:43:41 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:17:23 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-void	print_error_permi(char *str, t_data *info)
+void	print_error_permi(char *str)
 {
 	write(2, "minishell: ", 11);
 	write(2, str, ft_strlen(str));
 	write(2, ": Permission denied", 19);
 	write(2, "\n", 1);
-	g_data.exit_status = 1;
+	ft_status(1, 0);
 }
 
 void	intialization_norm_var(t_herdoc *arg)
@@ -32,37 +32,17 @@ void	intialization_norm_var(t_herdoc *arg)
 	arg->status = 0;
 }
 
-int	last_oper(t_data *info, t_input temp, t_herdoc *arg)
+int	run_redi_part(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 {
-	if (arg->error_file == 1)
+	if (info->number_cmd == 1)
 	{
-		error_print("minishell: ", temp.red[arg->posi_error_file],
-			": No such file or directory\n", NULL);
-		g_data.exit_status = 1;
-		return (-1);
+		if (herdoc(info, temp, arg, trash) == -1)
+			return (-1);
 	}
-	if (arg->status == 1)
+	else
 	{
-		dup2(arg->our_fd_out, 0);
-		info->flags.dup_stdin_used = 1;
-	}
-	else if (arg->status == 2)
-	{
-		if (info->number_cmd == 1)
-			arg->fd_herdoc = open(".herdoc_buff", O_RDWR, 0644);
-		else
-		{
-			arg->fd_herdoc = open(info->flags.names[info->flags.index], O_RDWR, 0644);
-		}
-		dup2(arg->fd_herdoc, 0);
-		close(arg->fd_herdoc);
-		info->flags.dup_stdin_used = 1;
-	}
-	if (arg->our_fd_in != -1)
-	{
-		dup2(arg->our_fd_in, 1);
-		close(arg->our_fd_in);
-		info->flags.dup_stdout_used = 1;
+		arg->status = 2;
+		arg->posi = arg->i;
 	}
 	return (0);
 }
@@ -71,31 +51,23 @@ int	run_redi(t_data *info, t_input temp, t_herdoc *arg, t_trash *trash)
 {
 	if (cmp_str(temp.red[arg->i], ">") == 1)
 	{
-		if (out_file(info, temp, arg) == -1)
+		if (out_file(temp, arg) == -1)
 			return (-1);
 	}
 	else if (cmp_str(temp.red[arg->i], ">>") == 1)
 	{
-		if (out_file_append(info, temp, arg) == -1)
+		if (out_file_append(temp, arg) == -1)
 			return (-1);
 	}
 	else if (cmp_str(temp.red[arg->i], "<") == 1)
 	{
-		if (in_file(info, temp, arg) == -1)
+		if (in_file(temp, arg) == -1)
 			return (-1);
 	}
 	else if (cmp_str(temp.red[arg->i], "<<") == 1)
 	{
-		if (info->number_cmd == 1)
-		{
-			if (herdoc(info, temp, arg, trash) == -1)
-				return (-1);
-		}
-		else
-		{
-			arg->status = 2;
-			arg->posi = arg->i;
-		}
+		if (run_redi_part(info, temp, arg, trash) == -1)
+			return (-1);
 	}
 	return (0);
 }

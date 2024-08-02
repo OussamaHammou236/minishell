@@ -1,23 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   helper_part_four.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 20:02:24 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/01 16:05:11 by iahamdan         ###   ########.fr       */
+/*   Created: 2024/07/31 16:34:14 by iahamdan          #+#    #+#             */
+/*   Updated: 2024/08/01 16:49:15 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../header.h"
 
-size_t	ft_strlen(const char *str)
+int	search_for_character(char *str, char c)
 {
-	size_t		i;
+	int	i;
 
 	i = 0;
-	while (((char *)str)[i])
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
 		i++;
-	return (i);
+	}
+	return (0);
+}
+
+void	delete_files(t_data *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->flags.number_files)
+	{
+		unlink(info->flags.names[i]);
+		i++;
+	}
+	unlink(".herdoc_buff");
+	i = 0;
+	while (i < info->flags.number_files)
+	{
+		free(info->flags.names[i]);
+		i++;
+	}
 }

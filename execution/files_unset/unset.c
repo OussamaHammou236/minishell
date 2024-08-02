@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 14:05:51 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 18:45:02 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:14:06 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	part_unset(t_data *info, t_input temp)
 			NULL);
 		error_print("unset: usage: unset [-f] [-v] [-n] [name ...]\n", NULL,
 			NULL, NULL);
-		g_data.exit_status = 2;
+		ft_status(2, 0);
 		return (-1);
 	}
 	while (temp.cmd[i])
@@ -88,7 +88,7 @@ void	run_unset(t_data *info, t_input temp)
 {
 	int	len_input;
 
-	len_input = get_part_input(info, temp);
+	len_input = get_part_input(temp);
 	if (len_input == 1)
 		return ;
 	else
@@ -96,5 +96,5 @@ void	run_unset(t_data *info, t_input temp)
 		if (part_unset(info, temp) == -1)
 			return ;
 	}
-	g_data.exit_status = 0;
+	ft_status(0, 0);
 }

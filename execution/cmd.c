@@ -6,15 +6,27 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 18:39:49 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:15:12 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	handler_ctrl_backslash_child(int x)
+int	handle_status(int s)
 {
-	(void)x;
+	if (s == 131)
+	{
+		write(2, "Quit (core dumped)\n", 19);
+		ft_status(131, 0);
+		return (1);
+	}
+	if (ft_status(0, 1) == 130)
+	{
+		if (WEXITSTATUS(s) != 130)
+			write(2, "\n", 1);
+		return (1);
+	}
+	return (0);
 }
 
 void	run_cmd(t_data *info, char **cmd)
@@ -24,22 +36,18 @@ void	run_cmd(t_data *info, char **cmd)
 
 	change_cmd_var_env(info, cmd);
 	pid = fork();
-	g_data.exit_status = 0;
-	signal(SIGQUIT, handler_ctrl_backslash_child);
+	ft_status(0, 0);
 	if (!pid)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		if (execve(info->current_path, cmd, info->env) == -1)
-		{
-			perror("minishell");
 			exit(1);
-		}
 	}
 	else
 	{
 		wait(&s);
-		signal(SIGQUIT, handler_ctrl_backslash);
-		if (g_data.exit_status == 130)
+		if (handle_status(s) == 1)
 			return ;
-		g_data.exit_status = get_exit_status(s);
+		ft_status(get_exit_status(s), 0);
 	}
 }

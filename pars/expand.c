@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/31 15:11:50 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:18:15 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	etc_of_expande(t_data *data, t_data *info, int i, t_trash **trash)
 		f = c_len(data);
 		src = ft_substr(data->env[data->i], 0, f);
 		if (!src)
-			return (info->str = NULL, g_data.exit_status = 2, 0);
+			return (info->str = NULL, 0);
 		add_to_trash(src, trash);
 		if (ft_strncmp(data->s, src, ft_strlen(src) + 1) == 0)
 		{
@@ -82,15 +82,13 @@ void	expand_status_exit(t_data *info, t_trash **trash)
 {
 	t_data	data;
 
-	info->nb = g_data.exit_status;
+	info->nb = ft_status(0, 1);
 	data.src = ft_itoa(info->nb);
 	add_to_trash(data.src, trash);
 	data.str = malloc(info->j - 2 + ft_strlen(data.src) + 1);
 	if (!data.str)
 	{
 		info->str = NULL;
-		g_data.exit_status = 2;
-		printf("malloc failed: try again !\n");
 		return ;
 	}
 	ft_bzero(data.str, info->j - 2 + ft_strlen(data.src) + 1);
@@ -127,7 +125,5 @@ void	expande(char *str, t_data *info, t_data *data, t_trash **trash)
 		info->str[info->len] = '$';
 		info->len++;
 	}
-	if (!data->check)
-		printf("malloc failed: try again !\n");
 	free(data->s);
 }

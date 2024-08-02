@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:50:12 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/29 15:45:00 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:54:56 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*make_path(char *path, char *input)
 	i = 0;
 	j = 0;
 	len_new_path = ft_strlen(path) + ft_strlen(input) + 2;
-	new_path = malloc(sizeof(char) * len_new_path);
+	new_path = manage_malloc_one(len_new_path);
 	while (path[i])
 	{
 		new_path[i] = path[i];
@@ -38,50 +38,52 @@ char	*make_path(char *path, char *input)
 	return (new_path);
 }
 
-int	check_cmd(t_data *info, char *input)
+int	check_cmd_part(t_data *info, char *input)
 {
 	int	i;
 
 	i = 0;
+	while (info->path[i])
+	{
+		info->current_path = make_path(info->path[i], input);
+		if (access(info->current_path, F_OK) == 0)
+		{
+			if (access(info->current_path, X_OK) == -1)
+				return (ft_free_path(info), info->flag_free_current_path = 1,
+					3);
+			return (ft_free_path(info), info->flag_free_current_path = 1, 1);
+		}
+		free(info->current_path);
+		i++;
+	}
+	return (0);
+}
+
+int	check_cmd(t_data *info, char *input)
+{
+	int	store;
+
 	if (input[0] == '\0')
 		return (0);
-	if (access(input, X_OK) == 0)
+	if (check_if_is_dir(input) == 1)
+		return (2);
+	if (search_for_character(input, '/') == 1 && access(input, F_OK) == 0)
 	{
+		if (access(input, X_OK) == -1)
+			return (3);
 		info->current_path = input;
 		info->flag_free_current_path = 0;
 		return (1);
 	}
-	extract_path(info->env, info, input);
+	extract_path(info->env, info);
 	if (info->path == NULL)
 		return (0);
-	while (info->path[i])
-	{
-		info->current_path = make_path(info->path[i], input);
-		if (access(info->current_path, X_OK) == 0)
-			return (ft_free_path(info), info->flag_free_current_path = 1, 1);
-		free(info->current_path);
-		i++;
-	}
+	store = check_cmd_part(info, input);
+	if (store == 3)
+		return (3);
+	else if (store == 1)
+		return (1);
 	return (ft_free_path(info), 0);
-}
-
-int	check_built_cmd(t_data *info, t_input temp)
-{
-	if (cmp_str(temp.cmd[0], "cd") == 1)
-		return (run_cd(info, temp), update_env(info), 1);
-	if (cmp_str(temp.cmd[0], "echo") == 1)
-		return (run_echo(info, temp), 1);
-	if (cmp_str(temp.cmd[0], "pwd") == 1)
-		return (run_pwd(info, temp), 1);
-	if (cmp_str(temp.cmd[0], "env") == 1)
-		return (run_env(info, temp), 1);
-	if (cmp_str(temp.cmd[0], "export") == 1)
-		return (run_export(info, temp), 1);
-	if (cmp_str(temp.cmd[0], "unset") == 1)
-		return (run_unset(info, temp), 1);
-	if (cmp_str(temp.cmd[0], "exit") == 1)
-		return (run_exit(info, temp), 1);
-	return (0);
 }
 
 int	get_number_cmd(t_data *info)
@@ -113,13 +115,11 @@ int	check_input(t_data *info)
 			return (0);
 		if (check_built_cmd(info, info->input) == 1)
 			change_cmd_var_env(info, info->input.cmd);
-		else if (check_cmd(info, info->input.cmd[0]) == 1)
-			run_cmd(info, info->input.cmd);
 		else
 		{
-			if (info->flags.unset_path == 1)
-				return (0);
-			return (-1);
+			if (get_error(check_cmd(info, info->input.cmd[0]),
+					info->input.cmd[0], info) == 1)
+				run_cmd(info, info->input.cmd);
 		}
 	}
 	else

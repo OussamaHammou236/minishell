@@ -6,39 +6,11 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:01:45 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/26 11:59:09 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:08:39 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
-
-void	display_exporting_var(t_data *info)
-{
-	int	i;
-	int	j;
-	int	flag;
-
-	flag = 0;
-	i = -1;
-	while (info->env[++i + 1])
-	{
-		flag = 0;
-		printf("declare -x ");
-		j = -1;
-		while (info->env[i][++j])
-		{
-			printf("%c", info->env[i][j]);
-			if (flag == 0 && info->env[i][j] == '=')
-			{
-				printf("\"");
-				flag = 1;
-			}
-		}
-		if (flag == 1)
-			printf("\"");
-		printf("\n");
-	}
-}
 
 int	check_second_error_export(char *str)
 {

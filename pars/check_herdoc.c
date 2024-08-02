@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/07/31 15:12:17 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/02 22:40:22 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	check_herdoc(t_data *data, t_trash **trash)
 {
+	t_data *tmp;
 	if (data->nb_of_herdoc > 16)
 	{
 		printf("minishell: maximum here-document count exceeded \n");
-		free_env_new(&g_data);
+		tmp = data_global(data, 1);
+		free_env_new(tmp);
 		free_trash(trash);
 		exit(2);
 	}
@@ -28,6 +30,7 @@ void	check_herdoc(t_data *data, t_trash **trash)
 int	red_check(char *str, t_trash **trash)
 {
 	int	i;
+	t_data g_data;
 
 	i = 0;
 	g_data.i = 0;
@@ -49,7 +52,7 @@ int	set_value(t_data *data, t_data *info, int i, t_trash **trash)
 		data->src = add_single_double_q(data->src);
 	data->str = ftmalloc(info->j - i + ft_strlen(data->src) + 1, trash);
 	if (!data->src || !data->str)
-		return (info->str = NULL, g_data.exit_status = 2, 0);
+		return (info->str = NULL, ft_status(2, 0), 0);
 	ft_strlcpy(data->str, info->str, info->len + 1);
 	ft_strlcat(data->str, data->src, info->len + ft_strlen(data->src)
 		+ 1);
