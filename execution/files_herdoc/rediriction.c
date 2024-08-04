@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:21:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 15:59:28 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:40:37 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	out_file(t_input temp, t_herdoc *arg)
 	{
 		if (temp.red[arg->posi + 1] == NULL)
 			return (-1);
-		arg->our_fd_in = open(temp.red[arg->posi + 1], O_CREAT | O_RDWR, 0644);
+		arg->our_fd_in = open(temp.red[arg->posi + 1],
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (access(temp.red[arg->posi + 1], W_OK) == -1)
 			return (print_error_permi(temp.red[arg->posi + 1]), -1);
 	}

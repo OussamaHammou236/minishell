@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:23:22 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 15:20:51 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:10:52 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ void	update_old_pwd(t_data *info, char *str)
 		{
 			free(info->env[i]);
 			info->env[i] = new_path;
-			break ;
+			return ;
 		}
 	}
+	free(new_path);
 }
 
 void	update_env(t_data *info)
@@ -89,8 +90,9 @@ void	update_env(t_data *info)
 			free(info->env[i]);
 			info->env[i] = make_format_path(new_path);
 			free(new_path);
-			break ;
+			return ;
 		}
 		i++;
 	}
+	free(new_path);
 }

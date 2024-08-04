@@ -6,13 +6,11 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:38:04 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:34:39 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-t_data		g_data;
 
 void	reset_fds(t_data *info)
 {
@@ -43,9 +41,7 @@ void	run_minishell(t_data *info, t_trash *trash, t_input *tm, t_data *data)
 		reset_fds(info);
 	}
 	else
-	{
 		ft_status(2, 0);
-	}
 	info->flags.index = -1;
 }
 
@@ -80,7 +76,7 @@ void	in_the_last(char *str, t_data *info, t_trash **trash, char **argv)
 		info->flag_free_current_path = 0;
 	}
 }
-// shell level
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data		info;
@@ -88,13 +84,13 @@ int	main(int argc, char **argv, char **env)
 	t_trash		*trash;
 	t_input		*tm;
 	char		*str;
+
 	begining_minishell(&info, &trash, env, argc);
 	while (1)
 	{
 		norm_mai(&info);
 		str = readline("minishell-> ");
 		signal(SIGINT, handler_ctrl_c_after_readline);
-		data_global(&info, 0);
 		if (!str)
 		{
 			free_something_after_exit(&info);

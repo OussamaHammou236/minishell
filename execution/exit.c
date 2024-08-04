@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:05:58 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:15:35 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:37:31 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void	run_exit(t_data *info, t_input temp)
 	}
 	free_something_after_exit(info);
 	printf("exit\n");
-	exit(0);
+	exit(WEXITSTATUS(ft_status(0, 1) * 256));
 }

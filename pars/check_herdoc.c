@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/02 22:40:22 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:39:58 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,30 @@
 
 void	check_herdoc(t_data *data, t_trash **trash)
 {
-	t_data *tmp;
-	if (data->nb_of_herdoc > 16)
+	t_data	*tmp;
+	int		i;
+
+	i = 0;
+	while (i < data->len)
 	{
-		printf("minishell: maximum here-document count exceeded \n");
-		tmp = data_global(data, 1);
-		free_env_new(tmp);
-		free_trash(trash);
-		exit(2);
+		if (data->nb_of_herdoc > 16)
+		{
+			printf("minishell: maximum here-document count exceeded \n");
+			tmp = data_global(data, 1);
+			free_env_new(tmp);
+			free_trash(trash);
+			exit(2);
+		}
+		else if (data->tab[i] == RE_OUTF)
+			data->nb_of_herdoc++;
+		i++;
 	}
-	else if (data->tab[data->i] == RE_OUTF)
-		data->nb_of_herdoc++;
 }
 
 int	red_check(char *str, t_trash **trash)
 {
-	int	i;
-	t_data g_data;
+	int		i;
+	t_data	g_data;
 
 	i = 0;
 	g_data.i = 0;

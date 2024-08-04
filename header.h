@@ -197,7 +197,7 @@ int					len(char *str);
 int					cont_words_spaces(char *str);
 int					set_value(t_data *data, t_data *info, int i,
 						t_trash **trash);
-t_data 				*data_global(t_data *data, int fg);
+t_data				*data_global(t_data *data, int fg);
 // new
 int					out_file(t_input temp, t_herdoc *arg);
 int					out_file_append(t_input temp, t_herdoc *arg);
@@ -222,8 +222,8 @@ int					is_containe_equal_flag(char *user_var);
 int					len_str_equal(char *str);
 void				part_one_upd_var(t_export *arg_export, char *variable,
 						int posi, t_data *info);
-void				part_two_upd_var(t_export *arg_export,
-						int posi, t_data *info);
+void				part_two_upd_var(t_export *arg_export, int posi,
+						t_data *info);
 void				upd_variable(t_data *info, char *variable, int posi);
 char				*ft_strdup_export(char *variable);
 void				child_part(t_data *info, t_input temp, t_herdoc *arg,

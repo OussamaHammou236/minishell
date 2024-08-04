@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:37:53 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:15:12 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:35:40 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	handle_status(int s)
 	}
 	if (ft_status(0, 1) == 130)
 	{
-		if (WEXITSTATUS(s) != 130)
+		if (s == 2)
 			write(2, "\n", 1);
+		else
+			return (0);
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:01:45 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/07/30 17:08:39 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/03 18:21:01 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_correct_arg(char *str, int *sign_plus)
 		if (*sign_plus == 0)
 		{
 			if ((str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z')
-				&& (str[i] < '0' || str[i] > '9'))
+				&& (str[i] < '0' || str[i] > '9') && (str[i] != '_'))
 				return (-1);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_part2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:30:18 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:16:04 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:49:38 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	get_error(int status, char *input, t_data *info)
 {
+	change_cmd_var_env(info, info->input.cmd);
 	if (status == 0)
 	{
 		if (info->flags.unset_path == 1 || search_for_character(input,
