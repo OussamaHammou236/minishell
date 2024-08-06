@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 09:36:21 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/02 22:41:20 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:16:03 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	check_imbg(t_input **list, t_data *data, t_trash **trash, t_data *info)
 		{
 			printf("minishell: %s: ambiguous redirect\n",
 				data->cmd[data->len + 1]);
+			ft_status(1, 0);
 			s = NULL;
 		}
 		(*list)->red[data->i + 1] = s;
