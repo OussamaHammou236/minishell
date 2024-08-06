@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/02 22:38:40 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:38:30 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ typedef struct s_data
 # define RST "\033[0m"
 
 int					ft_status(int b, int fg);
-char				**ft_split(char const *s, char c);
+char				*edit_str(char *str, t_trash **trash);
 int					cmp_str_env(char *str1, const char *str2, int len_str2);
 void				extract_path(char **env, t_data *info);
 char				*make_path(char *path, char *input);
@@ -191,7 +191,7 @@ char				*change_cmd(char *str, int len, t_trash **trash);
 void				check_imbg(t_input **list, t_data *data, t_trash **trash,
 						t_data *info);
 void				run_true(void);
-int					red_check(char *str, t_trash **trash);
+int					red_check(char *str);
 char				*add_single_double_q(char *str);
 int					len(char *str);
 int					cont_words_spaces(char *str);

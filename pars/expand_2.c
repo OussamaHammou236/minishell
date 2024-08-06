@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/02 11:10:17 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:24:16 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ void	flag_of_expand_herdoc(t_data *data, char *str)
 		&& (str[data->i] != '<' || str[data->i] != '>')
 		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->fg = 0;
-	if (data->v == 1)
-		data->fg = 0;
-	else if (data->v == 0 && str[data->i] == '$'
+	if (data->v == 0 && str[data->i] == '$'
 		&& data->flag1 == SINGLE_Q_OFF && data->flag == DOUBLE_Q_OFF)
 		data->v = 1;
 	if (str[data->i] == '<' && str[data->i + 1] == '<'

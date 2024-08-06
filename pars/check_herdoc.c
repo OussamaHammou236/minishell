@@ -6,7 +6,7 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:16:52 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/04 17:39:58 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:24:31 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,10 @@ void	check_herdoc(t_data *data, t_trash **trash)
 	}
 }
 
-int	red_check(char *str, t_trash **trash)
+int	red_check(char *str)
 {
-	int		i;
-	t_data	g_data;
-
-	i = 0;
-	g_data.i = 0;
-	g_data.j = ft_strlen(str) - 1;
 	if (!*str || cont_words_spaces(str) > 1 || cont_words_spaces(str) == 0)
 		return (-1);
-	while (str[g_data.i] && is_white_space(str[g_data.i]))
-		g_data.i++;
-	while (g_data.j > g_data.i && is_white_space(str[g_data.j]))
-		g_data.j--;
-	g_data.str = ft_substr(str, g_data.i, g_data.j - g_data.i + 1);
-	add_to_trash(g_data.str, trash);
 	return (0);
 }
 
@@ -66,4 +54,23 @@ int	set_value(t_data *data, t_data *info, int i, t_trash **trash)
 	info->j = info->j - i + ft_strlen(data->src);
 	info->len += ft_strlen(data->src);
 	return (1);
+}
+
+char	*edit_str(char *str, t_trash **trash)
+{
+	int		i;
+	t_data	g_data;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	g_data.i = 0;
+	g_data.j = ft_strlen(str) - 1;
+	while (str[g_data.i] && is_white_space(str[g_data.i]))
+		g_data.i++;
+	while (g_data.j > g_data.i && is_white_space(str[g_data.j]))
+		g_data.j--;
+	g_data.str = ft_substr(str, g_data.i, g_data.j - g_data.i + 1);
+	add_to_trash(g_data.str, trash);
+	return (g_data.str);
 }
