@@ -6,29 +6,22 @@
 /*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/06 12:24:16 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:44:32 by ohammou-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	etc_of_add_qoutes(char *str, t_data *data, char c)
+void test(t_data *data, char d, char c)
 {
-	if ((!is_white_space(str[data->i]) && data->i == 0) || (data->i > 0
-			&& !is_white_space(str[data->i])
-			&& is_white_space(str[data->i - 1])))
+	if (!is_white_space(d))
 	{
 		data->str[data->j] = c;
-		data->str[++data->j] = str[data->i];
-	}
-	if (!is_white_space(str[data->i])
-		&& (is_white_space(str[data->i + 1]) || !str[data->i + 1]))
-	{
-		data->str[data->j] = str[data->i];
+		data->str[++data->j] = d;
 		data->str[++data->j] = c;
 	}
 	else
-		data->str[data->j] = str[data->i];
+		data->str[data->j] = d;
 }
 
 char	*add_qoutes(char *str, char c)
@@ -37,14 +30,18 @@ char	*add_qoutes(char *str, char c)
 
 	data.i = 0;
 	data.j = 0;
-	data.len = ft_strlen(str) + (cont_words_spaces(str) * 2);
+	data.len = ft_strlen(str) + (ft_strlen(str) * 2);
 	data.str = malloc(data.len + 1);
 	if (!data.str)
 		return (NULL);
 	ft_bzero(data.str, data.len + 1);
 	while (str[data.i])
 	{
-		etc_of_add_qoutes(str, &data, c);
+		if (str[data.i] == '\'')
+			c = '"';
+		else
+			c = '\'';
+		test(&data, str[data.i], c);
 		data.j++;
 		data.i++;
 	}
