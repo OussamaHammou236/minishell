@@ -6,15 +6,37 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:30:18 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/03 16:49:38 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:39:43 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
-int	get_error(int status, char *input, t_data *info)
+int	handle_error_part(int *status, t_data *info, char *input)
 {
 	change_cmd_var_env(info, info->input.cmd);
+	if (*status == 4)
+	{
+		error_print("minishell: .: filename argument required\n",
+			".: usage: . filename [arguments]\n", NULL, NULL);
+		ft_status(2, 0);
+		return (0);
+	}
+	if (*status == 0 && info->flags.unset_path == 1)
+	{
+		if (access(input, F_OK) == 0)
+		{
+			if (access(input, X_OK) == -1)
+				*status = 3;
+		}
+	}
+	return (1);
+}
+
+int	get_error(int status, char *input, t_data *info)
+{
+	if (handle_error_part(&status, info, input) == 0)
+		return (0);
 	if (status == 0)
 	{
 		if (info->flags.unset_path == 1 || search_for_character(input,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:36:40 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/04 17:34:39 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:46:48 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void	in_the_last(char *str, t_data *info, t_trash **trash, char **argv)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data		info;
-	t_data		data;
-	t_trash		*trash;
-	t_input		*tm;
-	char		*str;
+	t_data	info;
+	t_data	data;
+	t_trash	*trash;
+	t_input	*tm;
+	char	*str;
 
 	begining_minishell(&info, &trash, env, argc);
 	while (1)

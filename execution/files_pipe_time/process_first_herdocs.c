@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_first_herdocs.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:26:08 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:13:26 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:49:45 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	create_name_file(t_data *info)
 	while (i < 2147483647)
 	{
 		store = ft_itoa(i);
-		str = ft_strjoin(".", store);
+		str = ft_strjoin("/var/tmp/.", store);
 		free(store);
 		if (access(str, F_OK) == -1)
 		{

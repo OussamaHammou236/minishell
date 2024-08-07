@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:44:35 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/06 19:44:32 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:45:39 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void test(t_data *data, char d, char c)
+void	test(t_data *data, char d, char c)
 {
 	if (!is_white_space(d))
 	{

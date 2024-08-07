@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:41:03 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/03 17:07:44 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:29:29 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	echo_compare_opt(char *str)
 	int	len;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	len = i;
@@ -48,7 +50,7 @@ void	run_echo(t_input temp)
 		printf("\n");
 	else
 	{
-		if (echo_compare_opt(temp.cmd[1]) == 1)
+		while (echo_compare_opt(temp.cmd[i]) == 1)
 			i++;
 		while (temp.cmd[i])
 		{

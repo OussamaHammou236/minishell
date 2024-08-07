@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:34:14 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 16:49:15 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:43:02 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,29 @@ void	delete_files(t_data *info)
 		unlink(info->flags.names[i]);
 		i++;
 	}
-	unlink(".herdoc_buff");
+	unlink("/var/tmp/.h");
 	i = 0;
 	while (i < info->flags.number_files)
 	{
 		free(info->flags.names[i]);
 		i++;
 	}
+}
+
+void	handle_status_pip(int st)
+{
+	if (st == 0)
+		ft_status(0, 0);
+	else if (st == 256)
+		ft_status(1, 0);
+	else if (st == 512)
+		ft_status(2, 0);
+	else if (st == 768)
+		ft_status(125, 0);
+	else if (st == 1024)
+		ft_status(127, 0);
+	else if (st == 1280 || st == 2)
+		ft_status(130, 0);
+	else if (st == 1536)
+		ft_status(126, 0);
 }

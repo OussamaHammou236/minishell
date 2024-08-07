@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:43:23 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 16:42:40 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:05:50 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,12 @@ char	**make_mini_env(void)
 {
 	char	**new_env;
 
-	new_env = manage_malloc_two(4);
+	new_env = manage_malloc_two(5);
 	new_env[0] = make_pwd();
 	new_env[1] = make_shlvl();
-	new_env[2] = make_last();
-	new_env[3] = NULL;
+	new_env[2] = ft_strdup("OLDPWD");
+	new_env[3] = make_last();
+	new_env[4] = NULL;
 	return (new_env);
 }
 

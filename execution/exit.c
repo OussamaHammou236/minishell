@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:05:58 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/03 16:37:31 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:09:37 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	is_all_numbers(char *str)
 	int	i;
 
 	i = 0;
-	if (str[0] == '-')
+	if (str[0] == '-' || str[0] == '+')
 		i++;
+	if (str[i] == '\0')
+		return (1);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -33,7 +35,8 @@ void	part_three_exit(t_data *info, t_input temp)
 	error_print("minishell: exit: ", temp.cmd[1],
 		": numeric argument required\n", NULL);
 	free_something_after_exit(info);
-	printf("exit\n");
+	if (info->number_cmd == 1)
+		printf("exit\n");
 	exit(2);
 }
 
@@ -53,7 +56,8 @@ int	part_two_exit(t_data *info, t_input temp, int len_input, int store)
 				part_three_exit(info, temp);
 			store = ft_atoi(temp.cmd[1]);
 			free_something_after_exit(info);
-			printf("exit\n");
+			if (info->number_cmd == 1)
+				printf("exit\n");
 			exit(store);
 		}
 	}
@@ -75,6 +79,7 @@ void	run_exit(t_data *info, t_input temp)
 			return ;
 	}
 	free_something_after_exit(info);
-	printf("exit\n");
+	if (info->number_cmd == 1)
+		printf("exit\n");
 	exit(WEXITSTATUS(ft_status(0, 1) * 256));
 }

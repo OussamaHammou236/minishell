@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:47:50 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/06 11:38:30 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:43:15 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ void				ft_free_path(t_data *info);
 int					run_herdoc_first(t_data *info);
 int					check_is_there_a_herdoc(t_input temp);
 void				display_exporting_var(t_data *info);
-int					check_if_is_dir(char *input);
+int					check_if_is_dir(char *input, t_data *info);
 int					search_for_character(char *str, char c);
 int					get_error(int status, char *input, t_data *info);
 void				delete_files(t_data *info);
@@ -279,7 +279,9 @@ char				**manage_malloc_two(int size);
 int					*manage_malloc_num_one(int size);
 int					**manage_malloc_num_two(int size);
 void				norm_mai(t_data *info);
-
+int					check_name_devs(char *str, int flag);
+int					is_exit_last_cmd(t_data *info);
+void				handle_status_pip(int st);
 // test//
 
 // hint :

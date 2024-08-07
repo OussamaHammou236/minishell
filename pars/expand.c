@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 20:33:03 by ohammou-          #+#    #+#             */
-/*   Updated: 2024/08/06 11:29:46 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:34:53 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	c_len(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->env[data->i][i] != '=')
+	while (data->env[data->i][i] && data->env[data->i][i] != '=')
 		i++;
 	return (i);
 }

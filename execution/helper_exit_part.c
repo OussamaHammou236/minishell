@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:44:51 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 14:44:51 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:46:10 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*skip_zero(char *str, int is_negative)
 		}
 		return (ft_strdup(str));
 	}
+	if (str[0] == '+')
+		i++;
 	while (str[i])
 	{
 		if (str[i] != '0')

@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 00:24:19 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 15:18:56 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:14:00 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ char	**duplacte_env(char **env)
 		i++;
 	our_env = manage_malloc_two(i + 1);
 	i = 0;
-	while (env[i])
+	while (env[i + 1])
 	{
 		our_env[i] = ft_strdup(env[i]);
 		i++;
 	}
-	our_env[i] = NULL;
+	our_env[i] = ft_strdup("_=]");
+	our_env[++i] = NULL;
 	return (our_env);
 }
 

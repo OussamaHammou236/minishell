@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 11:23:29 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:16:27 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:40:33 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,19 @@ int	check_specifique_case(t_input temp)
 
 int	run_cd_part(t_data *info)
 {
+	int		i;
+
+	i = 0;
 	if (chdir(get_home(info)) == -1)
 	{
 		ft_status(1, 0);
+		while (info->env[i])
+		{
+			if (cmp_str_env(info->env[i], "HOME=", 5) == 1)
+				return (-1);
+			i++;
+		}
+		error_print("minishell: cd: HOME not set\n", NULL, NULL, NULL);
 		return (-1);
 	}
 	ft_status(0, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helping_red.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohammou- <ohammou-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:49 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/02 22:17:19 by ohammou-         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:40:16 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	last_open_part_one(t_input temp, t_herdoc *arg)
 void	last_open_part_two(t_data *info, t_herdoc *arg)
 {
 	if (info->number_cmd == 1)
-		arg->fd_herdoc = open(".herdoc_buff", O_RDWR, 0644);
+		arg->fd_herdoc = open("/var/tmp/.h", O_RDWR, 0644);
 	else
 	{
 		arg->fd_herdoc = open(info->flags.names[info->flags.index], O_RDWR,
@@ -50,6 +50,25 @@ int	last_oper(t_data *info, t_input temp, t_herdoc *arg)
 		dup2(arg->our_fd_in, 1);
 		close(arg->our_fd_in);
 		info->flags.dup_stdout_used = 1;
+	}
+	return (0);
+}
+
+int	check_name_devs(char *str, int flag)
+{
+	if (flag == 1)
+	{
+		if (cmp_str(str, "/dev/stdout") == 1)
+			return (1);
+		if (cmp_str(str, "/proc/self/fd/1") == 1)
+			return (1);
+	}
+	else if (flag == 0)
+	{
+		if (cmp_str(str, "/dev/stdin") == 1)
+			return (1);
+		if (cmp_str(str, "/proc/self/fd/0") == 1)
+			return (1);
 	}
 	return (0);
 }

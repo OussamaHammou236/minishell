@@ -6,7 +6,7 @@
 /*   By: iahamdan <iahamdan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 16:50:12 by iahamdan          #+#    #+#             */
-/*   Updated: 2024/08/01 15:54:56 by iahamdan         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:31:03 by iahamdan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ int	check_cmd(t_data *info, char *input)
 {
 	int	store;
 
-	if (input[0] == '\0')
+	if (input[0] == '\0' || cmp_str(input, "..") == 1)
 		return (0);
-	if (check_if_is_dir(input) == 1)
+	if (cmp_str(input, ".") == 1)
+		return (4);
+	if (check_if_is_dir(input, info) == 1)
 		return (2);
 	if (search_for_character(input, '/') == 1 && access(input, F_OK) == 0)
 	{
